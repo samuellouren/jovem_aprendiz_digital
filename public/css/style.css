@@ -1,0 +1,840 @@
+:root {
+  --navy: #1B3A4B;
+  --coral: #D9694F;
+  --coral-dark: #B84F38;
+  --teal: #2E8B8B;
+  --amber: #E8A33D;
+  --bg: #F5F8FA;
+  --card: #FFFFFF;
+  --border: #E1E8EC;
+  --ink: #1B2A33;
+  --sub: #5B6B74;
+  --green: #3D9970;
+  --green-bg: #E6F4EE;
+  --red-bg: #FBEAE7;
+  --red-txt: #B84F38;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+/* ---------- Ícones (SVG de linha, ver public/js/icones.js) ----------
+   O traço herda a cor do texto, então basta mudar `color` no pai. */
+.icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 0;
+}
+.icone svg { display: block; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Roboto, Calibri, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; margin: 0 0 0.4em; color: var(--navy); }
+h1 { font-size: 1.7rem; }
+h2 { font-size: 1.3rem; }
+p { margin: 0 0 0.8em; }
+a { color: inherit; }
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 18px 90px;
+}
+
+/* ---------- Topo ---------- */
+.topbar {
+  background: var(--navy);
+  color: #fff;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topbar .logo-badge {
+  width: 34px; height: 34px; min-width: 34px; border-radius: 50%;
+  background: var(--amber);
+  color: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+}
+/* Seta de voltar da topbar — alvo grande o suficiente para o dedo */
+.topbar .voltar {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; min-width: 44px;
+  margin-left: -12px;
+  color: #fff;
+  text-decoration: none;
+}
+.topbar strong { font-size: 1.05rem; }
+.topbar small { display: block; color: #B9CBD4; font-size: 0.75rem; }
+.topbar .spacer { flex: 1; }
+.topbar button.sair {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  border-radius: 20px;
+  padding: 10px 16px;
+  min-height: 44px;
+  font-size: 0.85rem;
+}
+
+/* ---------- Botões ---------- */
+button, .btn {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-weight: 700;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.btn-primary { background: var(--coral); color: #fff; width: 100%; }
+.btn-primary:active { background: var(--coral-dark); }
+.btn-secondary { background: var(--card); color: var(--navy); border: 2px solid var(--border); width: 100%; }
+.btn-link { background: none; color: var(--teal); font-weight: 700; padding: 10px; }
+.btn:disabled { opacity: 0.55; }
+
+/* ---------- Formulários ---------- */
+label { display: block; font-weight: 700; font-size: 0.92rem; margin: 14px 0 6px; color: var(--navy); }
+input[type=text], input[type=email], input[type=password], textarea {
+  width: 100%;
+  font: inherit;
+  padding: 13px 14px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+input:focus, textarea:focus { outline: 3px solid #cfe3ea; border-color: var(--teal); }
+/* Foco visível para quem navega por teclado */
+button:focus-visible, a:focus-visible, label.alternativa:focus-within {
+  outline: 3px solid var(--teal);
+  outline-offset: 2px;
+}
+textarea { resize: vertical; min-height: 70px; }
+.erro-msg {
+  background: var(--red-bg); color: var(--red-txt);
+  padding: 10px 14px; border-radius: 10px; font-size: 0.9rem; margin-top: 12px;
+  display: none;
+}
+.erro-msg.show { display: block; }
+
+/* ---------- Cartões ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+/* ---------- Landing / Auth ---------- */
+
+/* index.html tem duas vistas na mesma página: a apresentação (o que quem
+   chega vê primeiro) e o acesso (entrar / criar conta). Só uma por vez. */
+.vista { display: none; }
+.vista.ativa { display: block; }
+
+.hero {
+  text-align: center;
+  padding: 34px 6px 10px;
+}
+.hero .marca {
+  width: 62px; height: 62px;
+  margin: 0 auto 12px;
+  border-radius: 18px;
+  background: var(--navy);
+  color: var(--amber);
+  display: flex; align-items: center; justify-content: center;
+}
+.hero p { color: var(--sub); }
+
+/* Na vista de acesso a marca já foi apresentada — aqui ela só situa. */
+.hero-compacto { padding: 10px 6px 2px; }
+.hero-compacto .marca {
+  width: 46px; height: 46px; border-radius: 14px; margin-bottom: 10px;
+}
+.hero-compacto h1 { font-size: 1.3rem; margin: 0; }
+/* O foco aqui é programático (vindo da apresentação), só para o leitor de
+   tela anunciar a troca de vista — não precisa de anel visível. */
+.hero-compacto h1:focus { outline: none; }
+
+.tabs { display: flex; gap: 8px; margin: 18px 0 6px; }
+.tabs button {
+  flex: 1; background: var(--card); color: var(--sub);
+  border: 2px solid var(--border); border-radius: 12px; padding: 10px;
+}
+.tabs button.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.form-panel { display: none; }
+.form-panel.active { display: block; }
+
+/* ---------- Apresentação (antes do cadastro) ---------- */
+
+.apre-topo { display: flex; justify-content: flex-end; margin-bottom: -14px; }
+.btn-entrar-topo {
+  background: none;
+  color: var(--teal);
+  font-size: 0.9rem;
+  padding: 10px 4px 10px 14px; min-height: 44px;
+}
+/* Com o atalho "Entrar" acima, o topo da marca precisa de menos respiro. */
+.hero-apre { padding-top: 14px; }
+
+/* Grátis / celular / sem instalar: as três objeções que aparecem antes de
+   alguém decidir criar conta, resolvidas logo abaixo do título. */
+.selos {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 7px;
+  list-style: none;
+  margin: 6px 0 22px;
+  padding: 0;
+}
+.selo {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 7px 13px;
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--sub);
+}
+.selo .icone { color: var(--teal); }
+
+.apre-titulo {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 1.15rem;
+  margin: 24px 0 12px;
+}
+.apre-titulo .icone { color: var(--teal); }
+
+/* Prévia das trilhas: reaproveita .trilha-card do dashboard, mas sem link —
+   antes do login não há para onde ir, é só para saber o que tem aqui. */
+.previa-titulo {
+  display: block;
+  font-weight: 700; color: var(--navy);
+  font-size: 1rem; line-height: 1.3; margin-bottom: 4px;
+}
+.previa-desc {
+  display: block;
+  color: var(--sub); font-size: 0.87rem; line-height: 1.45;
+}
+.previa-meta {
+  display: block;
+  margin-top: 7px;
+  font-size: 0.75rem; font-weight: 700; color: var(--sub);
+}
+
+.passos-como { list-style: none; margin: 0 0 16px; padding: 18px 16px; }
+.passos-como li {
+  display: flex; align-items: flex-start; gap: 12px;
+  margin-bottom: 14px;
+}
+.passos-como li:last-child { margin-bottom: 0; }
+.passo-num {
+  width: 30px; height: 30px; min-width: 30px;
+  border-radius: 50%;
+  background: var(--green-bg);
+  color: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.9rem;
+}
+.passo-txt { flex: 1; font-size: 0.92rem; line-height: 1.5; }
+.passo-txt strong { color: var(--navy); }
+
+.apre-tempo {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.88rem; color: var(--sub);
+  margin: 0 0 14px; padding: 0 2px;
+}
+.apre-tempo .icone { color: var(--amber); }
+
+.apre-mural {
+  display: flex; align-items: flex-start; gap: 9px;
+  background: var(--green-bg);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 0.88rem; line-height: 1.45;
+  margin: 0 0 22px;
+}
+.apre-mural .icone { color: var(--teal); margin-top: 2px; }
+.apre-mural strong { color: var(--teal); }
+
+.apre-acoes { display: grid; gap: 8px; }
+.btn-ja-tenho {
+  width: 100%;
+  background: none;
+  color: var(--teal);
+  min-height: 44px;
+  padding: 12px;
+  font-size: 0.95rem;
+}
+
+.apre-rodape {
+  text-align: center;
+  color: var(--sub); font-size: 0.85rem;
+  margin-top: 16px;
+}
+
+.btn-voltar-apre {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none;
+  color: var(--teal);
+  font-size: 0.88rem; font-weight: 700;
+  padding: 10px 12px 10px 0; min-height: 44px;
+  margin: 2px 0 -8px -2px;
+}
+
+/* ---------- Dashboard ---------- */
+.resumo-card {
+  background: var(--navy);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 18px;
+}
+.resumo-card .barra-fundo {
+  background: rgba(255,255,255,0.18);
+  border-radius: 10px;
+  height: 12px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+.resumo-card .barra-preenchida {
+  background: var(--amber);
+  height: 100%;
+  border-radius: 10px;
+}
+.resumo-card .pct { font-size: 2rem; font-weight: 800; color: var(--amber); }
+.resumo-card .resumo-texto { margin-top: 8px; font-size: 0.85rem; color: #B9CBD4; }
+
+/* Estado de estreia: convite em vez de "0%" */
+.resumo-card.boas-vindas h2 { color: #fff; font-size: 1.35rem; margin: 0 0 6px; }
+.resumo-card.boas-vindas p { color: #B9CBD4; font-size: 0.92rem; margin: 0 0 16px; }
+.btn-comecar {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--coral); color: #fff;
+  border-radius: 12px; padding: 14px 18px; min-height: 44px;
+  font-weight: 700; text-decoration: none;
+}
+.btn-comecar:active { background: var(--coral-dark); }
+
+.trilha-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  text-decoration: none;
+  color: inherit;
+}
+.trilha-icone {
+  width: 50px; height: 50px; min-width: 50px;
+  border-radius: 12px;
+  background: var(--green-bg);
+  color: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+}
+.trilha-info { flex: 1; }
+.trilha-nivel {
+  display: inline-block;
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--teal);
+  margin-bottom: 3px;
+}
+.trilha-progresso-texto { font-size: 0.85rem; color: var(--sub); margin-top: 6px; }
+
+/* ===============================================================
+   MÓDULO (a lição virou um módulo de curso, com várias seções)
+
+   São duas telas dentro de trilha.html:
+     1. lista de módulos da trilha  -> .modulo-card
+     2. o módulo aberto, uma seção por vez -> .modulo-topo + .secao
+   =============================================================== */
+
+/* ---------- Tela 1: cabeçalho da trilha ---------- */
+.trilha-cabecalho {
+  background: var(--navy);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 20px 18px;
+  margin-bottom: 18px;
+}
+.trilha-cabecalho h1 { color: #fff; font-size: 1.45rem; margin-bottom: 6px; }
+.trilha-cabecalho .desc { color: #B9CBD4; font-size: 0.92rem; margin: 0 0 14px; }
+.etiqueta-nivel {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.14);
+  color: var(--amber);
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.6px;
+  border-radius: 20px; padding: 4px 11px;
+  margin-bottom: 10px;
+}
+.trilha-cabecalho .barra-fundo {
+  background: rgba(255,255,255,0.18);
+  border-radius: 10px; height: 10px; overflow: hidden;
+}
+.trilha-cabecalho .barra-preenchida {
+  background: var(--amber); height: 100%; border-radius: 10px;
+  transition: width 0.3s ease;
+}
+.trilha-cabecalho .progresso-texto {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.82rem; color: #B9CBD4; margin-top: 8px;
+}
+
+/* ---------- Tela 1: cartão de cada módulo ---------- */
+.secao-titulo-lista {
+  display: flex; align-items: center; gap: 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--navy); font-size: 1.15rem;
+  margin: 0 0 12px;
+}
+
+.modulo-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  text-align: left;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 15px 14px;
+  margin-bottom: 11px;
+  font: inherit;
+  cursor: pointer;
+}
+.modulo-card:active { background: #FAFCFD; }
+.modulo-card.feito { border-color: #BFE3D2; }
+
+.modulo-numero {
+  width: 38px; height: 38px; min-width: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  color: var(--sub);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.95rem;
+}
+.modulo-card.feito .modulo-numero {
+  background: var(--green); border-color: var(--green); color: #fff;
+}
+
+/* São <span> dentro de um <button> (botão não pode conter <div>),
+   então cada um precisa virar bloco explicitamente. */
+.modulo-corpo { display: block; flex: 1; min-width: 0; }
+.modulo-titulo {
+  display: block;
+  font-weight: 700; color: var(--navy);
+  font-size: 1rem; line-height: 1.3; margin-bottom: 3px;
+}
+.modulo-resumo {
+  display: block;
+  color: var(--sub); font-size: 0.85rem; line-height: 1.4;
+  margin-bottom: 7px;
+}
+.modulo-meta {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 4px 12px;
+  font-size: 0.75rem; color: var(--sub); font-weight: 600;
+}
+.modulo-meta span { display: inline-flex; align-items: center; gap: 4px; }
+.modulo-meta .feito-txt { color: var(--green); }
+.modulo-card .seta { color: var(--sub); }
+
+/* ---------- Tela 2: cabeçalho do módulo aberto ---------- */
+.modulo-topo {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 16px 14px;
+  margin-bottom: 14px;
+}
+.btn-voltar-modulos {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none;
+  padding: 0 12px 10px 0; min-height: 44px;
+  margin-left: -2px;
+  color: var(--teal); font-weight: 700; font-size: 0.85rem;
+  cursor: pointer; font-family: inherit;
+}
+.modulo-etiqueta {
+  display: block;
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--teal); margin-bottom: 4px;
+}
+.modulo-topo h1 { font-size: 1.3rem; margin-bottom: 8px; line-height: 1.25; }
+.modulo-topo .modulo-resumo { font-size: 0.88rem; margin-bottom: 14px; }
+
+/* Barra de progresso DO MÓDULO (diferente da barra da trilha inteira) */
+.modulo-progresso .barra-fundo {
+  background: var(--border);
+  border-radius: 10px; height: 8px; overflow: hidden;
+}
+.modulo-progresso .barra-preenchida {
+  background: var(--teal); height: 100%; border-radius: 10px;
+  transition: width 0.25s ease;
+}
+.modulo-progresso .passo-texto {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; font-size: 0.75rem; color: var(--sub);
+  font-weight: 600; margin-top: 7px;
+}
+
+/* ---------- Tela 2: stepper de seções ----------
+   Rolagem horizontal no celular: cabe em qualquer largura sem quebrar
+   o texto da seção, e mostra de relance onde a pessoa está. */
+.stepper {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  padding: 2px 18px 12px;
+  margin: 0 -18px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.stepper::-webkit-scrollbar { display: none; }
+
+.passo {
+  display: inline-flex; align-items: center; gap: 6px;
+  flex-shrink: 0;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 22px;
+  padding: 7px 14px;
+  min-height: 44px;
+  font: inherit;
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--sub);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.passo.visitado { color: var(--green); border-color: #BFE3D2; }
+.passo.atual {
+  background: var(--navy); border-color: var(--navy); color: #fff;
+}
+.passo.passo-teste { border-color: #E9C3B7; color: var(--coral-dark); }
+.passo.passo-teste.atual { background: var(--coral); border-color: var(--coral); color: #fff; border-style: solid; }
+
+/* ---------- Tela 2: a seção em si ---------- */
+.secao {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 18px;
+  margin-bottom: 14px;
+  border-left: 5px solid var(--teal);
+}
+.secao-tipo {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.7rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.7px;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+.secao h2 {
+  font-size: 1.22rem;
+  line-height: 1.28;
+  margin-bottom: 14px;
+  color: var(--navy);
+}
+
+/* Corpo do texto: medida e entrelinha confortáveis para leitura longa */
+.secao-texto { font-size: 1rem; line-height: 1.68; color: var(--ink); }
+.secao-texto p { margin: 0 0 1.05em; }
+.secao-texto p:last-child { margin-bottom: 0; }
+.secao-texto strong { color: var(--navy); font-weight: 700; }
+.secao-lista { margin: 0 0 1.05em; padding-left: 1.15em; }
+.secao-lista li { margin-bottom: 0.5em; }
+.secao-lista li:last-child { margin-bottom: 0; }
+
+/* Cada tipo de seção ganha uma cor de destaque própria — a pessoa
+   reconhece "isso é um exemplo" / "isso é um alerta" sem ler. */
+.secao-introducao { border-left-color: var(--navy); }
+.secao-introducao .secao-tipo { color: var(--navy); }
+
+.secao-explicacao { border-left-color: var(--teal); }
+
+.secao-exemplo {
+  border-left-color: var(--amber);
+  background: #FFFCF6;
+}
+.secao-exemplo .secao-tipo { color: #A8741B; }
+
+.secao-dica {
+  border-left-color: var(--coral);
+  background: #FFF9F7;
+}
+.secao-dica .secao-tipo { color: var(--coral-dark); }
+
+.secao-resumo {
+  border-left-color: var(--green);
+  background: var(--green-bg);
+}
+.secao-resumo .secao-tipo { color: var(--green); }
+.secao-resumo .secao-lista li { margin-bottom: 0.62em; }
+
+/* ---------- Tela 2: navegação entre seções ---------- */
+.secao-nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.secao-nav button {
+  flex: 1;
+  padding: 13px 12px;
+  font-size: 0.95rem;
+}
+.secao-nav .btn-anterior {
+  background: var(--card);
+  color: var(--navy);
+  border: 2px solid var(--border);
+  flex: 0 0 auto;
+  min-width: 54px;
+}
+.secao-nav .btn-anterior:disabled { opacity: 0.4; }
+.secao-nav .btn-proximo { background: var(--coral); color: #fff; }
+.secao-nav .btn-proximo.ir-atividade { background: var(--navy); }
+
+/* ---------- Bloco da atividade, no fim do módulo ----------
+   Destacado do texto corrido, mas SEM cara de prova: borda sólida e
+   suave em vez de tracejada. A persona tem "medo de não entender" —
+   moldura de prova é justamente o gatilho a evitar. */
+.bloco-teste {
+  border: 2px solid #F0DCD4;
+  border-radius: var(--radius);
+  background: #FFF9F7;
+  padding: 18px 15px;
+  margin-bottom: 14px;
+}
+.teste-cabecalho {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1.5px solid #F3DDD6;
+}
+.teste-selo {
+  width: 42px; height: 42px; min-width: 42px;
+  border-radius: 12px;
+  background: var(--coral);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.teste-cabecalho h2 {
+  font-size: 1.2rem;
+  margin: 0 0 3px;
+  color: var(--coral-dark);
+}
+.teste-cabecalho p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--sub);
+  line-height: 1.45;
+}
+
+/* ---------- Atividade da lição ---------- */
+
+.questao {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+.questao.certa { border-color: var(--green); background: var(--green-bg); }
+.questao.errada { border-color: var(--coral); background: var(--red-bg); }
+.questao-enunciado {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+.questao-numero {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--teal);
+  margin-bottom: 4px;
+}
+
+/* Alternativa: a label inteira é clicável, alvo grande pro dedo */
+.alternativa {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 12px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 0.93rem;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.alternativa:last-child { margin-bottom: 0; }
+.alternativa input[type=radio] {
+  width: 20px; height: 20px; min-width: 20px;
+  margin: 1px 0 0;
+  accent-color: var(--teal);
+}
+.alternativa:has(input:checked) { border-color: var(--teal); background: #F0F7F8; }
+.alternativa.marcada { border-color: var(--teal); background: #F0F7F8; }
+
+.feedback-questao {
+  margin-top: 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  display: none;
+  align-items: flex-start;
+  gap: 7px;
+  line-height: 1.4;
+}
+.feedback-questao.show { display: flex; }
+.feedback-questao.certa { color: var(--green); }
+.feedback-questao.errada { color: var(--red-txt); }
+
+.feedback-final {
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 12px;
+  font-size: 0.93rem;
+  font-weight: 700;
+  display: none;
+}
+.feedback-final.show { display: flex; align-items: flex-start; gap: 10px; }
+.feedback-final .txt { flex: 1; }
+.feedback-final.tudo-certo { background: var(--green-bg); color: var(--green); }
+.feedback-final.tente-de-novo { background: #FDF3E2; color: #8A5A12; }
+.feedback-final .sub { display: block; font-weight: 400; margin-top: 4px; color: var(--sub); }
+
+.selo-concluida {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-bg);
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin-top: 10px;
+}
+
+/* ---------- Comunidade ---------- */
+.post-card { border-left: 4px solid var(--teal); }
+.post-autor { font-weight: 700; color: var(--navy); font-size: 0.92rem; }
+.post-data { color: var(--sub); font-size: 0.78rem; margin-bottom: 6px; }
+
+/* ---------- Respostas dos posts ---------- */
+.btn-responder {
+  background: none;
+  gap: 7px;
+  color: var(--teal);
+  border: none;
+  padding: 10px 12px 10px 0;
+  min-height: 44px;
+  margin-left: -2px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  justify-content: flex-start;
+}
+.btn-responder .seta { transition: transform 0.18s ease; }
+.btn-responder.aberto .seta { transform: rotate(180deg); }
+
+.respostas {
+  display: none;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.respostas.aberta { display: block; }
+
+.comentario {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+.comentario-autor { font-weight: 700; color: var(--navy); font-size: 0.85rem; }
+.comentario-data { color: var(--sub); font-size: 0.74rem; margin-bottom: 4px; }
+.comentario p { margin: 0; font-size: 0.92rem; }
+
+.form-resposta textarea { min-height: 56px; font-size: 0.95rem; }
+.form-resposta .btn-secondary { margin-top: 8px; padding: 11px; font-size: 0.92rem; }
+.respostas-vazio { color: var(--sub); font-size: 0.88rem; margin-bottom: 10px; }
+
+/* ---------- Navegação inferior ---------- */
+.tabbar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding: 6px 0 max(6px, env(safe-area-inset-bottom));
+  z-index: 20;
+}
+.tabbar a {
+  flex: 1;
+  text-decoration: none;
+  color: var(--sub);
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 8px 4px 4px;
+}
+.tabbar a .ic { display: flex; justify-content: center; margin-bottom: 2px; }
+.tabbar a.active { color: var(--coral); }
+
+.vazio { text-align: center; color: var(--sub); padding: 30px 10px; }
+
+.ajuda-form { font-size: 0.85rem; color: var(--sub); margin: 0 0 10px; }
+
+/* Convite para o mural no fim do módulo */
+.convite-mural {
+  display: flex; align-items: flex-start; gap: 8px;
+  background: var(--green-bg);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 0.88rem; line-height: 1.45;
+  margin: 0 0 10px;
+}
+.convite-mural .icone { color: var(--teal); margin-top: 2px; }
+.convite-mural { text-decoration: none; min-height: 44px; }
+.convite-mural strong { color: var(--teal); }
+.convite-mural:active { background: #D9EDE3; }
+
+.vazio { display: block; }
+.vazio .icone { display: flex; margin: 0 auto 10px; color: var(--border); }
+
+@media (min-width: 520px) {
+  .container { padding-top: 32px; }
+}
+
+/* Em tela maior, o corpo do módulo ganha um pouco mais de largura —
+   ainda dentro da medida confortável de leitura (nunca linha larga demais). */
+@media (min-width: 720px) {
+  .container { max-width: 580px; }
+  .secao { padding: 26px 24px; }
+  .secao h2 { font-size: 1.35rem; }
+  .modulo-topo { padding: 20px; }
+}
