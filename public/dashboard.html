@@ -40,6 +40,13 @@ montarTabbar("/dashboard.html");
 const usuario = Api.usuario();
 document.getElementById("saudacao").textContent = "Olá, " + (usuario?.nome?.split(" ")[0] || "") + "!";
 
+// Evita que texto vindo do banco seja interpretado como HTML
+function esc(txt) {
+  const d = document.createElement("div");
+  d.textContent = txt == null ? "" : String(txt);
+  return d.innerHTML;
+}
+
 // O board aponta que a queda emocional é mais forte NO INÍCIO. Mostrar
 // "0%" em destaque bem nesse momento desanima em vez de motivar — então,
 // enquanto não há nenhum módulo concluído, o card vira um convite para
@@ -89,9 +96,9 @@ async function carregar() {
       div.innerHTML = `
         <div class="trilha-icone">${Icones.svg(t.icone || "book-open", { tamanho: 26 })}</div>
         <div class="trilha-info">
-          <div class="trilha-nivel">${t.nivel}</div>
-          <h2 style="margin-bottom:4px;">${t.titulo}</h2>
-          <p style="margin:0; color:var(--sub); font-size:0.92rem;">${t.descricao || ""}</p>
+          <div class="trilha-nivel">${esc(t.nivel)}</div>
+          <h2 style="margin-bottom:4px;">${esc(t.titulo)}</h2>
+          <p style="margin:0; color:var(--sub); font-size:0.92rem;">${esc(t.descricao || "")}</p>
           <div class="trilha-progresso-texto">${t.licoes_concluidas === 0 ? t.total_licoes + " módulos" : t.licoes_concluidas + " de " + t.total_licoes + " módulos concluídos"}</div>
         </div>`;
       lista.appendChild(div);
