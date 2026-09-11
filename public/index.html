@@ -8,7 +8,10 @@
 </head>
 <body>
 
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
 <div class="container">
+<main id="conteudo">
 
 <!-- =====================================================================
      VISTA 1 — APRESENTAÇÃO (é o que quem chega vê primeiro)
@@ -26,28 +29,28 @@
 
   <!-- Atalho para quem já tem conta não precisar rolar a apresentação toda -->
   <div class="apre-topo">
-    <button type="button" class="btn-entrar-topo" onclick="irParaAcesso('entrar')">Entrar</button>
+    <button type="button" class="btn-entrar-topo" id="btn-entrar-topo">Entrar</button>
   </div>
 
   <div class="hero hero-apre">
-    <div class="marca icone" data-icone="graduation-cap" data-icone-tamanho="34"></div>
+    <div class="marca icone" data-icone="graduation-cap" data-icone-tamanho="34" aria-hidden="true"></div>
     <h1>Jovem Aprendiz Digital</h1>
     <p>Tecnologia explicada do seu jeito, no seu tempo. Sem jargão, sem pressa.</p>
   </div>
 
   <ul class="selos">
-    <li class="selo"><span class="icone" data-icone="check" data-icone-tamanho="15"></span>De graça</li>
-    <li class="selo"><span class="icone" data-icone="smartphone" data-icone-tamanho="15"></span>Feito para o celular</li>
-    <li class="selo"><span class="icone" data-icone="globe" data-icone-tamanho="15"></span>Sem instalar nada</li>
+    <li class="selo"><span class="icone" data-icone="check" data-icone-tamanho="15" aria-hidden="true"></span>De graça</li>
+    <li class="selo"><span class="icone" data-icone="smartphone" data-icone-tamanho="15" aria-hidden="true"></span>Feito para o celular</li>
+    <li class="selo"><span class="icone" data-icone="globe" data-icone-tamanho="15" aria-hidden="true"></span>Sem instalar nada</li>
   </ul>
 
   <h2 class="apre-titulo">
-    <span class="icone" data-icone="book-open" data-icone-tamanho="19"></span>
+    <span class="icone" data-icone="book-open" data-icone-tamanho="19" aria-hidden="true"></span>
     O que você vai aprender
   </h2>
 
   <div class="card trilha-card previa-trilha">
-    <div class="trilha-icone icone" data-icone="monitor" data-icone-tamanho="26"></div>
+    <div class="trilha-icone icone" data-icone="monitor" data-icone-tamanho="26" aria-hidden="true"></div>
     <div class="trilha-info">
       <span class="trilha-nivel">Iniciante</span>
       <strong class="previa-titulo">Primeiros Passos no Computador</strong>
@@ -57,7 +60,7 @@
   </div>
 
   <div class="card trilha-card previa-trilha">
-    <div class="trilha-icone icone" data-icone="sparkles" data-icone-tamanho="26"></div>
+    <div class="trilha-icone icone" data-icone="sparkles" data-icone-tamanho="26" aria-hidden="true"></div>
     <div class="trilha-info">
       <span class="trilha-nivel">Intermediário</span>
       <strong class="previa-titulo">Ferramentas de IA no Dia a Dia</strong>
@@ -67,7 +70,7 @@
   </div>
 
   <div class="card trilha-card previa-trilha">
-    <div class="trilha-icone icone" data-icone="target" data-icone-tamanho="26"></div>
+    <div class="trilha-icone icone" data-icone="target" data-icone-tamanho="26" aria-hidden="true"></div>
     <div class="trilha-info">
       <span class="trilha-nivel">Intermediário</span>
       <strong class="previa-titulo">Pronta para o Mercado de Trabalho</strong>
@@ -77,45 +80,47 @@
   </div>
 
   <h2 class="apre-titulo">
-    <span class="icone" data-icone="list-checks" data-icone-tamanho="19"></span>
+    <span class="icone" data-icone="list-checks" data-icone-tamanho="19" aria-hidden="true"></span>
     Como funciona
   </h2>
 
   <ol class="passos-como card">
     <li>
-      <span class="passo-num">1</span>
+      <span class="passo-num" aria-hidden="true">1</span>
       <span class="passo-txt"><strong>Escolha uma trilha.</strong> Pode começar pela primeira ou pela que resolve o seu problema de agora.</span>
     </li>
     <li>
-      <span class="passo-num">2</span>
+      <span class="passo-num" aria-hidden="true">2</span>
       <span class="passo-txt"><strong>Leia em partes curtas.</strong> Cada parte cabe numa tela. Dá pra parar onde quiser — o app guarda onde você parou.</span>
     </li>
     <li>
-      <span class="passo-num">3</span>
+      <span class="passo-num" aria-hidden="true">3</span>
       <span class="passo-txt"><strong>Responda algumas perguntas.</strong> É só para fixar, não é prova. Errou? Refaz quantas vezes quiser.</span>
     </li>
   </ol>
 
   <p class="apre-tempo">
-    <span class="icone" data-icone="clock" data-icone-tamanho="17"></span>
+    <span class="icone" data-icone="clock" data-icone-tamanho="17" aria-hidden="true"></span>
     Cada módulo leva uns 10 minutos. São 9 no total, no seu ritmo.
   </p>
 
   <div class="apre-mural">
-    <span class="icone" data-icone="message-circle" data-icone-tamanho="20"></span>
+    <span class="icone" data-icone="message-circle" data-icone-tamanho="20" aria-hidden="true"></span>
     <span>E se travar, tem um mural para perguntar para a turma. <strong>Aqui ninguém julga pergunta básica.</strong></span>
   </div>
 
   <div class="apre-acoes">
-    <button type="button" class="btn-primary" onclick="irParaAcesso('cadastrar')">
-      Criar minha conta <span class="icone" data-icone="arrow-right" data-icone-tamanho="18"></span>
+    <button type="button" class="btn-primary" id="btn-criar-conta">
+      Criar minha conta <span class="icone" data-icone="arrow-right" data-icone-tamanho="18" aria-hidden="true"></span>
     </button>
-    <button type="button" class="btn-ja-tenho" onclick="irParaAcesso('entrar')">Já tenho conta</button>
+    <button type="button" class="btn-ja-tenho" id="btn-ja-tenho">Já tenho conta</button>
   </div>
 
-  <p class="apre-rodape">
-    Feito para quem está começando agora na tecnologia — não precisa saber nada antes.
-  </p>
+  <footer>
+    <p class="apre-rodape">
+      Feito para quem está começando agora na tecnologia — não precisa saber nada antes.
+    </p>
+  </footer>
 </div>
 
 <!-- =====================================================================
@@ -123,152 +128,75 @@
      ===================================================================== -->
 <div id="vista-acesso" class="vista">
 
-  <button type="button" class="btn-voltar-apre" onclick="voltarParaApresentacao()">
-    <span class="icone" data-icone="arrow-left" data-icone-tamanho="17"></span>
+  <button type="button" class="btn-voltar-apre" id="btn-voltar-apre">
+    <span class="icone" data-icone="arrow-left" data-icone-tamanho="17" aria-hidden="true"></span>
     Ver o que tem aqui
   </button>
 
   <div class="hero hero-compacto">
-    <div class="marca icone" data-icone="graduation-cap" data-icone-tamanho="26"></div>
+    <div class="marca icone" data-icone="graduation-cap" data-icone-tamanho="26" aria-hidden="true"></div>
     <h1 id="titulo-acesso" tabindex="-1">Jovem Aprendiz Digital</h1>
   </div>
 
-  <div class="tabs">
-    <button id="tab-entrar" class="active" onclick="mostrarAba('entrar')">Entrar</button>
-    <button id="tab-cadastrar" onclick="mostrarAba('cadastrar')">Criar conta</button>
+  <div class="tabs" aria-label="Entrar ou criar conta">
+    <button type="button" id="tab-entrar" class="active" aria-pressed="true" aria-controls="painel-entrar">Entrar</button>
+    <button type="button" id="tab-cadastrar" aria-pressed="false" aria-controls="painel-cadastrar">Criar conta</button>
   </div>
 
   <!-- LOGIN -->
   <div id="painel-entrar" class="form-panel active card">
-    <form id="form-entrar">
-      <label for="login-email">Seu e-mail</label>
-      <input type="email" id="login-email" required placeholder="voce@email.com">
+    <form id="form-entrar" novalidate>
+      <p class="campos-obrigatorios">Todos os campos são obrigatórios.</p>
 
-      <label for="login-senha">Sua senha</label>
-      <input type="password" id="login-senha" required placeholder="••••••••">
+      <label for="login-email">Seu e-mail <span class="obrigatorio" aria-hidden="true">*</span></label>
+      <input type="email" id="login-email" name="email" required autocomplete="email" placeholder="voce@email.com">
 
-      <div id="erro-entrar" class="erro-msg"></div>
+      <label for="login-senha">Sua senha <span class="obrigatorio" aria-hidden="true">*</span></label>
+      <input type="password" id="login-senha" name="senha" required autocomplete="current-password" placeholder="••••••••">
 
-      <div style="margin-top:20px">
+      <div id="erro-entrar" class="erro-msg" role="alert"></div>
+
+      <div class="acoes-form">
         <button type="submit" class="btn-primary">Entrar</button>
       </div>
     </form>
   </div>
 
   <!-- CADASTRO -->
-  <div id="painel-cadastrar" class="form-panel card">
-    <form id="form-cadastrar">
-      <label for="cad-nome">Seu nome</label>
-      <input type="text" id="cad-nome" required placeholder="Como podemos te chamar?">
+  <div id="painel-cadastrar" class="form-panel card" hidden>
+    <form id="form-cadastrar" novalidate>
+      <p class="campos-obrigatorios">Todos os campos são obrigatórios.</p>
 
-      <label for="cad-email">Seu e-mail</label>
-      <input type="email" id="cad-email" required placeholder="voce@email.com">
+      <label for="cad-nome">Seu nome <span class="obrigatorio" aria-hidden="true">*</span></label>
+      <input type="text" id="cad-nome" name="nome" required autocomplete="name" placeholder="Como podemos te chamar?">
 
-      <label for="cad-senha">Crie uma senha</label>
-      <input type="password" id="cad-senha" required placeholder="Pelo menos 4 caracteres">
+      <label for="cad-email">Seu e-mail <span class="obrigatorio" aria-hidden="true">*</span></label>
+      <input type="email" id="cad-email" name="email" required autocomplete="email" placeholder="voce@email.com">
 
-      <div id="erro-cadastrar" class="erro-msg"></div>
+      <label for="cad-senha">Crie uma senha <span class="obrigatorio" aria-hidden="true">*</span></label>
+      <input type="password" id="cad-senha" name="senha" required autocomplete="new-password" aria-describedby="cad-senha-ajuda" placeholder="Pelo menos 4 caracteres">
+      <p id="cad-senha-ajuda" class="ajuda-form">Use pelo menos 4 caracteres. Pode ser uma frase fácil de lembrar.</p>
 
-      <div style="margin-top:20px">
+      <div id="erro-cadastrar" class="erro-msg" role="alert"></div>
+
+      <div class="acoes-form">
         <button type="submit" class="btn-primary">Criar minha conta</button>
       </div>
     </form>
   </div>
 
-  <p class="apre-rodape">
-    É de graça e não precisa saber nada antes.
-  </p>
+  <footer>
+    <p class="apre-rodape">
+      É de graça e não precisa saber nada antes.
+    </p>
+  </footer>
 </div>
 
+</main>
 </div>
 
-<script src="/js/icones.js"></script>
-<script src="/js/api.js"></script>
-<script>
-if (Api.token()) window.location.href = "/dashboard.html";
-
-function mostrarAba(qual) {
-  document.getElementById("tab-entrar").classList.toggle("active", qual === "entrar");
-  document.getElementById("tab-cadastrar").classList.toggle("active", qual === "cadastrar");
-  document.getElementById("painel-entrar").classList.toggle("active", qual === "entrar");
-  document.getElementById("painel-cadastrar").classList.toggle("active", qual === "cadastrar");
-}
-
-// Troca entre a apresentação e o formulário.
-//
-// Cada troca entra no histórico (pushState) por dois motivos: o botão
-// "voltar" do celular precisa devolver a pessoa à apresentação em vez de
-// tirá-la do site, e o endereço passa a poder ser guardado — quem sai da
-// conta cai em "/#entrar" (ver Api.sair) e vai direto para o login, sem
-// reler a apresentação inteira toda vez.
-function mostrarVista(aba) {
-  const noAcesso = Boolean(aba);
-  document.getElementById("vista-apresentacao").classList.toggle("ativa", !noAcesso);
-  document.getElementById("vista-acesso").classList.toggle("ativa", noAcesso);
-  if (noAcesso) {
-    mostrarAba(aba);
-    // Foco no título da vista, não no campo: no celular, focar o input
-    // abriria o teclado por cima da tela antes de a pessoa ver onde chegou.
-    document.getElementById("titulo-acesso").focus();
-  }
-  window.scrollTo(0, 0);
-}
-
-function abaDoEndereco() {
-  if (location.hash === "#entrar") return "entrar";
-  if (location.hash === "#criar-conta") return "cadastrar";
-  return null;
-}
-
-function irParaAcesso(aba) {
-  history.pushState(null, "", aba === "entrar" ? "#entrar" : "#criar-conta");
-  mostrarVista(aba);
-}
-
-function voltarParaApresentacao() {
-  history.pushState(null, "", location.pathname);
-  mostrarVista(null);
-}
-
-window.addEventListener("popstate", () => mostrarVista(abaDoEndereco()));
-
-// Estado inicial: respeita o endereço com que a pessoa chegou.
-mostrarVista(abaDoEndereco());
-
-document.getElementById("form-entrar").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const erroEl = document.getElementById("erro-entrar");
-  erroEl.classList.remove("show");
-  try {
-    const dados = await Api.chamar("POST", "/login", {
-      email: document.getElementById("login-email").value,
-      senha: document.getElementById("login-senha").value,
-    });
-    Api.salvarSessao(dados.token, dados.usuario);
-    window.location.href = "/dashboard.html";
-  } catch (err) {
-    erroEl.textContent = err.message;
-    erroEl.classList.add("show");
-  }
-});
-
-document.getElementById("form-cadastrar").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const erroEl = document.getElementById("erro-cadastrar");
-  erroEl.classList.remove("show");
-  try {
-    const dados = await Api.chamar("POST", "/cadastro", {
-      nome: document.getElementById("cad-nome").value,
-      email: document.getElementById("cad-email").value,
-      senha: document.getElementById("cad-senha").value,
-    });
-    Api.salvarSessao(dados.token, dados.usuario);
-    window.location.href = "/dashboard.html";
-  } catch (err) {
-    erroEl.textContent = err.message;
-    erroEl.classList.add("show");
-  }
-});
-</script>
+<script src="/js/icones.js" defer></script>
+<script src="/js/api.js" defer></script>
+<script src="/js/index.js" defer></script>
 </body>
 </html>

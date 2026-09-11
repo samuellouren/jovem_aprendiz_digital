@@ -8,107 +8,35 @@
 </head>
 <body>
 
-<div class="topbar">
-  <div class="logo-badge icone" data-icone="graduation-cap" data-icone-tamanho="20"></div>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topbar">
+  <div class="logo-badge icone" data-icone="graduation-cap" data-icone-tamanho="20" aria-hidden="true"></div>
   <div>
-    <strong id="saudacao">Olá!</strong>
+    <h1 id="saudacao" class="topbar-titulo">Olá!</h1>
     <small>Jovem Aprendiz Digital</small>
   </div>
   <div class="spacer"></div>
-  <button class="sair" onclick="Api.sair()">Sair</button>
-</div>
+  <button type="button" class="sair" id="btn-sair">Sair</button>
+</header>
 
 <div class="container">
+  <main id="conteudo">
 
-  <div id="resumo-card"></div>
+    <div id="resumo-card"></div>
 
-  <h2>Suas trilhas</h2>
-  <div id="lista-trilhas">
-    <p class="vazio">Carregando trilhas...</p>
-  </div>
+    <h2>Suas trilhas</h2>
+    <div id="lista-trilhas" aria-live="polite">
+      <p class="vazio">Carregando trilhas...</p>
+    </div>
 
+  </main>
 </div>
 
-<div class="tabbar" id="tabbar"></div>
+<nav class="tabbar" id="tabbar" aria-label="Navegação principal"></nav>
 
-<script src="/js/icones.js"></script>
-<script src="/js/api.js"></script>
-<script>
-Api.exigirLogin();
-montarTabbar("/dashboard.html");
-
-const usuario = Api.usuario();
-document.getElementById("saudacao").textContent = "Olá, " + (usuario?.nome?.split(" ")[0] || "") + "!";
-
-// Evita que texto vindo do banco seja interpretado como HTML
-function esc(txt) {
-  const d = document.createElement("div");
-  d.textContent = txt == null ? "" : String(txt);
-  return d.innerHTML;
-}
-
-// O board aponta que a queda emocional é mais forte NO INÍCIO. Mostrar
-// "0%" em destaque bem nesse momento desanima em vez de motivar — então,
-// enquanto não há nenhum módulo concluído, o card vira um convite para
-// começar. A barra de progresso aparece assim que existe o que mostrar.
-function pintarResumo(resumo, trilhas) {
-  const card = document.getElementById("resumo-card");
-  const primeira = trilhas[0];
-
-  if (resumo.licoes_concluidas === 0) {
-    card.className = "resumo-card boas-vindas";
-    card.innerHTML =
-      "<h2>Vamos começar?</h2>" +
-      "<p>O primeiro módulo leva uns 10 minutos e começa do zero — " +
-      "você não precisa saber nada antes.</p>" +
-      (primeira
-        ? "<a class=\"btn-comecar\" href=\"/trilha.html?id=" + primeira.id + "\">" +
-          "Começar o primeiro módulo " + Icones.svg("arrow-right", { tamanho: 18 }) + "</a>"
-        : "");
-    return;
-  }
-
-  card.className = "resumo-card";
-  card.innerHTML =
-    "<div>Seu progresso</div>" +
-    "<div class=\"pct\">" + resumo.percentual + "%</div>" +
-    "<div class=\"barra-fundo\"><div class=\"barra-preenchida\" style=\"width:" +
-      resumo.percentual + "%\"></div></div>" +
-    "<div class=\"resumo-texto\">" + resumo.licoes_concluidas + " de " +
-      resumo.total_licoes + " módulos concluídos</div>";
-}
-
-async function carregar() {
-  try {
-    const [{ trilhas }, resumo] = await Promise.all([
-      Api.chamar("GET", "/trilhas"),
-      Api.chamar("GET", "/resumo"),
-    ]);
-
-    pintarResumo(resumo, trilhas);
-
-    const lista = document.getElementById("lista-trilhas");
-    lista.innerHTML = "";
-    trilhas.forEach((t) => {
-      const div = document.createElement("a");
-      div.href = "/trilha.html?id=" + t.id;
-      div.className = "card trilha-card";
-      div.innerHTML = `
-        <div class="trilha-icone">${Icones.svg(t.icone || "book-open", { tamanho: 26 })}</div>
-        <div class="trilha-info">
-          <div class="trilha-nivel">${esc(t.nivel)}</div>
-          <h2 style="margin-bottom:4px;">${esc(t.titulo)}</h2>
-          <p style="margin:0; color:var(--sub); font-size:0.92rem;">${esc(t.descricao || "")}</p>
-          <div class="trilha-progresso-texto">${t.licoes_concluidas === 0 ? t.total_licoes + " módulos" : t.licoes_concluidas + " de " + t.total_licoes + " módulos concluídos"}</div>
-        </div>`;
-      lista.appendChild(div);
-    });
-  } catch (err) {
-    document.getElementById("lista-trilhas").innerHTML =
-      `<p class="vazio">Não deu para carregar agora. ${err.message}</p>`;
-  }
-}
-carregar();
-</script>
+<script src="/js/icones.js" defer></script>
+<script src="/js/api.js" defer></script>
+<script src="/js/dashboard.js" defer></script>
 </body>
 </html>

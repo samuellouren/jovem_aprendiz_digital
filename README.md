@@ -26,10 +26,19 @@ jovem_aprendiz_digital/
     ├── comunidade.html  mural da turma
     ├── css/style.css
     └── js/
-        ├── api.js       autenticação, chamadas à API e barra inferior
-        ├── icones.js    ícones SVG de linha (sem CDN, sem build)
-        └── formato.js   texto das seções -> HTML seguro (escapa antes de marcar)
+        ├── api.js         autenticação, chamadas à API e barra inferior
+        ├── icones.js      ícones SVG de linha (sem CDN, sem build)
+        ├── formato.js     texto das seções -> HTML seguro (escapa antes de marcar)
+        ├── index.js       lógica da tela de apresentação/login/cadastro
+        ├── dashboard.js   lógica do painel inicial
+        ├── trilha.js      lógica da trilha, do módulo e da atividade
+        └── comunidade.js  lógica do mural e dos comentários
 ```
+
+Cada `.html` só referencia os scripts de que precisa, todos com `defer`, na
+ordem de dependência (ícones/formatação → `api.js` → script da própria
+página). Não há nenhum `<script>` inline nem atributo `onclick` no HTML —
+ver a seção **Acessibilidade** abaixo.
 
 ## Como rodar
 
@@ -210,6 +219,21 @@ Para esse projeto — poucas tabelas, bem relacionais, escala pequena — um ban
 Os ícones vivem em `public/js/icones.js` — SVGs no estilo Feather/Lucide embutidos como strings, sem CDN e sem build step. Como o traço usa `currentColor`, mudar a cor de um ícone é só mudar o `color` do elemento pai.
 
 O detalhamento completo dessa auditoria (critério a critério, com os ajustes já aplicados) está em [`AUDITORIA_UX.md`](AUDITORIA_UX.md).
+
+## Acessibilidade
+
+O front-end segue **WCAG 2 nível AA**. Resumo rápido do que foi implementado
+— o detalhamento completo, critério a critério, com onde e como cada um foi
+aplicado, está em [`DOCUMENTACAO_IHC.md`](DOCUMENTACAO_IHC.md):
+
+- **Estrutura semântica**: `<header>`, `<nav aria-label>`, `<main id="conteudo">` e `<footer>` no lugar de `<div>` genérica; um único `<h1>` por página, sem pular nível de cabeçalho.
+- **Formulários**: todo campo tem `<label for>` de verdade (nunca só placeholder), com `aria-describedby` no texto de ajuda.
+- **Teclado**: toda ação clicável é um `<button>` nativo — nunca `<div onclick>`. Skip link ("Pular para o conteúdo") no topo de cada página.
+- **Foco visível**: contorno `:focus-visible` de 3px em toda a página; zero `outline: none` sem substituto.
+- **ARIA com moderação**: `aria-expanded` no "Responder" do mural, `role="alert"` nos erros de formulário, `role="status" aria-live="polite"` no feedback da atividade.
+- **Contraste**: paleta calibrada para ≥ 4.5:1 em todo texto (cores um pouco mais escuras que antes, mesma identidade visual).
+- **Redução de movimento**: `prefers-reduced-motion` neutraliza as transições do projeto.
+- **Cor não é única informação**: acerto/erro da atividade sempre vem com ícone + texto, nunca só cor.
 
 ## Próximos passos possíveis
 
