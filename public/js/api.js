@@ -51,10 +51,12 @@ function montarTabbar(ativo) {
     ["/comunidade.html", "message-circle", "Comunidade"],
   ];
   el.innerHTML = itens
-    .map(
-      ([href, icone, label]) =>
-        `<a href="${href}" class="${href === ativo ? "active" : ""}">` +
+    .map(([href, icone, label]) => {
+      const ativa = href === ativo;
+      return (
+        `<a href="${href}" class="${ativa ? "active" : ""}"${ativa ? ' aria-current="page"' : ""}>` +
         `<span class="ic">${Icones.svg(icone, { tamanho: 22 })}</span>${label}</a>`
-    )
+      );
+    })
     .join("");
 }

@@ -82,7 +82,7 @@ const MIME = {
   ".ico": "image/x-icon",
 };
 
-function serveStatic(req, res, pathname) {
+function serveStatic(res, pathname) {
   let filePath = pathname === "/" ? "/index.html" : pathname;
   filePath = path.normalize(filePath).replace(/^(\.\.[/\\])+/, "");
   const fullPath = path.join(PUBLIC_DIR, filePath);
@@ -118,17 +118,19 @@ rota("POST", /^\/api\/cadastro$/, async (req, res) => {
   const existe = await db.get("SELECT id FROM usuarios WHERE email = ?", [email.toLowerCase().trim()]);
   if (existe) return sendJson(res, 409, { erro: "Já existe uma conta com esse e-mail." });
 
+  const nomeLimpo = nome.trim();
+  const emailLimpo = email.toLowerCase().trim();
   const salt = crypto.randomBytes(16).toString("hex");
   const hash = hashSenha(senha, salt);
   const r = await db.run("INSERT INTO usuarios (nome, email, senha_hash, senha_salt) VALUES (?, ?, ?, ?)", [
-    nome.trim(),
-    email.toLowerCase().trim(),
+    nomeLimpo,
+    emailLimpo,
     hash,
     salt,
   ]);
   const usuarioId = Number(r.lastInsertRowid);
   const token = await criarSessao(usuarioId);
-  sendJson(res, 201, { token, usuario: { id: usuarioId, nome: nome.trim(), email } });
+  sendJson(res, 201, { token, usuario: { id: usuarioId, nome: nomeLimpo, email: emailLimpo } });
 });
 
 // Login
@@ -384,7 +386,7 @@ rota("GET", /^\/api\/resumo$/, async (req, res) => {
 // Comunidade — mural simples
 // Cada post já vem com quantas respostas tem, pra mostrar "3 respostas" na
 // listagem. Os comentários em si só são buscados quando a pessoa abre o post.
-rota("GET", /^\/api\/comunidade$/, async (req, res) => {
+rota("GET", /^\/api\/comunidade$/, async (_req, res) => {
   const posts = await db.all(
     `SELECT p.id, p.conteudo, p.criado_em, u.nome AS autor,
             (SELECT COUNT(*) FROM comentarios c WHERE c.post_id = p.id) AS total_comentarios
@@ -404,7 +406,7 @@ rota("POST", /^\/api\/comunidade$/, async (req, res) => {
 });
 
 // Respostas de um post (carregadas só quando a pessoa abre o post)
-rota("GET", /^\/api\/comunidade\/(\d+)\/comentarios$/, async (req, res, params) => {
+rota("GET", /^\/api\/comunidade\/(\d+)\/comentarios$/, async (_req, res, params) => {
   const postId = Number(params[0]);
   const post = await db.get("SELECT id FROM posts WHERE id = ?", [postId]);
   if (!post) return sendJson(res, 404, { erro: "Essa publicação não existe mais." });
@@ -461,7 +463,7 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 404, { erro: "Não encontramos essa página." });
   }
 
-  serveStatic(req, res, pathname);
+  serveStatic(res, pathname);
 });
 
 db.iniciar()
