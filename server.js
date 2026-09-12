@@ -5,6 +5,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { URL } = require("node:url");
 const db = require("./db");
+const { enviarEmailVerificacao, enviarEmailRedefinicao } = require("./email");
 
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, "public");
@@ -55,12 +56,12 @@ async function usuarioDoToken(req) {
   const token = auth.startsWith("Bearer ") ? auth.slice(7) : null;
   if (!token) return null;
   const row = await db.get(
-    `SELECT u.id, u.nome, u.email FROM sessoes s
+    `SELECT u.id, u.nome, u.email, u.email_verificado FROM sessoes s
      JOIN usuarios u ON u.id = s.usuario_id
      WHERE s.token = ?`,
     [token]
   );
-  return row || null;
+  return row ? { ...row, email_verificado: !!row.email_verificado } : null;
 }
 
 async function exigirAuth(req, res) {
@@ -122,15 +123,26 @@ rota("POST", /^\/api\/cadastro$/, async (req, res) => {
   const emailLimpo = email.toLowerCase().trim();
   const salt = crypto.randomBytes(16).toString("hex");
   const hash = hashSenha(senha, salt);
-  const r = await db.run("INSERT INTO usuarios (nome, email, senha_hash, senha_salt) VALUES (?, ?, ?, ?)", [
-    nomeLimpo,
-    emailLimpo,
-    hash,
-    salt,
-  ]);
+  const tokenVerificacao = crypto.randomBytes(32).toString("hex");
+  const r = await db.run(
+    `INSERT INTO usuarios (nome, email, senha_hash, senha_salt, email_verificado, verificacao_token)
+     VALUES (?, ?, ?, ?, 0, ?)`,
+    [nomeLimpo, emailLimpo, hash, salt, tokenVerificacao]
+  );
   const usuarioId = Number(r.lastInsertRowid);
   const token = await criarSessao(usuarioId);
-  sendJson(res, 201, { token, usuario: { id: usuarioId, nome: nomeLimpo, email: emailLimpo } });
+
+  // O login não fica bloqueado por e-mail não confirmado (ver decisão do
+  // projeto): como o remetente de teste do Resend só entrega mensagens
+  // para o e-mail da própria conta Resend, exigir confirmação impediria
+  // qualquer outra pessoa de usar o sistema enquanto não houver um
+  // domínio próprio verificado.
+  await enviarEmailVerificacao(emailLimpo, nomeLimpo, tokenVerificacao);
+
+  sendJson(res, 201, {
+    token,
+    usuario: { id: usuarioId, nome: nomeLimpo, email: emailLimpo, email_verificado: false },
+  });
 });
 
 // Login
@@ -141,7 +153,85 @@ rota("POST", /^\/api\/login$/, async (req, res) => {
   const hash = hashSenha(senha || "", user.senha_salt);
   if (hash !== user.senha_hash) return sendJson(res, 401, { erro: "E-mail ou senha incorretos." });
   const token = await criarSessao(user.id);
-  sendJson(res, 200, { token, usuario: { id: user.id, nome: user.nome, email: user.email } });
+  sendJson(res, 200, {
+    token,
+    usuario: { id: user.id, nome: user.nome, email: user.email, email_verificado: !!user.email_verificado },
+  });
+});
+
+// Confirmação de e-mail (link enviado no cadastro)
+rota("POST", /^\/api\/verificar-email$/, async (req, res) => {
+  const { token } = await readBody(req);
+  if (!token) return sendJson(res, 400, { erro: "Link de confirmação inválido." });
+
+  const user = await db.get("SELECT id, email_verificado FROM usuarios WHERE verificacao_token = ?", [token]);
+  if (!user) return sendJson(res, 400, { erro: "Link de confirmação inválido ou já usado." });
+
+  if (user.email_verificado) {
+    return sendJson(res, 200, { ok: true, mensagem: "Este e-mail já estava confirmado." });
+  }
+
+  await db.run("UPDATE usuarios SET email_verificado = 1, verificacao_token = NULL WHERE id = ?", [user.id]);
+  sendJson(res, 200, { ok: true, mensagem: "E-mail confirmado com sucesso!" });
+});
+
+// Esqueci minha senha — pede o e-mail cadastrado
+//
+// Responde sempre com a mesma mensagem genérica, exista ou não uma conta
+// com esse e-mail, para não revelar a quem está tentando adivinhar quais
+// e-mails têm cadastro no sistema.
+rota("POST", /^\/api\/esqueci-senha$/, async (req, res) => {
+  const { email } = await readBody(req);
+  const emailLimpo = (email || "").toLowerCase().trim();
+  if (!emailLimpo) return sendJson(res, 400, { erro: "Informe o e-mail cadastrado." });
+
+  const mensagemGenerica = {
+    ok: true,
+    mensagem: "Se esse e-mail tiver uma conta, enviamos um link de redefinição para ele.",
+  };
+
+  const user = await db.get("SELECT id, nome, email FROM usuarios WHERE email = ?", [emailLimpo]);
+  if (!user) return sendJson(res, 200, mensagemGenerica);
+
+  const token = crypto.randomBytes(32).toString("hex");
+  const expira = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // válido por 1 hora
+  await db.run("UPDATE usuarios SET redefinicao_token = ?, redefinicao_expira = ? WHERE id = ?", [
+    token,
+    expira,
+    user.id,
+  ]);
+
+  await enviarEmailRedefinicao(user.email, user.nome, token);
+
+  sendJson(res, 200, mensagemGenerica);
+});
+
+// Redefinir senha a partir do token recebido por e-mail
+rota("POST", /^\/api\/redefinir-senha$/, async (req, res) => {
+  const { token, senha } = await readBody(req);
+  if (!token) return sendJson(res, 400, { erro: "Link de redefinição inválido." });
+  if (!senha || senha.length < 4) {
+    return sendJson(res, 400, { erro: "A nova senha precisa ter pelo menos 4 caracteres." });
+  }
+
+  const user = await db.get("SELECT id, redefinicao_expira FROM usuarios WHERE redefinicao_token = ?", [token]);
+  if (!user) return sendJson(res, 400, { erro: "Link de redefinição inválido ou já usado." });
+  if (!user.redefinicao_expira || new Date(user.redefinicao_expira).getTime() < Date.now()) {
+    return sendJson(res, 400, { erro: "Esse link expirou. Peça uma nova redefinição de senha." });
+  }
+
+  const salt = crypto.randomBytes(16).toString("hex");
+  const hash = hashSenha(senha, salt);
+  await db.run(
+    `UPDATE usuarios SET senha_hash = ?, senha_salt = ?, redefinicao_token = NULL, redefinicao_expira = NULL
+     WHERE id = ?`,
+    [hash, salt, user.id]
+  );
+  // Derruba as sessões existentes: quem redefine a senha normalmente é
+  // porque perdeu o acesso, então um token antigo não deve continuar valendo.
+  await db.run("DELETE FROM sessoes WHERE usuario_id = ?", [user.id]);
+
+  sendJson(res, 200, { ok: true, mensagem: "Senha redefinida com sucesso. Você já pode entrar." });
 });
 
 // Usuário logado

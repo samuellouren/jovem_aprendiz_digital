@@ -119,15 +119,22 @@ a { color: inherit; }
 
 /* ---------- Telas de autenticação (login, cadastro, recuperação) ----------
    São formulários curtos e continuam estreitos mesmo em desktop — largura
-   de formulário grande atrapalha o preenchimento. O que ficava desconfortável
-   em tela grande era o card colado no topo com um vazio enorme embaixo;
-   aqui ele fica centralizado verticalmente na janela. */
+   de formulário grande atrapalha o preenchimento. No celular, o que ficava
+   desconfortável era o card colado no topo com um vazio enorme embaixo;
+   aqui ele fica centralizado verticalmente na janela. Em telas de desktop
+   ganha também um painel de marca ao lado — ver "Desktop: telas de
+   autenticação" mais abaixo. */
 body.pagina-auth {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
+/* Painel de marca: só existe em telas de desktop (ver media query mais
+   abaixo). No celular fica fora do fluxo — não é onde a pessoa foca a
+   atenção numa tela pequena, e o formulário sozinho já funciona bem. */
+.painel-marca { display: none; }
 
 /* ---------- Topo ---------- */
 .topbar {
@@ -1077,4 +1084,70 @@ textarea { resize: vertical; min-height: 70px; }
    mesma largura estreita do formulário de autenticação. */
 @media (min-width: 860px) {
   .container-comunidade { max-width: 720px; padding-bottom: 40px; }
+}
+
+/* ---------- Desktop: telas de autenticação ----------
+   Em vez de só centralizar o card pequeno numa tela grande (o que deixava
+   ele flutuando sozinho, cercado de vazio), a partir daqui um painel de
+   marca ocupa o espaço ao lado do formulário. O painel é só reforço de
+   identidade/proposta de valor — nunca a única fonte de uma informação
+   essencial (tudo em texto real, nada preso a imagem — WCAG 1.1.1); some
+   inteiro no celular sem tirar nada do fluxo de cadastro/login. */
+@media (min-width: 860px) {
+  body.pagina-auth { flex-direction: row; justify-content: flex-start; }
+
+  .painel-marca {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 1 42%;
+    padding: 64px 56px;
+    background: linear-gradient(160deg, var(--navy) 0%, #12262F 100%);
+    color: #fff;
+  }
+  .painel-marca-icone {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--amber);
+    margin-bottom: 22px;
+  }
+  .painel-marca-titulo {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.8rem;
+    margin: 0 0 12px;
+    max-width: 16em;
+  }
+  /* #D7E2E7 sobre o gradiente escuro do painel: ~9:1 de contraste no pior
+     caso (ponta mais clara do gradiente, --navy), bem acima do mínimo de
+     4.5:1 para texto normal — conferido com a fórmula de luminância do
+     WCAG. */
+  .painel-marca-texto { color: #D7E2E7; max-width: 24em; margin-bottom: 26px; }
+  .painel-marca-lista { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  .painel-marca-lista li { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+  .painel-marca-lista .icone { color: var(--amber); }
+
+  .container-auth {
+    flex: 1 1 58%;
+    max-width: none;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+  .container-auth main { width: 100%; max-width: 420px; }
+
+  /* O card pode crescer um pouco em telas grandes (mais respiro, fonte um
+     pouco maior) — a largura do formulário continua curta de propósito:
+     formulário largo demais atrapalha o preenchimento, em qualquer tamanho
+     de tela. */
+  .container-auth .card { padding: 30px 32px; }
+  .container-auth .hero-compacto h1 { font-size: 1.5rem; }
+  .container-auth input[type=text],
+  .container-auth input[type=email],
+  .container-auth input[type=password] {
+    padding: 15px 16px;
+    font-size: 1.05rem;
+  }
 }

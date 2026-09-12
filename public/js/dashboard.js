@@ -8,6 +8,15 @@ document.getElementById("btn-sair").addEventListener("click", () => Api.sair());
 const usuario = Api.usuario();
 document.getElementById("saudacao").textContent = "Olá, " + (usuario?.nome?.split(" ")[0] || "") + "!";
 
+// Aviso não bloqueante: o login funciona sem confirmar o e-mail (ver
+// server.js), mas a pessoa precisa saber que o e-mail ainda não foi
+// confirmado, caso um dia isso passe a ser exigido.
+if (usuario && usuario.email_verificado === false) {
+  const aviso = document.getElementById("aviso-verificacao");
+  aviso.textContent = "Ainda falta confirmar seu e-mail (" + usuario.email + "). Veja sua caixa de entrada.";
+  aviso.hidden = false;
+}
+
 // Evita que texto vindo do banco seja interpretado como HTML
 function esc(txt) {
   const d = document.createElement("div");

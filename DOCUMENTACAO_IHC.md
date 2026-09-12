@@ -86,7 +86,7 @@ arrastar. A tabela abaixo é atualizada página a página conforme a revisão av
 |---|---|---|
 | `dashboard.html` | Container travava em 580px mesmo em telas largas; trilhas empilhadas numa única coluna cercada de vazio; barra de navegação (pensada pro rodapé do celular) sobrava sozinha no rodapé de uma janela grande | A partir de 860px: container até 1040px, trilhas em grid (`repeat(auto-fill, minmax(280px, 1fr))`), e a nav vira uma barra secundária normal logo abaixo do cabeçalho (`position: static` só nesse breakpoint — no mobile continua fixa embaixo, como antes) |
 | `index.html` (apresentação) | Mesma coluna estreita; textos corridos ficariam com linhas de ~900px se o container só fosse alargado | Prévia das trilhas e os 3 passos de "Como funciona" viram grid de 3 colunas a partir de 860px; parágrafos e blocos de texto ganham `max-width: 32em` para manter a medida de leitura, mesmo dentro de um container mais largo |
-| `login.html`, `cadastro.html`, `esqueci-senha.html`, `redefinir-senha.html`, `verificar-email.html` | Card do formulário ficava colado no topo com um vazio enorme embaixo em telas altas (a largura em si já era adequada — formulário largo demais atrapalha o preenchimento) | `body.pagina-auth` centraliza o card verticalmente na janela (`display:flex; flex-direction:column; justify-content:center`); largura do formulário mantida como estava, de propósito |
+| `login.html`, `cadastro.html`, `esqueci-senha.html`, `redefinir-senha.html`, `verificar-email.html` | No celular, card colado no topo com um vazio enorme embaixo em telas altas. Em desktop, além disso, o card ficava pequeno e sozinho no meio de uma tela larga, sem nenhuma composição pensada para o espaço extra | No celular, `body.pagina-auth` centraliza o card verticalmente (sem mudança). A partir de 860px, um `<aside class="painel-marca">` (nome do sistema, mesma frase de efeito e os 3 selos da apresentação — "De graça" / "Feito para o celular" / "Sem instalar nada", tudo texto real) ocupa a coluna ao lado do formulário; o card ganha um pouco mais de padding/fonte. Largura do próprio formulário mantida curta, de propósito — o que muda é a composição ao redor dele, não o formulário |
 | `trilha.html` | O stepper de seções (rolagem horizontal) cortava a última pastilha na borda do card sem nenhuma pista de que dava para arrastar; a coluna de leitura (580px) foi mantida assim mesmo em desktop | Sombra de fade nas duas bordas do stepper (`.stepper-wrap::before/::after`), ligada/desligada por `trilha.js` conforme a posição do scroll. A largura de leitura de 580px **não foi alargada de propósito**: é conteúdo de texto corrido (módulos) e uma lista de poucos itens — alargar pioraria a legibilidade sem ganho real (ver nota abaixo) |
 | `comunidade.html` | Mesmo problema do dashboard: nav pensada pro rodapé do celular sobrando sozinha no rodapé de uma janela grande; coluna de 580px cercada de vazio | Mesmo tratamento da nav do dashboard (`tabbar-inline`, vira barra secundária abaixo do cabeçalho a partir de 860px); container até 720px — um pouco mais largo que a leitura de módulo (é um feed, não texto corrido longo), mas sem virar grade, porque a ordem cronológica dos posts importa e cada um tem altura diferente |
 
@@ -121,6 +121,17 @@ inteira como incerta mesmo quando a sombra daquele lado está com opacidade 0
 avalia a sobreposição geométrica dos elementos e não o valor computado da
 opacidade. O contraste real já foi calculado à mão para o pior caso (ver nota
 acima) e fica em ~4.7:1, acima do mínimo de 4.5:1.
+
+**Mesma classe de falso positivo no painel de marca das telas de
+autenticação (`login.html`, `cadastro.html` etc.):** o axe aponta
+"incomplete" com a mensagem "background color could not be determined due
+to a background gradient" no título, no texto e nos três itens da lista do
+`.painel-marca`, porque o fundo é um `linear-gradient` (var(--navy) →
+#12262F) e o axe não calcula contraste sobre gradiente. Conferido à mão com
+a fórmula de luminância do WCAG contra a ponta mais clara do gradiente (o
+pior caso): texto branco/quase-branco fica em ~9–12:1, e o ícone âmbar
+(elemento gráfico, não texto) em ~5.5:1 — ambos folgados acima dos mínimos
+de 4.5:1 e 3:1, respectivamente.
 
 ---
 

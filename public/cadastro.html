@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Criar conta — Jovem Aprendiz Digital</title>
+    <meta name="description" content="Crie sua conta gratuita no Jovem Aprendiz Digital e comece a aprender informática, IA e habilidades para o mercado de trabalho." />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23E8A33D'/%3E%3Cg fill='none' stroke='%231B3A4B' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z'/%3E%3Cpath d='M22 10v6'/%3E%3Cpath d='M6 12.5V16a6 3 0 0 0 12 0v-3.5'/%3E%3C/g%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body class="pagina-auth">
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <aside class="painel-marca" aria-label="Sobre o Jovem Aprendiz Digital">
+      <div class="painel-marca-icone icone" data-icone="graduation-cap" data-icone-tamanho="28" aria-hidden="true"></div>
+      <p class="painel-marca-titulo">Jovem Aprendiz Digital</p>
+      <p class="painel-marca-texto">Tecnologia explicada do seu jeito, no seu tempo. Sem jargão, sem pressa.</p>
+      <ul class="painel-marca-lista">
+        <li><span class="icone" data-icone="check" data-icone-tamanho="15" aria-hidden="true"></span>De graça</li>
+        <li><span class="icone" data-icone="smartphone" data-icone-tamanho="15" aria-hidden="true"></span>Feito para o celular</li>
+        <li><span class="icone" data-icone="globe" data-icone-tamanho="15" aria-hidden="true"></span>Sem instalar nada</li>
+      </ul>
+    </aside>
+
+    <div class="container container-auth">
+      <main id="conteudo">
+        <a href="/" class="btn-voltar-apre">
+          <span
+            class="icone"
+            data-icone="arrow-left"
+            data-icone-tamanho="17"
+            aria-hidden="true"
+          ></span>
+          Voltar
+        </a>
+
+        <div class="hero hero-compacto">
+          <div
+            class="marca icone"
+            data-icone="graduation-cap"
+            data-icone-tamanho="26"
+            aria-hidden="true"
+          ></div>
+          <h1 id="titulo-cadastro" tabindex="-1">Jovem Aprendiz Digital</h1>
+        </div>
+
+        <div class="card">
+          <form id="form-cadastrar" novalidate>
+            <p class="campos-obrigatorios">
+              Todos os campos são obrigatórios.
+            </p>
+
+            <label for="cad-nome"
+              >Seu nome
+              <span class="obrigatorio" aria-hidden="true">*</span></label
+            >
+            <input
+              type="text"
+              id="cad-nome"
+              name="nome"
+              required
+              autocomplete="name"
+              placeholder="Como podemos te chamar?"
+            />
+
+            <label for="cad-email"
+              >Seu e-mail
+              <span class="obrigatorio" aria-hidden="true">*</span></label
+            >
+            <input
+              type="email"
+              id="cad-email"
+              name="email"
+              required
+              autocomplete="email"
+              placeholder="voce@email.com"
+            />
+
+            <label for="cad-senha"
+              >Crie uma senha
+              <span class="obrigatorio" aria-hidden="true">*</span></label
+            >
+            <input
+              type="password"
+              id="cad-senha"
+              name="senha"
+              required
+              autocomplete="new-password"
+              aria-describedby="cad-senha-ajuda"
+              placeholder="Pelo menos 4 caracteres"
+            />
+            <p id="cad-senha-ajuda" class="ajuda-form">
+              Use pelo menos 4 caracteres. Pode ser uma frase fácil de
+              lembrar.
+            </p>
+
+            <div id="erro-cadastrar" class="erro-msg" role="alert"></div>
+
+            <div class="acoes-form">
+              <button type="submit" class="btn-primary">
+                Criar minha conta
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <footer>
+          <p class="apre-rodape">
+            Já tem conta?
+            <a href="/login.html" class="rodape-link">Entrar</a>
+          </p>
+        </footer>
+      </main>
+    </div>
+
+    <script src="/js/icones.js" defer></script>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/cadastro.js" defer></script>
+  </body>
+</html>

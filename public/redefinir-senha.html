@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Redefinir senha — Jovem Aprendiz Digital</title>
+    <meta name="description" content="Defina uma nova senha para sua conta no Jovem Aprendiz Digital." />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23E8A33D'/%3E%3Cg fill='none' stroke='%231B3A4B' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z'/%3E%3Cpath d='M22 10v6'/%3E%3Cpath d='M6 12.5V16a6 3 0 0 0 12 0v-3.5'/%3E%3C/g%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body class="pagina-auth">
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+    <aside class="painel-marca" aria-label="Sobre o Jovem Aprendiz Digital">
+      <div class="painel-marca-icone icone" data-icone="graduation-cap" data-icone-tamanho="28" aria-hidden="true"></div>
+      <p class="painel-marca-titulo">Jovem Aprendiz Digital</p>
+      <p class="painel-marca-texto">Tecnologia explicada do seu jeito, no seu tempo. Sem jargão, sem pressa.</p>
+      <ul class="painel-marca-lista">
+        <li><span class="icone" data-icone="check" data-icone-tamanho="15" aria-hidden="true"></span>De graça</li>
+        <li><span class="icone" data-icone="smartphone" data-icone-tamanho="15" aria-hidden="true"></span>Feito para o celular</li>
+        <li><span class="icone" data-icone="globe" data-icone-tamanho="15" aria-hidden="true"></span>Sem instalar nada</li>
+      </ul>
+    </aside>
+
+    <div class="container container-auth">
+      <main id="conteudo">
+        <div class="hero hero-compacto">
+          <div class="marca icone" data-icone="graduation-cap" data-icone-tamanho="26" aria-hidden="true"></div>
+          <h1 tabindex="-1">Criar uma nova senha</h1>
+        </div>
+
+        <!-- Estado 1: link sem token na URL, ou já usado com sucesso -->
+        <div id="aviso-sem-token" class="card" hidden>
+          <p id="texto-aviso-sem-token">
+            Esse link de redefinição é inválido. Peça um novo na tela de login.
+          </p>
+          <div class="acoes-form">
+            <a href="/esqueci-senha.html" class="btn btn-primary">Pedir novo link</a>
+          </div>
+        </div>
+
+        <!-- Estado 2: formulário de nova senha -->
+        <div id="painel-form" class="card" hidden>
+          <form id="form-redefinir-senha" novalidate>
+            <p class="campos-obrigatorios">Todos os campos são obrigatórios.</p>
+
+            <label for="nova-senha"
+              >Nova senha
+              <span class="obrigatorio" aria-hidden="true">*</span></label
+            >
+            <input
+              type="password"
+              id="nova-senha"
+              name="senha"
+              required
+              autocomplete="new-password"
+              aria-describedby="nova-senha-ajuda"
+              placeholder="Pelo menos 4 caracteres"
+            />
+            <p id="nova-senha-ajuda" class="ajuda-form">
+              Use pelo menos 4 caracteres. Pode ser uma frase fácil de lembrar.
+            </p>
+
+            <label for="confirmar-senha"
+              >Confirme a nova senha
+              <span class="obrigatorio" aria-hidden="true">*</span></label
+            >
+            <input
+              type="password"
+              id="confirmar-senha"
+              name="confirmar-senha"
+              required
+              autocomplete="new-password"
+              placeholder="Repita a senha"
+            />
+
+            <div id="erro-form" class="erro-msg" role="alert"></div>
+
+            <div class="acoes-form">
+              <button type="submit" class="btn-primary">Salvar nova senha</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Estado 3: sucesso -->
+        <div id="painel-sucesso" class="card" hidden>
+          <div id="sucesso-form" class="sucesso-msg show" role="status"></div>
+          <div class="acoes-form">
+            <a href="/login.html" class="btn btn-primary">Ir para o login</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/js/icones.js" defer></script>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/redefinir-senha.js" defer></script>
+  </body>
+</html>

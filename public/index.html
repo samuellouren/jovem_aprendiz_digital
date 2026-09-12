@@ -1,202 +1,236 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jovem Aprendiz Digital</title>
-<link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-
-<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-
-<div class="container">
-<main id="conteudo">
-
-<!-- =====================================================================
-     VISTA 1 — APRESENTAÇÃO (é o que quem chega vê primeiro)
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jovem Aprendiz Digital</title>
+    <meta name="description" content="Aprenda informática, IA e habilidades para o mercado de trabalho em trilhas curtas e gratuitas, direto do celular." />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23E8A33D'/%3E%3Cg fill='none' stroke='%231B3A4B' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z'/%3E%3Cpath d='M22 10v6'/%3E%3Cpath d='M6 12.5V16a6 3 0 0 0 12 0v-3.5'/%3E%3C/g%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="container container-apresentacao">
+      <main id="conteudo">
+        <!-- =====================================================================
+     APRESENTAÇÃO (é o que quem chega vê primeiro)
 
      O board de pesquisa pedia onboarding ANTES do cadastro. Antes desta
      tela a pessoa caía direto nas abas Entrar/Criar conta e tinha que
      decidir se cadastrar sem saber o que é o sistema, o que ia aprender,
      quanto tempo leva nem que é de graça.
 
+     Login e cadastro são páginas próprias (login.html e cadastro.html) —
+     aqui só ficam os links/botões que levam até elas.
+
      A prévia das trilhas abaixo é estática de propósito: esta tela roda
      ANTES do login e a API de trilhas exige token. Se os títulos das
      trilhas mudarem em conteudo.js, atualize também aqui.
      ===================================================================== -->
-<div id="vista-apresentacao" class="vista ativa">
+        <div id="vista-apresentacao">
+          <!-- Atalho para quem já tem conta não precisar rolar a apresentação toda -->
+          <div class="apre-topo">
+            <a href="/login.html" class="btn btn-entrar-topo">Entrar</a>
+          </div>
 
-  <!-- Atalho para quem já tem conta não precisar rolar a apresentação toda -->
-  <div class="apre-topo">
-    <button type="button" class="btn-entrar-topo" id="btn-entrar-topo">Entrar</button>
-  </div>
+          <div class="hero hero-apre">
+            <div
+              class="marca icone"
+              data-icone="graduation-cap"
+              data-icone-tamanho="34"
+              aria-hidden="true"
+            ></div>
+            <h1>Jovem Aprendiz Digital</h1>
+            <p>
+              Tecnologia explicada do seu jeito, no seu tempo. Sem jargão, sem
+              pressa.
+            </p>
+          </div>
 
-  <div class="hero hero-apre">
-    <div class="marca icone" data-icone="graduation-cap" data-icone-tamanho="34" aria-hidden="true"></div>
-    <h1>Jovem Aprendiz Digital</h1>
-    <p>Tecnologia explicada do seu jeito, no seu tempo. Sem jargão, sem pressa.</p>
-  </div>
+          <ul class="selos">
+            <li class="selo">
+              <span
+                class="icone"
+                data-icone="check"
+                data-icone-tamanho="15"
+                aria-hidden="true"
+              ></span
+              >De graça
+            </li>
+            <li class="selo">
+              <span
+                class="icone"
+                data-icone="smartphone"
+                data-icone-tamanho="15"
+                aria-hidden="true"
+              ></span
+              >Feito para o celular
+            </li>
+            <li class="selo">
+              <span
+                class="icone"
+                data-icone="globe"
+                data-icone-tamanho="15"
+                aria-hidden="true"
+              ></span
+              >Sem instalar nada
+            </li>
+          </ul>
 
-  <ul class="selos">
-    <li class="selo"><span class="icone" data-icone="check" data-icone-tamanho="15" aria-hidden="true"></span>De graça</li>
-    <li class="selo"><span class="icone" data-icone="smartphone" data-icone-tamanho="15" aria-hidden="true"></span>Feito para o celular</li>
-    <li class="selo"><span class="icone" data-icone="globe" data-icone-tamanho="15" aria-hidden="true"></span>Sem instalar nada</li>
-  </ul>
+          <h2 class="apre-titulo">
+            <span
+              class="icone"
+              data-icone="book-open"
+              data-icone-tamanho="19"
+              aria-hidden="true"
+            ></span>
+            O que você vai aprender
+          </h2>
 
-  <h2 class="apre-titulo">
-    <span class="icone" data-icone="book-open" data-icone-tamanho="19" aria-hidden="true"></span>
-    O que você vai aprender
-  </h2>
+          <div class="previa-trilhas">
+            <div class="card trilha-card previa-trilha">
+              <div
+                class="trilha-icone icone"
+                data-icone="monitor"
+                data-icone-tamanho="26"
+                aria-hidden="true"
+              ></div>
+              <div class="trilha-info">
+                <span class="trilha-nivel">Iniciante</span>
+                <strong class="previa-titulo"
+                  >Primeiros Passos no Computador</strong
+                >
+                <span class="previa-desc"
+                  >Organizar arquivos, escrever um e-mail profissional e entender
+                  planilhas — o básico que ninguém te ensinou.</span
+                >
+                <span class="previa-meta">3 módulos</span>
+              </div>
+            </div>
 
-  <div class="card trilha-card previa-trilha">
-    <div class="trilha-icone icone" data-icone="monitor" data-icone-tamanho="26" aria-hidden="true"></div>
-    <div class="trilha-info">
-      <span class="trilha-nivel">Iniciante</span>
-      <strong class="previa-titulo">Primeiros Passos no Computador</strong>
-      <span class="previa-desc">Organizar arquivos, escrever um e-mail profissional e entender planilhas — o básico que ninguém te ensinou.</span>
-      <span class="previa-meta">3 módulos</span>
+            <div class="card trilha-card previa-trilha">
+              <div
+                class="trilha-icone icone"
+                data-icone="sparkles"
+                data-icone-tamanho="26"
+                aria-hidden="true"
+              ></div>
+              <div class="trilha-info">
+                <span class="trilha-nivel">Intermediário</span>
+                <strong class="previa-titulo"
+                  >Ferramentas de IA no Dia a Dia</strong
+                >
+                <span class="previa-desc"
+                  >O que a inteligência artificial faz de verdade, onde ela erra e
+                  como pedir as coisas pra ela sem enrolação.</span
+                >
+                <span class="previa-meta">3 módulos</span>
+              </div>
+            </div>
+
+            <div class="card trilha-card previa-trilha">
+              <div
+                class="trilha-icone icone"
+                data-icone="target"
+                data-icone-tamanho="26"
+                aria-hidden="true"
+              ></div>
+              <div class="trilha-info">
+                <span class="trilha-nivel">Intermediário</span>
+                <strong class="previa-titulo"
+                  >Pronta para o Mercado de Trabalho</strong
+                >
+                <span class="previa-desc"
+                  >Currículo de primeiro emprego, reuniões online sem susto e uma
+                  rotina de estudo que cabe no seu dia.</span
+                >
+                <span class="previa-meta">3 módulos</span>
+              </div>
+            </div>
+          </div>
+
+          <h2 class="apre-titulo">
+            <span
+              class="icone"
+              data-icone="list-checks"
+              data-icone-tamanho="19"
+              aria-hidden="true"
+            ></span>
+            Como funciona
+          </h2>
+
+          <ol class="passos-como card">
+            <li>
+              <span class="passo-num" aria-hidden="true">1</span>
+              <span class="passo-txt"
+                ><strong>Escolha uma trilha.</strong> Pode começar pela primeira
+                ou pela que resolve o seu problema de agora.</span
+              >
+            </li>
+            <li>
+              <span class="passo-num" aria-hidden="true">2</span>
+              <span class="passo-txt"
+                ><strong>Leia em partes curtas.</strong> Cada parte cabe numa
+                tela. Dá pra parar onde quiser — o app guarda onde você
+                parou.</span
+              >
+            </li>
+            <li>
+              <span class="passo-num" aria-hidden="true">3</span>
+              <span class="passo-txt"
+                ><strong>Responda algumas perguntas.</strong> É só para fixar,
+                não é prova. Errou? Refaz quantas vezes quiser.</span
+              >
+            </li>
+          </ol>
+
+          <p class="apre-tempo">
+            <span
+              class="icone"
+              data-icone="clock"
+              data-icone-tamanho="17"
+              aria-hidden="true"
+            ></span>
+            Cada módulo leva uns 10 minutos. São 9 no total, no seu ritmo.
+          </p>
+
+          <div class="apre-mural">
+            <span
+              class="icone"
+              data-icone="message-circle"
+              data-icone-tamanho="20"
+              aria-hidden="true"
+            ></span>
+            <span
+              >E se travar, tem um mural para perguntar para a turma.
+              <strong>Aqui ninguém julga pergunta básica.</strong></span
+            >
+          </div>
+
+          <div class="apre-acoes">
+            <a href="/cadastro.html" class="btn btn-primary">
+              Criar minha conta
+              <span
+                class="icone"
+                data-icone="arrow-right"
+                data-icone-tamanho="18"
+                aria-hidden="true"
+              ></span>
+            </a>
+            <a href="/login.html" class="btn btn-ja-tenho">Já tenho conta</a>
+          </div>
+
+          <footer>
+            <p class="apre-rodape">
+              Feito para quem está começando agora na tecnologia — não precisa
+              saber nada antes.
+            </p>
+          </footer>
+        </div>
+      </main>
     </div>
-  </div>
 
-  <div class="card trilha-card previa-trilha">
-    <div class="trilha-icone icone" data-icone="sparkles" data-icone-tamanho="26" aria-hidden="true"></div>
-    <div class="trilha-info">
-      <span class="trilha-nivel">Intermediário</span>
-      <strong class="previa-titulo">Ferramentas de IA no Dia a Dia</strong>
-      <span class="previa-desc">O que a inteligência artificial faz de verdade, onde ela erra e como pedir as coisas pra ela sem enrolação.</span>
-      <span class="previa-meta">3 módulos</span>
-    </div>
-  </div>
-
-  <div class="card trilha-card previa-trilha">
-    <div class="trilha-icone icone" data-icone="target" data-icone-tamanho="26" aria-hidden="true"></div>
-    <div class="trilha-info">
-      <span class="trilha-nivel">Intermediário</span>
-      <strong class="previa-titulo">Pronta para o Mercado de Trabalho</strong>
-      <span class="previa-desc">Currículo de primeiro emprego, reuniões online sem susto e uma rotina de estudo que cabe no seu dia.</span>
-      <span class="previa-meta">3 módulos</span>
-    </div>
-  </div>
-
-  <h2 class="apre-titulo">
-    <span class="icone" data-icone="list-checks" data-icone-tamanho="19" aria-hidden="true"></span>
-    Como funciona
-  </h2>
-
-  <ol class="passos-como card">
-    <li>
-      <span class="passo-num" aria-hidden="true">1</span>
-      <span class="passo-txt"><strong>Escolha uma trilha.</strong> Pode começar pela primeira ou pela que resolve o seu problema de agora.</span>
-    </li>
-    <li>
-      <span class="passo-num" aria-hidden="true">2</span>
-      <span class="passo-txt"><strong>Leia em partes curtas.</strong> Cada parte cabe numa tela. Dá pra parar onde quiser — o app guarda onde você parou.</span>
-    </li>
-    <li>
-      <span class="passo-num" aria-hidden="true">3</span>
-      <span class="passo-txt"><strong>Responda algumas perguntas.</strong> É só para fixar, não é prova. Errou? Refaz quantas vezes quiser.</span>
-    </li>
-  </ol>
-
-  <p class="apre-tempo">
-    <span class="icone" data-icone="clock" data-icone-tamanho="17" aria-hidden="true"></span>
-    Cada módulo leva uns 10 minutos. São 9 no total, no seu ritmo.
-  </p>
-
-  <div class="apre-mural">
-    <span class="icone" data-icone="message-circle" data-icone-tamanho="20" aria-hidden="true"></span>
-    <span>E se travar, tem um mural para perguntar para a turma. <strong>Aqui ninguém julga pergunta básica.</strong></span>
-  </div>
-
-  <div class="apre-acoes">
-    <button type="button" class="btn-primary" id="btn-criar-conta">
-      Criar minha conta <span class="icone" data-icone="arrow-right" data-icone-tamanho="18" aria-hidden="true"></span>
-    </button>
-    <button type="button" class="btn-ja-tenho" id="btn-ja-tenho">Já tenho conta</button>
-  </div>
-
-  <footer>
-    <p class="apre-rodape">
-      Feito para quem está começando agora na tecnologia — não precisa saber nada antes.
-    </p>
-  </footer>
-</div>
-
-<!-- =====================================================================
-     VISTA 2 — ACESSO (entrar / criar conta)
-     ===================================================================== -->
-<div id="vista-acesso" class="vista">
-
-  <button type="button" class="btn-voltar-apre" id="btn-voltar-apre">
-    <span class="icone" data-icone="arrow-left" data-icone-tamanho="17" aria-hidden="true"></span>
-    Ver o que tem aqui
-  </button>
-
-  <div class="hero hero-compacto">
-    <div class="marca icone" data-icone="graduation-cap" data-icone-tamanho="26" aria-hidden="true"></div>
-    <h1 id="titulo-acesso" tabindex="-1">Jovem Aprendiz Digital</h1>
-  </div>
-
-  <div class="tabs" aria-label="Entrar ou criar conta">
-    <button type="button" id="tab-entrar" class="active" aria-pressed="true" aria-controls="painel-entrar">Entrar</button>
-    <button type="button" id="tab-cadastrar" aria-pressed="false" aria-controls="painel-cadastrar">Criar conta</button>
-  </div>
-
-  <!-- LOGIN -->
-  <div id="painel-entrar" class="form-panel active card">
-    <form id="form-entrar" novalidate>
-      <p class="campos-obrigatorios">Todos os campos são obrigatórios.</p>
-
-      <label for="login-email">Seu e-mail <span class="obrigatorio" aria-hidden="true">*</span></label>
-      <input type="email" id="login-email" name="email" required autocomplete="email" placeholder="voce@email.com">
-
-      <label for="login-senha">Sua senha <span class="obrigatorio" aria-hidden="true">*</span></label>
-      <input type="password" id="login-senha" name="senha" required autocomplete="current-password" placeholder="••••••••">
-
-      <div id="erro-entrar" class="erro-msg" role="alert"></div>
-
-      <div class="acoes-form">
-        <button type="submit" class="btn-primary">Entrar</button>
-      </div>
-    </form>
-  </div>
-
-  <!-- CADASTRO -->
-  <div id="painel-cadastrar" class="form-panel card" hidden>
-    <form id="form-cadastrar" novalidate>
-      <p class="campos-obrigatorios">Todos os campos são obrigatórios.</p>
-
-      <label for="cad-nome">Seu nome <span class="obrigatorio" aria-hidden="true">*</span></label>
-      <input type="text" id="cad-nome" name="nome" required autocomplete="name" placeholder="Como podemos te chamar?">
-
-      <label for="cad-email">Seu e-mail <span class="obrigatorio" aria-hidden="true">*</span></label>
-      <input type="email" id="cad-email" name="email" required autocomplete="email" placeholder="voce@email.com">
-
-      <label for="cad-senha">Crie uma senha <span class="obrigatorio" aria-hidden="true">*</span></label>
-      <input type="password" id="cad-senha" name="senha" required autocomplete="new-password" aria-describedby="cad-senha-ajuda" placeholder="Pelo menos 4 caracteres">
-      <p id="cad-senha-ajuda" class="ajuda-form">Use pelo menos 4 caracteres. Pode ser uma frase fácil de lembrar.</p>
-
-      <div id="erro-cadastrar" class="erro-msg" role="alert"></div>
-
-      <div class="acoes-form">
-        <button type="submit" class="btn-primary">Criar minha conta</button>
-      </div>
-    </form>
-  </div>
-
-  <footer>
-    <p class="apre-rodape">
-      É de graça e não precisa saber nada antes.
-    </p>
-  </footer>
-</div>
-
-</main>
-</div>
-
-<script src="/js/icones.js" defer></script>
-<script src="/js/api.js" defer></script>
-<script src="/js/index.js" defer></script>
-</body>
+    <script src="/js/icones.js" defer></script>
+    <script src="/js/api.js" defer></script>
+    <script src="/js/index.js" defer></script>
+  </body>
 </html>

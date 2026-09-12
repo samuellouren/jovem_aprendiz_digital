@@ -108,8 +108,7 @@ function montarPost(p) {
       campo.value = "";
       await buscarComentarios();
     } catch (err) {
-      erroEl.textContent = err.message;
-      erroEl.classList.add("show");
+      mostrarErroForm(erroEl, err.message);
     } finally {
       enviar.disabled = false;
     }
@@ -148,8 +147,7 @@ document.getElementById("form-post").addEventListener("submit", async (e) => {
     texto.value = "";
     await carregarPosts();
   } catch (err) {
-    erroEl.textContent = err.message;
-    erroEl.classList.add("show");
+    mostrarErroForm(erroEl, err.message);
   } finally {
     botao.disabled = false;
   }

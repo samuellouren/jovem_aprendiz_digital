@@ -411,8 +411,44 @@ async function migrarConteudo() {
   if (mudancas) console.log(`Migração de conteúdo: ${mudancas} registro(s) atualizado(s).`);
 }
 
+// Colunas de verificação de e-mail e redefinição de senha.
+//
+// Vão direto em `usuarios` (em vez de tabelas próprias) porque só existe
+// um token pendente de cada tipo por pessoa — pedir uma nova redefinição
+// ou reenviar a confirmação substitui o token anterior, então não há por
+// que guardar histórico. Usa ALTER TABLE porque SQLite/libSQL não têm
+// "ADD COLUMN IF NOT EXISTS" nesta versão; a checagem via PRAGMA garante
+// que rodar de novo não falhe nem duplique nada.
+async function migrarVerificacaoUsuarios() {
+  const colunas = await all("PRAGMA table_info(usuarios)");
+  const nomes = new Set(colunas.map((c) => c.name));
+  const novasColunas = [
+    ["email_verificado", "INTEGER NOT NULL DEFAULT 0"],
+    ["verificacao_token", "TEXT"],
+    ["redefinicao_token", "TEXT"],
+    ["redefinicao_expira", "TEXT"],
+  ];
+
+  let criouEmailVerificado = false;
+  for (const [nome, tipo] of novasColunas) {
+    if (!nomes.has(nome)) {
+      await run(`ALTER TABLE usuarios ADD COLUMN ${nome} ${tipo}`);
+      if (nome === "email_verificado") criouEmailVerificado = true;
+    }
+  }
+
+  // Quem já tinha conta antes deste recurso existir nunca passou por
+  // nenhum fluxo de confirmação — não faz sentido cobrar isso agora.
+  // Só roda na vez em que a coluna é criada (contas novas já nascem
+  // com email_verificado = 0, defeito da coluna).
+  if (criouEmailVerificado) {
+    await run("UPDATE usuarios SET email_verificado = 1");
+  }
+}
+
 async function iniciar() {
   await criarTabelas();
+  await migrarVerificacaoUsuarios();
   await semearTrilhas();
   await semearAtividades();
   await semearSecoes();

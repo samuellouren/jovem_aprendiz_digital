@@ -4,13 +4,15 @@
   "description": "Sistema web de capacitação digital para jovens aprendizes — projeto de IHC",
   "main": "server.js",
   "scripts": {
-    "start": "node --env-file-if-exists=.env server.js"
+    "start": "nodemon --env-file-if-exists=.env server.js"
   },
   "engines": {
     "node": ">=20.6.0"
   },
   "license": "MIT",
   "dependencies": {
-    "@libsql/client": "^0.17.4"
+    "@libsql/client": "^0.17.4",
+    "nodemon": "^3.1.14",
+    "resend": "^4.8.0"
   }
 }
