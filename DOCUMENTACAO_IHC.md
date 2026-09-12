@@ -66,7 +66,7 @@ Nenhuma dependência nova foi usada — tudo em HTML/CSS/JS puro.
 | 5 | **2.1.1 Teclado** (interatividade) | `public/js/trilha.js`, `public/js/comunidade.js` | Toda ação clicável (abrir um módulo, avançar de seção, abrir os comentários de um post, verificar respostas) é um `<button type="button">` nativo — nunca uma `<div onclick>`. Botões nativos recebem foco por Tab e respondem a Enter/Espaço sem nenhum código extra |
 | 6 | **2.4.7 Foco Visível** | `public/css/style.css` | Regra única `:focus-visible` (botões, links, campos, elementos com `tabindex`) com `outline: 3px solid var(--teal); outline-offset: 2px`. A antiga regra `outline: none` sem substituto (no título da tela de acesso) foi removida — hoje não existe nenhum `outline: none` no CSS sem um contorno visível equivalente no lugar |
 | 7 | **4.1.2 Nome, Função, Valor** e **4.1.3 Mensagens de Status** (ARIA com moderação) | `public/js/comunidade.js`, `public/js/trilha.js`, HTML dos 4 arquivos | `aria-expanded` no botão "Responder" de cada post; `role="alert"` nas mensagens de erro de formulário; `role="status" aria-live="polite"` no feedback de acerto/erro da atividade e da resposta do mural; `aria-label` no botão de voltar (ícone sem texto) e na navegação inferior |
-| 8 | **2.4.1 Bloqueios** (skip link) | Topo de `index.html`, `dashboard.html`, `trilha.html`, `comunidade.html` | `<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>` como primeiro elemento do `<body>`, focável por Tab, apontando para `<main id="conteudo">` |
+| 8 | **2.4.1 Bloqueios** (skip link) | Topo de `dashboard.html`, `trilha.html`, `comunidade.html` | `<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>` como primeiro elemento do `<body>`, focável por Tab, apontando para `<main id="conteudo">`. `index.html` não tem: é a landing pública, sem cabeçalho/menu repetitivo antes do conteúdo (só o link avulso "Entrar") — não há bloco de navegação para pular |
 | 9 | Técnica de suporte a **4.1.2 / 2.4.6** (ocultar sem tirar do leitor de tela) | `public/css/style.css`, `.sr-only` | Classe `.sr-only` (clip-technique padrão) usada no rótulo da caixa de resposta de cada post do mural, que não tem espaço visual para um rótulo próprio |
 | 10 | **1.4.3 Contraste (Mínimo)** | `public/css/style.css`, variáveis `:root` | `--coral`, `--coral-dark`, `--teal`, `--green`, `--red-txt` foram escurecidos e uma nova `--amber-dark` foi criada para os usos como texto — todos calculados para ≥ 4.5:1 contra o fundo onde aparecem como texto (checados com a fórmula de luminância relativa do próprio WCAG). O fundo do selo de nível (`.etiqueta-nivel`) também mudou de um overlay branco para um overlay escuro, porque clareava demais o amber por trás |
 | 11 | **2.3.3 Animação por Interações** (nível AAA, aplicado aqui por precaução) | `public/css/style.css` | `@media (prefers-reduced-motion: reduce)` zera a duração de toda transição/animação do projeto (barras de progresso, seta do "Responder", skip link) para quem pede menos movimento ao sistema operacional |
@@ -74,7 +74,57 @@ Nenhuma dependência nova foi usada — tudo em HTML/CSS/JS puro.
 
 ---
 
-## 4. Princípios de Norman aplicados
+## 4. Responsividade — desktop e mobile como cidadãos de primeira classe
+
+O sistema nasceu mobile-first (a persona só acessa pelo celular — ver seção 1) e
+por isso ficava desconfortável em telas grandes: colunas estreitas perdidas no
+meio de janelas largas, barra de navegação pensada só para o rodapé do celular,
+e um elemento de rolagem horizontal sem nenhuma pista visual de que dava para
+arrastar. A tabela abaixo é atualizada página a página conforme a revisão avança.
+
+| Página | O que estava desconfortável em tela grande | Correção |
+|---|---|---|
+| `dashboard.html` | Container travava em 580px mesmo em telas largas; trilhas empilhadas numa única coluna cercada de vazio; barra de navegação (pensada pro rodapé do celular) sobrava sozinha no rodapé de uma janela grande | A partir de 860px: container até 1040px, trilhas em grid (`repeat(auto-fill, minmax(280px, 1fr))`), e a nav vira uma barra secundária normal logo abaixo do cabeçalho (`position: static` só nesse breakpoint — no mobile continua fixa embaixo, como antes) |
+| `index.html` (apresentação) | Mesma coluna estreita; textos corridos ficariam com linhas de ~900px se o container só fosse alargado | Prévia das trilhas e os 3 passos de "Como funciona" viram grid de 3 colunas a partir de 860px; parágrafos e blocos de texto ganham `max-width: 32em` para manter a medida de leitura, mesmo dentro de um container mais largo |
+| `login.html`, `cadastro.html`, `esqueci-senha.html`, `redefinir-senha.html`, `verificar-email.html` | Card do formulário ficava colado no topo com um vazio enorme embaixo em telas altas (a largura em si já era adequada — formulário largo demais atrapalha o preenchimento) | `body.pagina-auth` centraliza o card verticalmente na janela (`display:flex; flex-direction:column; justify-content:center`); largura do formulário mantida como estava, de propósito |
+| `trilha.html` | O stepper de seções (rolagem horizontal) cortava a última pastilha na borda do card sem nenhuma pista de que dava para arrastar; a coluna de leitura (580px) foi mantida assim mesmo em desktop | Sombra de fade nas duas bordas do stepper (`.stepper-wrap::before/::after`), ligada/desligada por `trilha.js` conforme a posição do scroll. A largura de leitura de 580px **não foi alargada de propósito**: é conteúdo de texto corrido (módulos) e uma lista de poucos itens — alargar pioraria a legibilidade sem ganho real (ver nota abaixo) |
+| `comunidade.html` | Mesmo problema do dashboard: nav pensada pro rodapé do celular sobrando sozinha no rodapé de uma janela grande; coluna de 580px cercada de vazio | Mesmo tratamento da nav do dashboard (`tabbar-inline`, vira barra secundária abaixo do cabeçalho a partir de 860px); container até 720px — um pouco mais largo que a leitura de módulo (é um feed, não texto corrido longo), mas sem virar grade, porque a ordem cronológica dos posts importa e cada um tem altura diferente |
+
+**Nota sobre a sombra do stepper e contraste (1.4.3):** a sombra fica por cima
+das pastilhas (elas têm fundo próprio opaco, então uma sombra "atrás" delas
+seria invisível). Isso significa que ela também passa por cima do texto nas
+pastilhas mais próximas da borda — a opacidade foi calibrada para o pior caso
+(pastilha `.visitado`, texto verde sobre fundo branco, que é a combinação de
+menor contraste do grupo): no pico da sombra (bem na borda) o contraste cai de
+5.44:1 para ~4.7:1, continuando acima do mínimo de 4.5:1 exigido para texto
+normal. Uma opacidade maior (testada em 0.16) derrubava esse mesmo caso para
+~4.1:1 e foi descartada por isso.
+
+**Falso positivo conhecido do axe em `comunidade.html`:** rodar o axe nessa
+página aponta "incomplete" (não confirmado) de contraste nos dois `<textarea>`
+(publicar / responder), com a mensagem "background color could not be
+determined because it's partially obscured by another element". É a alcinha
+nativa de redimensionar do textarea (`resize: vertical`) confundindo a
+detecção — o CSS do campo usa `background: #fff` sólido, sem transparência
+nenhuma (ver `input[type=text], ... textarea` em `style.css`), então o
+contraste real é normal. Documentado aqui para não ser confundido com uma
+falha de verdade ao reproduzir a auditoria.
+
+**Mesmo falso positivo em `trilha.html` (stepper):** com um módulo aberto, o
+axe (4.10, testado via injeção manual no navegador) aponta 0 violações e só
+"incomplete" de contraste nas pastilhas do stepper, com a mesma mensagem de
+"partially obscured by another element" — desta vez apontando para a sombra
+de fade (`.stepper-wrap::before/::after`), que é justamente um elemento
+posicionado por cima das pastilhas (ver seção 4). O axe sinaliza a pastilha
+inteira como incerta mesmo quando a sombra daquele lado está com opacidade 0
+(ex.: a pastilha "atual", à esquerda, com a sombra esquerda desligada), porque
+avalia a sobreposição geométrica dos elementos e não o valor computado da
+opacidade. O contraste real já foi calculado à mão para o pior caso (ver nota
+acima) e fica em ~4.7:1, acima do mínimo de 4.5:1.
+
+---
+
+## 5. Princípios de Norman aplicados
 
 | Princípio | Exemplo concreto no sistema |
 |---|---|
@@ -85,7 +135,7 @@ Nenhuma dependência nova foi usada — tudo em HTML/CSS/JS puro.
 
 ---
 
-## 5. Arquitetura resumida
+## 6. Arquitetura resumida
 
 O projeto é deliberadamente simples: sem framework de front-end, sem build
 step, sem ORM. O front-end é HTML/CSS/JS puro separado por página, que fala
@@ -121,7 +171,7 @@ do script da página).
 
 ---
 
-## 6. Como rodar e onde ver cada critério na prática
+## 7. Como rodar e onde ver cada critério na prática
 
 ### Rodando localmente
 

@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trilha — Jovem Aprendiz Digital</title>
+<meta name="description" content="Módulos de aprendizagem em seções curtas, com atividade de fixação ao final, no Jovem Aprendiz Digital.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23E8A33D'/%3E%3Cg fill='none' stroke='%231B3A4B' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z'/%3E%3Cpath d='M22 10v6'/%3E%3Cpath d='M6 12.5V16a6 3 0 0 0 12 0v-3.5'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -37,7 +39,9 @@
     <!-- Tela 2: um módulo aberto, uma seção por vez -->
     <div id="tela-modulo" hidden>
       <div class="modulo-topo" id="modulo-topo"></div>
-      <div class="stepper" id="stepper" aria-label="Seções do módulo"></div>
+      <div class="stepper-wrap" id="stepper-wrap">
+        <nav class="stepper" id="stepper" aria-label="Seções do módulo"></nav>
+      </div>
       <div id="conteudo-passo" aria-live="polite"></div>
       <div class="secao-nav" id="secao-nav"></div>
     </div>

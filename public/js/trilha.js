@@ -12,9 +12,20 @@ let licoes = [];
 let moduloAberto = null; // índice em `licoes`, ou null quando está na lista
 let passoAtual = 0;
 
-// Guarda até onde a pessoa já chegou em cada módulo, para o stepper mostrar
-// as seções já vistas. Só nesta visita — não é progresso salvo no servidor.
-const passosVistos = new Map(); // licao_id -> Set de índices
+// Guarda quais partes do módulo a pessoa já *concluiu de fato* nesta visita
+// (clicou em "Continuar" ao final daquela parte) — não quais ela só visitou.
+// Só nesta visita — não é progresso salvo no servidor; a conclusão real do
+// módulo continua sendo gravada no banco só quando a atividade é acertada
+// por completo (ver /licoes/:id/responder em server.js).
+const passosVistos = new Map(); // licao_id -> Set de índices confirmados
+
+// Marca uma parte do módulo como confirmada. Chamado só a partir de uma ação
+// explícita de avanço (botão "Continuar" / "Ir para a atividade" / "Voltar
+// aos módulos" no fim) — nunca por trocar de aba no stepper ou só carregar
+// a tela, que é o bug que este controle existe para evitar.
+function marcarPassoVisto(licaoId, indice) {
+  passosVistos.get(licaoId).add(indice);
+}
 
 // Como cada tipo de seção se apresenta: rótulo e ícone.
 const TIPOS = {
@@ -27,9 +38,7 @@ const TIPOS = {
 const TIPO_PADRAO = { rotulo: "Conteúdo", icone: "file-text" };
 const tipoDe = (t) => TIPOS[t] || TIPO_PADRAO;
 
-function ic(nome, tamanho) {
-  return '<span class="icone" aria-hidden="true">' + Icones.svg(nome, { tamanho: tamanho || 18 }) + "</span>";
-}
+// ic() vem de api.js (carregado antes deste script).
 
 // Um módulo tem N seções + 1 passo final (a atividade), quando ela existe
 function totalPassos(licao) {
@@ -107,7 +116,16 @@ function abrirModulo(indice) {
   moduloAberto = indice;
   passoAtual = 0;
   const licao = licoes[indice];
-  if (!passosVistos.has(licao.id)) passosVistos.set(licao.id, new Set());
+  if (!passosVistos.has(licao.id)) {
+    // Módulo já concluído antes (dado real, vindo do servidor): abre já
+    // com a barra e o stepper refletindo isso, em vez de "zerar" e forçar
+    // a pessoa a clicar em tudo de novo pra ver o que já tinha feito.
+    const vistos = new Set();
+    if (licao.concluida) {
+      for (let i = 0; i < totalPassos(licao); i++) vistos.add(i);
+    }
+    passosVistos.set(licao.id, vistos);
+  }
 
   document.getElementById("tela-trilha").hidden = true;
   document.getElementById("tela-modulo").hidden = false;
@@ -121,7 +139,6 @@ function abrirModulo(indice) {
 
 function pintarModulo() {
   const licao = licoes[moduloAberto];
-  passosVistos.get(licao.id).add(passoAtual);
 
   pintarTopoModulo(licao);
   pintarStepper(licao);
@@ -131,7 +148,10 @@ function pintarModulo() {
 
 function pintarTopoModulo(licao) {
   const total = totalPassos(licao);
-  const pct = Math.round(((passoAtual + 1) / total) * 100);
+  // % de partes de fato concluídas (marcadas por marcarPassoVisto), não em
+  // qual parte a pessoa está olhando agora — senão a barra é só decorativa.
+  const feitos = passosVistos.get(licao.id).size;
+  const pct = total ? Math.round((feitos / total) * 100) : 0;
   const naAtividade = ehPassoAtividade(licao, passoAtual);
 
   document.getElementById("modulo-topo").innerHTML = `
@@ -190,6 +210,23 @@ function pintarStepper(licao) {
 
   const atual = stepper.querySelector(".passo.atual");
   if (atual) atual.scrollIntoView({ block: "nearest", inline: "center" });
+
+  atualizarSombraStepper();
+}
+
+// Liga/desliga a sombra de fade de cada lado do stepper conforme dá ou não
+// pra rolar pra lá — sem isso não existia nenhuma pista visual de que o
+// stepper rola (as pastilhas cortadas na borda do card eram a única dica).
+function atualizarSombraStepper() {
+  const stepper = document.getElementById("stepper");
+  const wrap = document.getElementById("stepper-wrap");
+  const folga = 2; // tolerância para arredondamento de subpixel
+  const temOverflow = stepper.scrollWidth > stepper.clientWidth + folga;
+  wrap.classList.toggle("rola-esquerda", temOverflow && stepper.scrollLeft > folga);
+  wrap.classList.toggle(
+    "rola-direita",
+    temOverflow && stepper.scrollLeft < stepper.scrollWidth - stepper.clientWidth - folga
+  );
 }
 
 function pintarPasso(licao) {
@@ -220,6 +257,7 @@ function pintarNavegacao(licao) {
   if (conviteAntigo) conviteAntigo.remove();
   const total = totalPassos(licao);
   const ultimo = passoAtual >= total - 1;
+  const naAtividadeAtual = ehPassoAtividade(licao, passoAtual);
   const proximoEhAtividade = ehPassoAtividade(licao, passoAtual + 1);
 
   nav.innerHTML = "";
@@ -236,7 +274,12 @@ function pintarNavegacao(licao) {
     lista.type = "button";
     lista.className = "btn-proximo ir-atividade";
     lista.innerHTML = ic("layers", 17) + " Voltar aos módulos";
-    lista.addEventListener("click", mostrarTelaTrilha);
+    lista.addEventListener("click", () => {
+      // Se o último passo é a atividade, "concluída" depende de acertar o
+      // teste (ver montarAtividade), não de simplesmente clicar aqui.
+      if (!naAtividadeAtual) marcarPassoVisto(licao.id, passoAtual);
+      mostrarTelaTrilha();
+    });
 
     nav.appendChild(voltar);
     nav.appendChild(lista);
@@ -258,7 +301,10 @@ function pintarNavegacao(licao) {
   proximo.innerHTML = proximoEhAtividade
     ? ic("edit-3", 17) + " Ir para a atividade"
     : "Continuar " + ic("chevron-right", 18);
-  proximo.addEventListener("click", () => irParaPasso(passoAtual + 1));
+  proximo.addEventListener("click", () => {
+    marcarPassoVisto(licao.id, passoAtual);
+    irParaPasso(passoAtual + 1);
+  });
 
   nav.appendChild(anterior);
   nav.appendChild(proximo);
@@ -278,6 +324,10 @@ function mostrarConviteMural() {
     "<br>No mural ninguém julga pergunta básica.</span>";
   nav.insertAdjacentElement("afterend", convite);
 }
+
+// Registrado uma única vez: o elemento nunca é recriado, só repintado por
+// dentro (pintarStepper troca o innerHTML, não o próprio #stepper).
+document.getElementById("stepper").addEventListener("scroll", atualizarSombraStepper);
 
 function irParaPasso(indice) {
   const licao = licoes[moduloAberto];
@@ -403,6 +453,11 @@ function montarAtividade(licao) {
           "<span class='txt'>Você acertou tudo! Módulo concluído." +
           "<span class='sub'>Seu progresso já foi atualizado no painel.</span></span>";
         licao.concluida = true;
+        // A atividade em si só conta como "parte concluída" quando acertada
+        // por completo — não por só ter clicado nela. Repinta a barra do
+        // topo do módulo para refletir isso na hora, sem mexer no resto.
+        marcarPassoVisto(licao.id, passoAtual);
+        pintarTopoModulo(licao);
       } else {
         const acertos = r.resultados.filter((x) => x.correta).length;
         final.className = "feedback-final tente-de-novo show";

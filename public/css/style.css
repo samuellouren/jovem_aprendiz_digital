@@ -101,7 +101,7 @@ body {
   font-family: -apple-system, "Segoe UI", Roboto, Calibri, Arial, sans-serif;
   background: var(--bg);
   color: var(--ink);
-  font-size: 17px;
+  font-size: 1.0625rem; /* = 17px com a raiz padrão de 16px, mas em unidade relativa (WCAG 1.4.4) */
   line-height: 1.5;
 }
 
@@ -115,6 +115,18 @@ a { color: inherit; }
   max-width: 480px;
   margin: 0 auto;
   padding: 20px 18px 90px;
+}
+
+/* ---------- Telas de autenticação (login, cadastro, recuperação) ----------
+   São formulários curtos e continuam estreitos mesmo em desktop — largura
+   de formulário grande atrapalha o preenchimento. O que ficava desconfortável
+   em tela grande era o card colado no topo com um vazio enorme embaixo;
+   aqui ele fica centralizado verticalmente na janela. */
+body.pagina-auth {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* ---------- Topo ---------- */
@@ -195,12 +207,23 @@ input[type=text], input[type=email], input[type=password], textarea {
 }
 input:focus, textarea:focus { border-color: var(--teal); }
 textarea { resize: vertical; min-height: 70px; }
+/* Ícone + texto, nunca só a cor de fundo (WCAG 1.4.1 — Uso de Cor). */
 .erro-msg {
   background: var(--red-bg); color: var(--red-txt);
   padding: 10px 14px; border-radius: 10px; font-size: 0.9rem; margin-top: 12px;
-  display: none;
+  display: none; align-items: flex-start; gap: 8px;
 }
-.erro-msg.show { display: block; }
+.erro-msg.show { display: flex; }
+.erro-msg .icone { margin-top: 1px; flex-shrink: 0; }
+.erro-msg .txt { flex: 1; }
+.sucesso-msg {
+  background: var(--green-bg); color: var(--green);
+  padding: 10px 14px; border-radius: 10px; font-size: 0.9rem; margin-top: 12px;
+  display: none; align-items: flex-start; gap: 8px;
+}
+.sucesso-msg.show { display: flex; }
+.sucesso-msg .icone { margin-top: 1px; flex-shrink: 0; }
+.sucesso-msg .txt { flex: 1; }
 
 /* ---------- Cartões ---------- */
 .card {
@@ -212,11 +235,6 @@ textarea { resize: vertical; min-height: 70px; }
 }
 
 /* ---------- Landing / Auth ---------- */
-
-/* index.html tem duas vistas na mesma página: a apresentação (o que quem
-   chega vê primeiro) e o acesso (entrar / criar conta). Só uma por vez. */
-.vista { display: none; }
-.vista.ativa { display: block; }
 
 .hero {
   text-align: center;
@@ -239,25 +257,25 @@ textarea { resize: vertical; min-height: 70px; }
 }
 .hero-compacto h1 { font-size: 1.3rem; margin: 0; }
 
-.tabs { display: flex; gap: 8px; margin: 18px 0 6px; }
-.tabs button {
-  flex: 1; background: var(--card); color: var(--sub);
-  border: 2px solid var(--border); border-radius: 12px; padding: 10px;
-}
-.tabs button.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-.form-panel { display: none; }
-.form-panel.active { display: block; }
-.acoes-form { margin-top: 20px; }
+.acoes-form { margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.rodape-link { color: var(--teal); font-weight: 700; }
 
 /* ---------- Apresentação (antes do cadastro) ---------- */
 
 .apre-topo { display: flex; justify-content: flex-end; margin-bottom: -14px; }
+/* Variante "outline": mesmo raio/padding de família dos outros botões
+   (herdados de .btn), só troca o preenchimento sólido por um contorno —
+   antes era texto solto sem nenhuma affordance de que era clicável. */
 .btn-entrar-topo {
-  background: none;
+  background: var(--card);
   color: var(--teal);
+  border: 2px solid var(--teal);
   font-size: 0.9rem;
-  padding: 10px 4px 10px 14px; min-height: 44px;
+  padding: 10px 18px;
+  min-height: 44px;
 }
+.btn-entrar-topo:hover { background: var(--teal); color: #fff; }
+.btn-entrar-topo:active { background: var(--teal); color: #fff; opacity: 0.85; }
 /* Com o atalho "Entrar" acima, o topo da marca precisa de menos respiro. */
 .hero-apre { padding-top: 14px; }
 
@@ -567,12 +585,41 @@ textarea { resize: vertical; min-height: 70px; }
 /* ---------- Tela 2: stepper de seções ----------
    Rolagem horizontal no celular: cabe em qualquer largura sem quebrar
    o texto da seção, e mostra de relance onde a pessoa está. */
+/* Envolve o stepper só para ancorar a sombra de fade nas bordas (abaixo) —
+   as pastilhas têm fundo próprio opaco, então a sombra precisa ficar POR
+   CIMA delas, não atrás. */
+.stepper-wrap {
+  position: relative;
+  margin: 0 -18px;
+}
+.stepper-wrap::before,
+.stepper-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 12px;
+  width: 28px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 1;
+}
+/* Opacidade calibrada a dedo: no pico (bem na borda) ainda precisa manter
+   4.5:1 de contraste para o texto mais claro que existe nas pastilhas
+   (".passo.visitado", verde sobre branco) mesmo com a sombra por cima —
+   ver DOCUMENTACAO_IHC.md. 0.08 mantém ~4.7:1 nesse pior caso. */
+.stepper-wrap::before { left: 0; background: linear-gradient(to right, rgba(27, 58, 75, 0.08), rgba(27, 58, 75, 0)); }
+.stepper-wrap::after { right: 0; background: linear-gradient(to left, rgba(27, 58, 75, 0.08), rgba(27, 58, 75, 0)); }
+/* trilha.js só acrescenta estas classes quando o stepper tem mesmo conteúdo
+   fora da vista, e atualiza qual lado mostrar conforme a posição do scroll. */
+.stepper-wrap.rola-esquerda::before,
+.stepper-wrap.rola-direita::after { opacity: 1; }
+
 .stepper {
   display: flex;
   gap: 7px;
   overflow-x: auto;
   padding: 2px 18px 12px;
-  margin: 0 -18px;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
@@ -919,4 +966,115 @@ textarea { resize: vertical; min-height: 70px; }
   .secao { padding: 26px 24px; }
   .secao h2 { font-size: 1.35rem; }
   .modulo-topo { padding: 20px; }
+}
+
+/* ---------- Desktop: dashboard ----------
+   Em telas largas o painel deixa de ser uma coluna única esticada: o
+   conteúdo ganha mais respiro horizontal e as trilhas viram um grid
+   (em vez de uma pilha vertical solitária cercada de vazio), sem perder
+   nada do layout mobile original. */
+@media (min-width: 860px) {
+  .container-dashboard {
+    max-width: 1040px;
+    padding-bottom: 40px;
+  }
+
+  #lista-trilhas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  #lista-trilhas .card { margin-bottom: 0; }
+
+  /* O texto do card de resumo não deve virar uma linha de 1000px —
+     mantém a medida de leitura confortável mesmo num card mais largo. */
+  #resumo-card h2,
+  #resumo-card p,
+  #resumo-card .barra-fundo { max-width: 640px; }
+
+  /* A barra de navegação (pensada para o rodapé do celular) vira uma
+     barra secundária normal, logo abaixo do cabeçalho, em vez de ficar
+     fixada sozinha no rodapé de uma janela grande. */
+  .tabbar-inline {
+    position: static;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    border-top: none;
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+    background: #fff;
+  }
+  .tabbar-inline a {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    padding: 10px 18px;
+  }
+  .tabbar-inline a .ic { margin-bottom: 0; }
+  .tabbar-inline a:hover { color: var(--navy); }
+}
+
+/* ---------- Desktop: apresentação (index.html) ----------
+   A landing pública é uma rolagem única de leitura — larga demais ela
+   vira parágrafo de linha infinita, estreita demais ela é só uma coluna
+   perdida no meio de uma tela grande. Aqui o container ganha mais
+   espaço, mas cada bloco de texto corrido mantém a medida de leitura
+   confortável; o que já era "cartão" (prévia das trilhas, passos)
+   aproveita a largura extra virando grade em vez de pilha. */
+@media (min-width: 860px) {
+  .container-apresentacao { max-width: 900px; }
+
+  .hero-apre p {
+    max-width: 32em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .previa-trilhas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .previa-trilhas .previa-trilha { margin-bottom: 0; }
+
+  .passos-como {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    padding: 22px;
+  }
+  .passos-como li {
+    margin-bottom: 0;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .passo-num { margin-bottom: 4px; }
+
+  .apre-tempo,
+  .apre-mural {
+    max-width: 32em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .apre-acoes {
+    max-width: 22em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .apre-rodape { max-width: 32em; margin-left: auto; margin-right: auto; }
+}
+
+/* ---------- Desktop: comunidade (mural) ----------
+   O mural é um feed cronológico — não vira grade (a ordem importa e cada
+   post tem altura diferente), mas ganha uma medida um pouco mais larga que
+   a leitura de módulo, comum em feeds sociais, em vez de ficar preso à
+   mesma largura estreita do formulário de autenticação. */
+@media (min-width: 860px) {
+  .container-comunidade { max-width: 720px; padding-bottom: 40px; }
 }
