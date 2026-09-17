@@ -19,7 +19,7 @@ const Api = {
   sair() {
     localStorage.removeItem("token");
     localStorage.removeItem("usuario");
-    window.location.href = "/#entrar";
+    window.location.href = "/login.html";
   },
 
   async chamar(metodo, caminho, corpo) {
@@ -38,9 +38,32 @@ const Api = {
   },
 
   exigirLogin() {
-    if (!this.token()) window.location.href = "/";
+    if (!this.token()) window.location.href = "/login.html";
   },
 };
+
+// Mensagens de erro/sucesso de formulário: ícone + texto, nunca só a cor
+// de fundo (WCAG 1.4.1 — Uso de Cor). Mesmo padrão já usado no feedback
+// da atividade de cada módulo (ver trilha.js).
+function ic(nome, tamanho) {
+  return '<span class="icone" aria-hidden="true">' + Icones.svg(nome, { tamanho: tamanho || 18 }) + "</span>";
+}
+
+function escHtml(txt) {
+  const d = document.createElement("div");
+  d.textContent = txt == null ? "" : String(txt);
+  return d.innerHTML;
+}
+
+function mostrarErroForm(el, mensagem) {
+  el.innerHTML = ic("alert-circle", 18) + "<span class='txt'>" + escHtml(mensagem) + "</span>";
+  el.classList.add("show");
+}
+
+function mostrarSucessoForm(el, mensagem) {
+  el.innerHTML = ic("check-circle", 18) + "<span class='txt'>" + escHtml(mensagem) + "</span>";
+  el.classList.add("show");
+}
 
 function montarTabbar(ativo) {
   const el = document.getElementById("tabbar");
