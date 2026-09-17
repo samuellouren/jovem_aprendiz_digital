@@ -18,6 +18,18 @@ const REMETENTE = "onboarding@resend.dev";
 
 const APP_URL = process.env.APP_URL || "http://localhost:3000";
 
+// Escapa dado vindo do usuário (nome, e-mail) antes de interpolar no HTML
+// do corpo do e-mail — sem isso, um nome como "<b>oi</b>" ou contendo aspas
+// entraria cru no template (ver templates abaixo).
+function escHtml(txt) {
+  return String(txt ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function layoutEmail(titulo, corpoHtml) {
   return `
     <div style="font-family: Arial, Helvetica, sans-serif; max-width: 480px; margin: 0 auto; color:#1B3A4B; line-height: 1.5;">
@@ -56,7 +68,7 @@ async function enviarEmailVerificacao(destino, nome, token) {
     to: destino,
     subject: "Confirme seu e-mail — Jovem Aprendiz Digital",
     html: layoutEmail(
-      `Olá, ${nome}!`,
+      `Olá, ${escHtml(nome)}!`,
       `<p>Falta só confirmar seu e-mail para garantir o acesso à sua conta.</p>` +
         botao(link, "Confirmar meu e-mail") +
         `<p style="font-size:13px; color:#6b7280;">Ou copie e cole este link no navegador:<br>${link}</p>`
@@ -70,7 +82,7 @@ async function enviarEmailRedefinicao(destino, nome, token) {
     to: destino,
     subject: "Redefinir sua senha — Jovem Aprendiz Digital",
     html: layoutEmail(
-      `Olá, ${nome}!`,
+      `Olá, ${escHtml(nome)}!`,
       `<p>Recebemos um pedido para redefinir a senha da sua conta. Este link é válido por 1 hora.</p>` +
         botao(link, "Redefinir minha senha") +
         `<p style="font-size:13px; color:#6b7280;">Ou copie e cole este link no navegador:<br>${link}</p>` +
