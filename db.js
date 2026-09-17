@@ -3,7 +3,7 @@
 // Funciona em dois modos, sem mudar nenhuma linha de SQL:
 //  - LOCAL (padrão): grava em data/aprendiz.db, não precisa de conta em nada
 //  - TURSO (produção): defina TURSO_DATABASE_URL e TURSO_AUTH_TOKEN
-//    (veja README.md -> "Usando com Turso")
+//    (veja README_TECNICO.md -> "Usando com Turso")
 const { createClient } = require("@libsql/client");
 const path = require("node:path");
 const fs = require("node:fs");

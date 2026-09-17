@@ -3,9 +3,10 @@
 > Este documento é para quem vai **avaliar** o projeto (professora/banca), não
 > para quem vai dar manutenção no código depois. A documentação técnica
 > completa (arquitetura, rotas da API, modelo de dados) está no
-> [`README.md`](README.md); o diagnóstico de UX que originou os ajustes de
-> conteúdo está em [`AUDITORIA_UX.md`](AUDITORIA_UX.md). Aqui o foco é só o
-> que a correção pede: front-end e qualidade de código.
+> [`README_TECNICO.md`](README_TECNICO.md); o diagnóstico de UX que originou
+> os ajustes de conteúdo está em [`AUDITORIA_UX.md`](AUDITORIA_UX.md). Aqui o
+> foco é só o que a correção pede: front-end e qualidade de código. Para o
+> roteiro rápido de navegação do sistema, veja o [`README.md`](README.md).
 
 ---
 
