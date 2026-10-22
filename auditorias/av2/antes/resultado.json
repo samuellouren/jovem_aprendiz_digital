@@ -1,0 +1,490 @@
+{
+  "geradoEm": "2026-10-22T03:56:47.386Z",
+  "base": "http://localhost:3000",
+  "contas": {
+    "maria": {
+      "email": "maria.av2.1792641284399@teste.local",
+      "id": 8
+    },
+    "joana": {
+      "email": "joana.av2.1792641284399@teste.local",
+      "id": 9
+    }
+  },
+  "estados": [
+    {
+      "nome": "mobile-index",
+      "pagina": "index",
+      "sufixo": null,
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/index.html",
+      "screenshot": "mobile-index.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-index",
+      "pagina": "index",
+      "sufixo": null,
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/index.html",
+      "screenshot": "desktop-index.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-login",
+      "pagina": "login",
+      "sufixo": null,
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/login.html",
+      "screenshot": "mobile-login.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-login",
+      "pagina": "login",
+      "sufixo": null,
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/login.html",
+      "screenshot": "desktop-login.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-cadastro",
+      "pagina": "cadastro",
+      "sufixo": null,
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/cadastro.html",
+      "screenshot": "mobile-cadastro.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-cadastro",
+      "pagina": "cadastro",
+      "sufixo": null,
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/cadastro.html",
+      "screenshot": "desktop-cadastro.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-esqueci-senha",
+      "pagina": "esqueci-senha",
+      "sufixo": null,
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/esqueci-senha.html",
+      "screenshot": "mobile-esqueci-senha.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-esqueci-senha",
+      "pagina": "esqueci-senha",
+      "sufixo": null,
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/esqueci-senha.html",
+      "screenshot": "desktop-esqueci-senha.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-redefinir-senha",
+      "pagina": "redefinir-senha",
+      "sufixo": null,
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/redefinir-senha.html",
+      "screenshot": "mobile-redefinir-senha.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-redefinir-senha",
+      "pagina": "redefinir-senha",
+      "sufixo": null,
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/redefinir-senha.html",
+      "screenshot": "desktop-redefinir-senha.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-verificar-email",
+      "pagina": "verificar-email",
+      "sufixo": null,
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/verificar-email.html",
+      "screenshot": "mobile-verificar-email.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-verificar-email",
+      "pagina": "verificar-email",
+      "sufixo": null,
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/verificar-email.html",
+      "screenshot": "desktop-verificar-email.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-dashboard",
+      "pagina": "dashboard",
+      "sufixo": null,
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/dashboard.html",
+      "screenshot": "mobile-dashboard.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-dashboard",
+      "pagina": "dashboard",
+      "sufixo": null,
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/dashboard.html",
+      "screenshot": "desktop-dashboard.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-trilha",
+      "pagina": "trilha",
+      "sufixo": null,
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/trilha.html?id=1",
+      "screenshot": "mobile-trilha.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-trilha",
+      "pagina": "trilha",
+      "sufixo": null,
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/trilha.html?id=1",
+      "screenshot": "desktop-trilha.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-comunidade",
+      "pagina": "comunidade",
+      "sufixo": null,
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/comunidade.html",
+      "screenshot": "mobile-comunidade.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-comunidade",
+      "pagina": "comunidade",
+      "sufixo": null,
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/comunidade.html",
+      "screenshot": "desktop-comunidade.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-dashboard-progresso",
+      "pagina": "dashboard",
+      "sufixo": "progresso",
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/dashboard.html",
+      "screenshot": "mobile-dashboard-progresso.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-dashboard-progresso",
+      "pagina": "dashboard",
+      "sufixo": "progresso",
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/dashboard.html",
+      "screenshot": "desktop-dashboard-progresso.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-trilha-progresso",
+      "pagina": "trilha",
+      "sufixo": "progresso",
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/trilha.html?id=1",
+      "screenshot": "mobile-trilha-progresso.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-trilha-progresso",
+      "pagina": "trilha",
+      "sufixo": "progresso",
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/trilha.html?id=1",
+      "screenshot": "desktop-trilha-progresso.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 0
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-trilha-modulo",
+      "pagina": "trilha",
+      "sufixo": "modulo",
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/trilha.html?id=1",
+      "screenshot": "mobile-trilha-modulo.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-trilha-modulo",
+      "pagina": "trilha",
+      "sufixo": "modulo",
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/trilha.html?id=1",
+      "screenshot": "desktop-trilha-modulo.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "mobile-trilha-atividade",
+      "pagina": "trilha",
+      "sufixo": "atividade",
+      "viewport": "mobile",
+      "urlFinal": "http://localhost:3000/trilha.html?id=1",
+      "screenshot": "mobile-trilha-atividade.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1
+      },
+      "console": [],
+      "erro": null
+    },
+    {
+      "nome": "desktop-trilha-atividade",
+      "pagina": "trilha",
+      "sufixo": "atividade",
+      "viewport": "desktop",
+      "urlFinal": "http://localhost:3000/trilha.html?id=1",
+      "screenshot": "desktop-trilha-atividade.png",
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1
+      },
+      "console": [],
+      "erro": null
+    }
+  ],
+  "lighthouse": [
+    {
+      "pagina": "index",
+      "viewport": "mobile",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "index",
+      "viewport": "desktop",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "login",
+      "viewport": "mobile",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "login",
+      "viewport": "desktop",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "cadastro",
+      "viewport": "mobile",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "cadastro",
+      "viewport": "desktop",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "esqueci-senha",
+      "viewport": "mobile",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "esqueci-senha",
+      "viewport": "desktop",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "redefinir-senha",
+      "viewport": "mobile",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "redefinir-senha",
+      "viewport": "desktop",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "verificar-email",
+      "viewport": "mobile",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "verificar-email",
+      "viewport": "desktop",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "dashboard",
+      "viewport": "mobile",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "dashboard",
+      "viewport": "desktop",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "trilha",
+      "viewport": "mobile",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "trilha",
+      "viewport": "desktop",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "comunidade",
+      "viewport": "mobile",
+      "score": 100,
+      "reprovadas": []
+    },
+    {
+      "pagina": "comunidade",
+      "viewport": "desktop",
+      "score": 100,
+      "reprovadas": []
+    }
+  ]
+}
