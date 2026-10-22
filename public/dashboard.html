@@ -11,30 +11,29 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
+<body class="com-menu">
 
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-<header class="topbar">
+<header class="topbar topbar-marca">
   <div class="logo-badge icone" data-icone="graduation-cap" data-icone-tamanho="20" aria-hidden="true"></div>
-  <div>
-    <h1 id="saudacao" class="topbar-titulo">Olá!</h1>
-    <small>Jovem Aprendiz Digital</small>
-  </div>
+  <strong class="topbar-titulo">Jovem Aprendiz Digital</strong>
   <div class="spacer"></div>
   <button type="button" class="sair" id="btn-sair">Sair</button>
 </header>
 
-<nav class="tabbar tabbar-inline" id="tabbar" aria-label="Navegação principal"></nav>
+<nav class="tabbar" id="tabbar" aria-label="Navegação principal"></nav>
 
 <div class="container container-dashboard">
   <main id="conteudo">
+
+    <h1 id="saudacao" class="saudacao">Olá!</h1>
 
     <div id="aviso-verificacao" class="sucesso-msg" role="status" hidden></div>
 
     <div id="resumo-card"></div>
 
-    <h2>Suas trilhas</h2>
+    <h2 class="titulo-trilhas">Suas trilhas</h2>
     <div id="lista-trilhas" aria-live="polite">
       <p class="vazio">Carregando trilhas...</p>
     </div>

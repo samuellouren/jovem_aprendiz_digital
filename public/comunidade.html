@@ -11,22 +11,24 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap">
 <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
+<body class="com-menu">
 
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-<header class="topbar">
-  <div class="logo-badge icone" data-icone="message-circle" data-icone-tamanho="20" aria-hidden="true"></div>
-  <div>
-    <h1 class="topbar-titulo">Comunidade</h1>
-    <small>Pergunte, compartilhe, ajude alguém</small>
-  </div>
+<header class="topbar topbar-marca">
+  <div class="logo-badge icone" data-icone="graduation-cap" data-icone-tamanho="20" aria-hidden="true"></div>
+  <strong class="topbar-titulo">Jovem Aprendiz Digital</strong>
+  <div class="spacer"></div>
+  <button type="button" class="sair" data-sair>Sair</button>
 </header>
 
-<nav class="tabbar tabbar-inline" id="tabbar" aria-label="Navegação principal"></nav>
+<nav class="tabbar" id="tabbar" aria-label="Navegação principal"></nav>
 
 <div class="container container-comunidade">
   <main id="conteudo">
+
+    <h1 class="saudacao">Comunidade</h1>
+    <p class="subtitulo-pagina">Pergunte, compartilhe, ajude alguém.</p>
 
     <div class="card">
       <form id="form-post" novalidate>
