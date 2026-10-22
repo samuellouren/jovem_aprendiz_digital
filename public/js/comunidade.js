@@ -44,6 +44,18 @@ function pintarComentarios(caixa, comentarios) {
     .join("");
 }
 
+// Esqueleto de carregamento (a classe .esqueleto-bloco vem do style.css)
+function esqueletoComentarios() {
+  return '<span class="sr-only">Carregando...</span>' +
+    '<div class="esqueleto" aria-hidden="true">' +
+    '<span class="esqueleto-bloco esq-comentario"></span>'.repeat(2) + "</div>";
+}
+function esqueletoPosts() {
+  return '<span class="sr-only">Carregando...</span>' +
+    '<div class="esqueleto" aria-hidden="true">' +
+    '<span class="esqueleto-bloco esq-post"></span>'.repeat(3) + "</div>";
+}
+
 function montarPost(p) {
   const div = document.createElement("div");
   div.className = "card post-card";
@@ -59,7 +71,7 @@ function montarPost(p) {
     </button>
 
     <div class="respostas">
-      <div class="lista-comentarios" aria-live="polite"><p class="respostas-vazio">Carregando respostas...</p></div>
+      <div class="lista-comentarios" aria-live="polite" aria-busy="true">${esqueletoComentarios()}</div>
       <form class="form-resposta" novalidate>
         <label for="${idResposta}" class="sr-only">Sua resposta para essa publicação</label>
         <textarea id="${idResposta}" placeholder="Escreva sua resposta..." required></textarea>
@@ -82,10 +94,19 @@ function montarPost(p) {
     try {
       const { comentarios } = await Api.chamar("GET", "/comunidade/" + p.id + "/comentarios");
       jaCarregou = true;
+      lista.removeAttribute("aria-busy");
       pintarComentarios(lista, comentarios);
       rotulo.textContent = textoRespostas(comentarios.length);
     } catch (err) {
-      lista.innerHTML = `<p class="respostas-vazio">${esc(err.message)}</p>`;
+      lista.removeAttribute("aria-busy");
+      lista.innerHTML =
+        `<div class="estado-erro"><p class="respostas-vazio">${esc(err.message)}</p>` +
+        `<button type="button" class="btn-secondary tentar-de-novo">Tentar de novo</button></div>`;
+      lista.querySelector(".tentar-de-novo").addEventListener("click", () => {
+        lista.setAttribute("aria-busy", "true");
+        lista.innerHTML = esqueletoComentarios();
+        buscarComentarios();
+      });
     }
   }
 
@@ -121,6 +142,7 @@ async function carregarPosts() {
   try {
     const { posts } = await Api.chamar("GET", "/comunidade");
     const lista = document.getElementById("lista-posts");
+    lista.removeAttribute("aria-busy");
     if (!posts.length) {
       lista.innerHTML =
         `<p class="vazio">` +
@@ -131,7 +153,16 @@ async function carregarPosts() {
     lista.innerHTML = "";
     posts.forEach((p) => lista.appendChild(montarPost(p)));
   } catch (err) {
-    document.getElementById("lista-posts").innerHTML = `<p class="vazio">${esc(err.message)}</p>`;
+    const lista = document.getElementById("lista-posts");
+    lista.removeAttribute("aria-busy");
+    lista.innerHTML =
+      `<div class="estado-erro"><p class="vazio">${esc(err.message)}</p>` +
+      `<button type="button" class="btn-secondary tentar-de-novo">Tentar de novo</button></div>`;
+    lista.querySelector(".tentar-de-novo").addEventListener("click", () => {
+      lista.setAttribute("aria-busy", "true");
+      lista.innerHTML = esqueletoPosts();
+      carregarPosts();
+    });
   }
 }
 

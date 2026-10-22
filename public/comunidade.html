@@ -44,8 +44,9 @@
       </form>
     </div>
 
-    <div id="lista-posts" aria-live="polite">
-      <p class="vazio">Carregando mural...</p>
+    <div id="lista-posts" aria-live="polite" aria-busy="true">
+      <span class="sr-only">Carregando...</span>
+      <div class="esqueleto" aria-hidden="true"><span class="esqueleto-bloco esq-post"></span><span class="esqueleto-bloco esq-post"></span><span class="esqueleto-bloco esq-post"></span></div>
     </div>
 
   </main>

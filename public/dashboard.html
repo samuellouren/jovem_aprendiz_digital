@@ -31,11 +31,12 @@
 
     <div id="aviso-verificacao" class="sucesso-msg" role="status" hidden></div>
 
-    <div id="resumo-card"></div>
+    <div id="resumo-card"><div class="esqueleto" aria-hidden="true"><span class="esqueleto-bloco esq-resumo"></span></div></div>
 
     <h2 class="titulo-trilhas">Suas trilhas</h2>
-    <div id="lista-trilhas" aria-live="polite">
-      <p class="vazio">Carregando trilhas...</p>
+    <div id="lista-trilhas" aria-live="polite" aria-busy="true">
+      <span class="sr-only">Carregando...</span>
+      <div class="esqueleto esq-trilhas" aria-hidden="true"><span class="esqueleto-bloco esq-card"></span><span class="esqueleto-bloco esq-card"></span><span class="esqueleto-bloco esq-card"></span></div>
     </div>
 
   </main>

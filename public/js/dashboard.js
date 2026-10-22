@@ -195,6 +195,19 @@ async function buscarProximoModulo(trilhas) {
   return licao ? { trilhaId: alvo.id, licao } : null;
 }
 
+function mostrarEsqueleto() {
+  const lista = document.getElementById("lista-trilhas");
+  lista.setAttribute("aria-busy", "true");
+  lista.innerHTML =
+    '<span class="sr-only">Carregando...</span>' +
+    '<div class="esqueleto esq-trilhas" aria-hidden="true">' +
+    '<span class="esqueleto-bloco esq-card"></span>'.repeat(3) +
+    "</div>";
+  const card = document.getElementById("resumo-card");
+  card.className = "";
+  card.innerHTML = '<div class="esqueleto" aria-hidden="true"><span class="esqueleto-bloco esq-resumo"></span></div>';
+}
+
 async function carregar() {
   try {
     const [{ trilhas }, resumo] = await Promise.all([
@@ -203,6 +216,7 @@ async function carregar() {
     ]);
 
     const lista = document.getElementById("lista-trilhas");
+    lista.removeAttribute("aria-busy");
     lista.innerHTML = "";
     trilhas.forEach((t, i) => lista.appendChild(cartaoTrilha(t, i)));
 
@@ -218,8 +232,16 @@ async function carregar() {
     }
     pintarResumo(resumo, trilhas, proximo);
   } catch (err) {
-    document.getElementById("lista-trilhas").innerHTML =
-      `<p class="vazio">Não deu para carregar agora. ${esc(err.message)}</p>`;
+    const lista = document.getElementById("lista-trilhas");
+    lista.removeAttribute("aria-busy");
+    document.getElementById("resumo-card").innerHTML = "";
+    lista.innerHTML =
+      `<div class="estado-erro"><p class="vazio">Não deu para carregar agora. ${esc(err.message)}</p>` +
+      `<button type="button" class="btn-secondary tentar-de-novo">Tentar de novo</button></div>`;
+    lista.querySelector(".tentar-de-novo").addEventListener("click", () => {
+      mostrarEsqueleto();
+      carregar();
+    });
   }
 }
 carregar();

@@ -1009,45 +1009,25 @@ textarea { resize: vertical; min-height: 70px; }
 .secao-nav .btn-proximo.ir-atividade { background: var(--ink); box-shadow: 0 5px 0 var(--ink-deep); }
 .secao-nav .btn-proximo.ir-atividade:active:not(:disabled) { box-shadow: 0 1px 0 var(--ink-deep); }
 
-/* ---------- Bloco da atividade, no fim do módulo ----------
-   Destacado do texto corrido, mas SEM cara de prova: borda sólida e
-   suave em vez de tracejada. A persona tem "medo de não entender" —
-   moldura de prova é justamente o gatilho a evitar. */
-.bloco-teste {
-  border: 2px solid var(--coral-borda);
-  border-radius: var(--radius);
-  background: var(--coral-soft);
-  padding: var(--s4);
-  margin-bottom: var(--s4);
-}
-.teste-cabecalho {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--s3);
-  padding-bottom: var(--s4);
-  margin-bottom: var(--s4);
-  border-bottom: 1.5px solid var(--coral-borda);
-}
-.teste-selo {
-  width: 42px; height: 42px; min-width: 42px;
-  border-radius: var(--radius-sm);
-  background: var(--coral);
-  color: #fff;
-  display: flex; align-items: center; justify-content: center;
-}
-.teste-cabecalho h2 {
-  font-size: 1.2rem;
+/* ---------- Atividade do módulo ----------
+   Sem moldura de "prova" (nada de borda tracejada): perguntas em cartões
+   brancos, alternativas em cartões grossos com letra, e uma barra de ação
+   presa no rodapé da área. Contrastes medidos (WCAG): rótulo --roxo-dark
+   sobre --bg 8.29; número --roxo-dark sobre branco 8.98; letra #fff sobre
+   --teal 5.47 / --ok 5.02 / --erro 6.29; --ok-ink sobre branco 7.13 e sobre
+   --ok-bg 6.49; --erro-ink sobre branco 8.02. */
+.bloco-teste { margin-bottom: var(--s4); }
+.teste-cabecalho { margin-bottom: var(--s5); }
+.teste-rotulo {
   margin: 0 0 var(--s1);
-  color: var(--coral-dark);
+  color: var(--roxo-dark);
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
-.teste-cabecalho p {
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--sub);
-  line-height: 1.45;
-}
-
-/* ---------- Atividade da lição ---------- */
+.teste-cabecalho h2 { font-size: 1.5rem; margin: 0 0 var(--s2); }
+.teste-apoio { margin: 0; color: var(--sub); font-size: 0.95rem; line-height: 1.5; }
 
 /* .questao é um <fieldset> (agrupa as alternativas daquela pergunta para
    quem usa leitor de tela); min-width: 0 evita que o mínimo padrão do
@@ -1055,60 +1035,86 @@ textarea { resize: vertical; min-height: 70px; }
 .questao {
   min-width: 0;
   border: 2px solid var(--border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-lg);
   padding: var(--s4);
-  margin-bottom: var(--s3);
+  margin: 0 0 var(--s4);
   background: #fff;
 }
-.questao.certa { border-color: var(--ok); background: var(--ok-bg); }
-.questao.errada { border-color: var(--erro); background: var(--erro-bg); }
-.questao-enunciado {
-  font-weight: 800;
-  color: var(--ink);
-  font-size: 0.95rem;
-  margin-bottom: var(--s3);
-}
-/* legend.questao-numero: zera o padding/borda padrão do <legend> */
-.questao-numero {
-  display: inline-block;
+.questao legend {
+  float: left; /* sai de cima da borda do fieldset */
+  width: 100%;
   padding: 0;
-  border: 0;
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--teal);
-  margin-bottom: var(--s1);
+  margin-bottom: var(--s4);
+  font-size: 1.15rem;
+  line-height: 1.35;
+  font-weight: 900;
+  color: var(--ink);
 }
+.questao-numero { color: var(--roxo-dark); font-weight: 900; }
+.questao-enunciado { font-weight: 900; }
 
-/* Alternativa: a label inteira é clicável, alvo grande pro dedo */
+.alternativas { clear: both; display: grid; gap: var(--s4); grid-template-columns: minmax(0, 1fr); }
+
+/* Alternativa: a label inteira é o alvo. O radio real fica dentro (.sr-only:
+   escondido só visualmente, continua no teclado); o foco aparece no cartão
+   por label.alternativa:focus-within (regra de foco lá em cima). */
 .alternativa {
+  position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--s3);
-  padding: var(--s3);
+  min-height: 58px;
+  margin: 0; /* zera a margem global de label: o espaçamento vem do gap da grade */
+  padding: var(--s3) var(--s4) var(--s3) var(--s3);
   border: 2px solid var(--border);
-  border-radius: var(--radius-sm);
-  margin-bottom: var(--s2);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 0 var(--border);
   background: #fff;
   cursor: pointer;
-  font-weight: 600;
-  font-size: 0.93rem;
+  font-weight: 700;
+  font-size: 1rem;
   color: var(--ink);
   line-height: 1.4;
+  scroll-margin-bottom: calc(var(--s7) * 3); /* a barra fixa não cobre a alternativa focada */
+  transition: transform 120ms var(--ease), box-shadow 120ms var(--ease), border-color 150ms ease;
 }
-.alternativa:last-child { margin-bottom: 0; }
-.alternativa input[type=radio] {
-  width: 20px; height: 20px; min-width: 20px;
-  margin: 1px 0 0;
-  accent-color: var(--teal);
+.alt-letra {
+  flex: 0 0 32px;
+  width: 32px; height: 32px;
+  border-radius: 10px;
+  background: var(--border);
+  color: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900;
+  font-size: 0.95rem;
 }
-.alternativa:has(input:checked) { border-color: var(--teal); background: var(--teal-tint); }
-.alternativa.marcada { border-color: var(--teal); background: var(--teal-tint); }
+.alt-texto { flex: 1; min-width: 0; }
+.alternativa:has(input:checked),
+.alternativa.marcada { border-color: var(--teal); background: var(--teal-tint); box-shadow: 0 4px 0 var(--teal); }
+.alternativa:has(input:checked) .alt-letra,
+.alternativa.marcada .alt-letra { background: var(--teal); color: #fff; }
+/* Depois de verificar: só a escolhida é colorida (o servidor não diz qual era a certa) */
+.questao.certa .alternativa:has(input:checked),
+.questao.certa .alternativa.marcada { background: var(--ok-bg); border-color: var(--ok); box-shadow: 0 4px 0 var(--ok); }
+.questao.certa .alternativa:has(input:checked) .alt-letra,
+.questao.certa .alternativa.marcada .alt-letra { background: var(--ok); }
+.questao.errada .alternativa:has(input:checked),
+.questao.errada .alternativa.marcada { background: var(--erro-bg); border-color: var(--erro); box-shadow: 0 4px 0 var(--erro); }
+.questao.errada .alternativa:has(input:checked) .alt-letra,
+.questao.errada .alternativa.marcada .alt-letra { background: var(--erro); }
+@media (hover: hover) and (pointer: fine) {
+  .alternativa:hover { border-color: var(--border-strong); }
+  .alternativa:has(input:checked):hover,
+  .alternativa.marcada:hover { border-color: var(--teal); }
+}
+.alternativa:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--border); }
+@media (prefers-reduced-motion: reduce) {
+  .alternativa:active { transform: none; }
+}
 
 .feedback-questao {
-  margin-top: var(--s3);
-  font-size: 0.88rem;
+  margin-top: var(--s4);
+  font-size: 0.95rem;
   font-weight: 800;
   display: none;
   align-items: flex-start;
@@ -1116,22 +1122,111 @@ textarea { resize: vertical; min-height: 70px; }
   line-height: 1.4;
 }
 .feedback-questao.show { display: flex; }
+.feedback-questao svg { flex: 0 0 auto; margin-top: 2px; }
 .feedback-questao.certa { color: var(--ok-ink); }
 .feedback-questao.errada { color: var(--erro-ink); }
 
+/* Barra de ação presa no rodapé da área (no celular a trilha não tem barra
+   inferior; no computador o menu é lateral). Fundo opaco + sombra para cima. */
+.teste-barra {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  padding: var(--s3) var(--s4) var(--s4);
+  margin: 0 calc(-1 * var(--s2));
+  background: #fff;
+  border-top: 2px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  box-shadow: 0 -6px 16px var(--fade-stepper);
+}
+.teste-barra .btn-primary { margin: 0; }
+.teste-barra .btn-primary[hidden] { display: none; }
 .feedback-final {
   border-radius: var(--radius-sm);
-  padding: var(--s4);
-  margin-top: var(--s3);
-  font-size: 0.93rem;
+  padding: var(--s3) var(--s4);
+  font-size: 0.95rem;
   font-weight: 800;
   display: none;
 }
 .feedback-final.show { display: flex; align-items: flex-start; gap: var(--s3); }
+.feedback-final svg { flex: 0 0 auto; }
 .feedback-final .txt { flex: 1; }
-.feedback-final.tudo-certo { background: var(--ok-bg); color: var(--ok-ink); }
+.feedback-final.tudo-certo { background: transparent; color: var(--ok-ink); padding: 0; align-items: center; }
 .feedback-final.tente-de-novo { background: var(--amber-soft); color: var(--amber-ink); }
 .feedback-final .sub { display: block; font-weight: 600; margin-top: var(--s1); color: var(--sub); }
+.feedback-final.tudo-certo .sub { color: var(--ok-ink); }
+
+/* Acertou tudo: a barra vira uma faixa verde com a saída para os módulos */
+.teste-barra.concluida { background: var(--ok-bg); border-top-color: var(--ok-borda); }
+.teste-barra.concluida .feedback-final { font-size: 1.1rem; }
+.btn-ok {
+  background: var(--ok);
+  color: #fff;
+  border-radius: 16px;
+  min-height: 52px;
+  width: 100%;
+  font-weight: 900;
+  font-size: 1.05rem;
+  box-shadow: 0 5px 0 var(--ok-ink);
+  margin-bottom: var(--s2);
+  transition: transform 120ms var(--ease), box-shadow 120ms var(--ease), filter 150ms ease;
+}
+.btn-ok:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--ok-ink); }
+.btn-ok[hidden] { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-ok:hover { filter: brightness(0.95); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-ok:active { transform: none; }
+}
+
+@media (min-width: 860px) {
+  .com-menu #tela-modulo:has(.bloco-teste) { max-width: 960px; }
+  .alternativas { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .teste-barra { flex-direction: row; align-items: center; margin: 0; }
+  .teste-barra .btn-primary,
+  .teste-barra .btn-ok { width: auto; flex: 0 0 auto; min-width: 240px; margin-bottom: 0; }
+  .teste-barra .feedback-final { flex: 1; }
+}
+
+/* ---------- Carregamento: esqueleto ----------
+   Blocos --border com pulso de opacidade. O texto "Carregando..." é .sr-only
+   e o contêiner leva aria-busy; os blocos são aria-hidden. */
+.esqueleto-bloco {
+  display: block;
+  background: var(--border);
+  border-radius: var(--radius-sm);
+  animation: esqueleto-pulso 1.2s ease-in-out infinite;
+}
+@keyframes esqueleto-pulso {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .esqueleto-bloco { animation: none !important; }
+}
+.esqueleto { display: grid; gap: var(--s4); }
+.esq-trilhas { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+#lista-trilhas > .esq-trilhas { grid-column: 1 / -1; }
+.esq-card { height: 190px; border-radius: var(--radius); }
+.esq-resumo { height: 210px; border-radius: var(--radius-lg); margin-bottom: var(--s5); }
+.esq-post { height: 150px; border-radius: var(--radius); }
+.esq-comentario { height: 58px; }
+.esq-no { display: flex; align-items: center; gap: var(--s4); padding: var(--s2) 0; }
+.esq-no.lado-direito { flex-direction: row-reverse; }
+.esq-circulo { flex: 0 0 72px; width: 72px; height: 72px; border-radius: 50%; }
+.esq-textos { flex: 1; display: grid; gap: var(--s2); }
+.esq-linha { height: 16px; border-radius: 8px; }
+.esq-linha.curta { width: 55%; }
+.esq-no.lado-direito .esq-linha.curta { margin-left: auto; }
+
+/* ---------- Erro de carregamento, com saída ---------- */
+.estado-erro { text-align: center; }
+#lista-trilhas > .estado-erro { grid-column: 1 / -1; }
+.estado-erro .btn-secondary { width: auto; min-width: 200px; min-height: 48px; }
 
 .selo-concluida {
   display: inline-flex;

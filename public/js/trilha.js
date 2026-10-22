@@ -433,17 +433,19 @@ function montarAtividade(licao) {
     .map(
       (q, i) => `
       <fieldset class="questao" data-questao="${q.id}">
-        <legend class="questao-numero">Pergunta ${i + 1} de ${licao.questoes.length}</legend>
-        <div class="questao-enunciado">${esc(q.enunciado)}</div>
+        <legend><span class="questao-numero">${i + 1}.</span> <span class="questao-enunciado">${esc(q.enunciado)}</span></legend>
+        <div class="alternativas">
         ${q.alternativas
           .map(
-            (a) => `
+            (a, j) => `
           <label class="alternativa">
-            <input type="radio" name="questao-${q.id}" value="${a.id}">
-            <span>${esc(a.texto)}</span>
+            <input type="radio" name="questao-${q.id}" value="${a.id}" class="sr-only">
+            <span class="alt-letra" aria-hidden="true">${String.fromCharCode(65 + j)}</span>
+            <span class="alt-texto">${esc(a.texto)}</span>
           </label>`
           )
           .join("")}
+        </div>
         <div class="feedback-questao" role="status" aria-live="polite"></div>
       </fieldset>`
     )
@@ -451,18 +453,19 @@ function montarAtividade(licao) {
 
   box.innerHTML = `
     <div class="teste-cabecalho">
-      <span class="teste-selo" aria-hidden="true">${Icones.svg("edit-3", { tamanho: 22 })}</span>
-      <div>
-        <h2>Agora é sua vez</h2>
-        <p>
-          Responda para fixar o que você acabou de estudar. Acertando tudo, o módulo
-          é concluído sozinho — e dá para refazer quantas vezes quiser.
-        </p>
-      </div>
+      <p class="teste-rotulo">Agora é sua vez</p>
+      <h2>Atividade do módulo</h2>
+      <p class="teste-apoio">
+        Sem pressa: dá pra refazer quantas vezes quiser. Acertando tudo, o módulo
+        é concluído sozinho.
+      </p>
     </div>
     ${perguntas}
-    <button type="button" class="btn-primary verificar">Verificar respostas</button>
-    <div class="feedback-final" role="status" aria-live="polite"></div>`;
+    <div class="teste-barra">
+      <button type="button" class="btn-primary verificar">Verificar respostas</button>
+      <div class="feedback-final" role="status" aria-live="polite"></div>
+      <button type="button" class="btn-ok voltar-modulos" hidden>${ic("layers", 18)} Voltar aos módulos</button>
+    </div>`;
 
   // Deixa marcada a resposta que a pessoa já tinha dado antes
   licao.questoes.forEach((q) => {
@@ -485,6 +488,9 @@ function montarAtividade(licao) {
 
   const btn = box.querySelector(".verificar");
   const final = box.querySelector(".feedback-final");
+  const barra = box.querySelector(".teste-barra");
+  const voltarOk = box.querySelector(".voltar-modulos");
+  voltarOk.addEventListener("click", mostrarTelaTrilha);
 
   btn.addEventListener("click", async () => {
     const respostas = [];
@@ -528,9 +534,14 @@ function montarAtividade(licao) {
       if (r.todas_corretas) {
         final.className = "feedback-final tudo-certo show";
         final.innerHTML =
-          ic("award", 20) +
-          "<span class='txt'>Você acertou tudo! Módulo concluído." +
-          "<span class='sub'>Seu progresso já foi atualizado no painel.</span></span>";
+          ic("award", 22) +
+          "<span class='txt'>Você acertou tudo!" +
+          "<span class='sub'>Módulo concluído.</span></span>";
+        // Só apresentação: a barra vira a faixa verde com a saída para os módulos
+        barra.classList.add("concluida");
+        btn.hidden = true;
+        voltarOk.hidden = false;
+        voltarOk.focus();
         licao.concluida = true;
         // A atividade em si só conta como "parte concluída" quando acertada
         // por completo — não por só ter clicado nela. Repinta a barra do
@@ -539,6 +550,7 @@ function montarAtividade(licao) {
         pintarTopoModulo(licao);
       } else {
         const acertos = r.resultados.filter((x) => x.correta).length;
+        barra.classList.remove("concluida");
         final.className = "feedback-final tente-de-novo show";
         final.innerHTML =
           ic("trending-up", 20) +
@@ -561,15 +573,37 @@ function montarAtividade(licao) {
 /* =================================================================
    Carga inicial
    ================================================================= */
+function mostrarEsqueletoModulos() {
+  const wrap = document.getElementById("lista-modulos");
+  wrap.setAttribute("aria-busy", "true");
+  wrap.innerHTML =
+    '<span class="sr-only">Carregando...</span>' +
+    '<div class="esqueleto" aria-hidden="true">' +
+    [0, 1, 2].map((i) =>
+      '<div class="esq-no ' + (i % 2 ? "lado-direito" : "lado-esquerdo") + '">' +
+      '<span class="esqueleto-bloco esq-circulo"></span>' +
+      '<span class="esq-textos"><span class="esqueleto-bloco esq-linha"></span><span class="esqueleto-bloco esq-linha curta"></span></span></div>'
+    ).join("") +
+    "</div>";
+}
+
 async function carregar() {
   try {
     const dados = await Api.chamar("GET", "/trilhas/" + trilhaId);
     trilha = dados.trilha;
     licoes = dados.licoes.map((l) => ({ ...l, secoes: l.secoes || [], questoes: l.questoes || [] }));
+    document.getElementById("lista-modulos").removeAttribute("aria-busy");
     mostrarTelaTrilha();
   } catch (err) {
-    document.getElementById("lista-modulos").innerHTML =
-      `<p class="vazio">${ic("alert-circle", 30)}${esc(err.message)}</p>`;
+    const wrap = document.getElementById("lista-modulos");
+    wrap.removeAttribute("aria-busy");
+    wrap.innerHTML =
+      `<div class="estado-erro"><p class="vazio">${ic("alert-circle", 30)}${esc(err.message)}</p>` +
+      `<button type="button" class="btn-secondary tentar-de-novo">Tentar de novo</button></div>`;
+    wrap.querySelector(".tentar-de-novo").addEventListener("click", () => {
+      mostrarEsqueletoModulos();
+      carregar();
+    });
   }
 }
 carregar();
