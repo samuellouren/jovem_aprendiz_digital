@@ -97,12 +97,13 @@ function pintarResumo(resumo, trilhas, proximo) {
     return;
   }
 
+  const fechar = trilhas.length === 3 ? "as três trilhas" : "todas as trilhas";
   if (feitos >= total) {
     card.className = "resumo-card resumo-completo";
     card.innerHTML =
       proximoHtml({
         etiqueta: "Mini curso completo",
-        titulo: "Você fechou as três trilhas!",
+        titulo: "Você fechou " + fechar + "!",
         descricao: "Quando quiser, volte a qualquer módulo para rever o que aprendeu.",
         href: primeira ? "/trilha.html?id=" + primeira.id : "",
         botao: "Revisar os módulos",
@@ -112,7 +113,6 @@ function pintarResumo(resumo, trilhas, proximo) {
   }
 
   const faltam = total - feitos;
-  const fechar = trilhas.length === 3 ? "as três trilhas" : "todas as trilhas";
   const alvo = trilhas.find((t) => t.licoes_concluidas < t.total_licoes) || primeira;
 
   let p;

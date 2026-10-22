@@ -68,7 +68,8 @@ function mostrarSucessoForm(el, mensagem) {
 // Navegação principal. No celular é a barra inferior fixa (só os itens); a
 // partir de 860px o CSS a transforma em menu lateral e passa a mostrar também
 // a marca e o bloco do usuário (com o botão Sair), montados aqui.
-function montarTabbar(ativo) {
+function montarTabbar(ativo, ariaCurrent) {
+  const atual = ariaCurrent || "page";
   const el = document.getElementById("tabbar");
   if (!el) return;
   // Os ícones vêm de public/js/icones.js — a página precisa carregá-lo antes
@@ -90,7 +91,7 @@ function montarTabbar(ativo) {
       .map(([href, icone, label]) => {
         const ativa = href === ativo;
         return (
-          `<a href="${href}" class="${ativa ? "active" : ""}"${ativa ? ' aria-current="page"' : ""}>` +
+          `<a href="${href}" class="${ativa ? "active" : ""}"${ativa ? ' aria-current="' + atual + '"' : ""}>` +
           `<span class="ic">${Icones.svg(icone, { tamanho: 22 })}</span>${label}</a>`
         );
       })
@@ -116,5 +117,5 @@ function montarTabbar(ativo) {
 (function montarAutomatico() {
   const ativo = document.body && document.body.dataset.tabbarAtivo;
   const el = document.getElementById("tabbar");
-  if (ativo && el && !el.children.length) montarTabbar(ativo);
+  if (ativo && el && !el.children.length) montarTabbar(ativo, "true");
 })();

@@ -92,7 +92,7 @@ function pintarListaModulos() {
 
   licoes.forEach((l, i) => {
     const estado = l.concluida ? "feito" : i === proximo ? "proximo" : "";
-    const sufixo = estado === "feito" ? " — concluído" : estado === "proximo" ? " — próximo" : "";
+    const sufixo = estado === "feito" ? " — concluído" : estado === "proximo" ? " — começar" : "";
     const meta = l.secoes.length + " seções" + (l.questoes.length ? " · atividade" : "");
 
     // Linha pontilhada (só desenho) entre este módulo e o anterior
@@ -246,7 +246,6 @@ function pintarTopoModulo(licao) {
       </div>
       <div class="passo-texto">
         <span>${naAtividade ? "Atividade final" : "Parte " + (passoAtual + 1) + " de " + total}</span>
-        <span>${pct}%</span>
       </div>
     </div>`;
 
@@ -433,7 +432,7 @@ function montarAtividade(licao) {
     .map(
       (q, i) => `
       <fieldset class="questao" data-questao="${q.id}">
-        <legend><span class="questao-numero">${i + 1}.</span> <span class="questao-enunciado">${esc(q.enunciado)}</span></legend>
+        <legend><span class="questao-numero"><span class="sr-only">Pergunta </span>${i + 1}<span class="sr-only"> de ${licao.questoes.length}</span>.</span> <span class="questao-enunciado">${esc(q.enunciado)}</span></legend>
         <div class="alternativas">
         ${q.alternativas
           .map(
@@ -442,6 +441,7 @@ function montarAtividade(licao) {
             <input type="radio" name="questao-${q.id}" value="${a.id}" class="sr-only">
             <span class="alt-letra" aria-hidden="true">${String.fromCharCode(65 + j)}</span>
             <span class="alt-texto">${esc(a.texto)}</span>
+            <span class="alt-marca" aria-hidden="true"><span class="alt-marca-ok">${ic("check", 20)}</span><span class="alt-marca-erro">${ic("x", 20)}</span></span>
           </label>`
           )
           .join("")}
@@ -483,6 +483,17 @@ function montarAtividade(licao) {
       marcarSelecionada(questaoEl);
       questaoEl.classList.remove("certa", "errada");
       questaoEl.querySelector(".feedback-questao").classList.remove("show");
+      // Depois de concluída, trocar uma resposta devolve o botão de verificar
+      // (só apresentação: licao.concluida e passosVistos não são desfeitos).
+      const barraEl = box.querySelector(".teste-barra");
+      if (barraEl.classList.contains("concluida")) {
+        barraEl.classList.remove("concluida");
+        box.querySelector(".verificar").hidden = false;
+        box.querySelector(".voltar-modulos").hidden = true;
+        const fin = box.querySelector(".feedback-final");
+        fin.className = "feedback-final";
+        fin.innerHTML = "";
+      }
     });
   });
 
