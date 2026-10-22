@@ -54,48 +54,126 @@ function ehPassoAtividade(licao, indice) {
 function pintarCabecalhoTrilha() {
   const total = licoes.length;
   const feitos = licoes.filter((l) => l.concluida).length;
-  const pct = total ? Math.round((feitos / total) * 100) : 0;
+
+  // Sem progresso, "0 de 3" em destaque só desanima: mostra só quantos módulos
+  // existem, sem barra. Com progresso, "X de N" e a barra (sem porcentagem).
+  const progresso = feitos
+    ? `<p class="progresso-texto"><span>Progresso</span> <strong>${feitos} de ${total}</strong></p>
+       <div class="barra-fundo" role="progressbar" aria-valuenow="${feitos}" aria-valuemin="0" aria-valuemax="${total}" aria-valuetext="${feitos} de ${total} módulos concluídos" aria-label="Progresso da trilha">
+         <div class="barra-preenchida" style="width:${Math.round((feitos / total) * 100)}%"></div>
+       </div>`
+    : `<p class="progresso-texto"><strong>${total} ${total === 1 ? "módulo" : "módulos"}</strong></p>`;
 
   document.getElementById("cabecalho-trilha").innerHTML = `
     <div class="trilha-cabecalho">
-      <span class="etiqueta-nivel">
-        ${ic(trilha.icone, 13)} ${esc(trilha.nivel || "")}
-      </span>
-      <h1>${esc(trilha.titulo)}</h1>
-      <p class="desc">${esc(trilha.descricao || "")}</p>
-      <div class="barra-fundo" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso da trilha">
-        <div class="barra-preenchida" style="width:${pct}%"></div>
+      <a class="trilha-voltar" href="/dashboard.html" aria-label="Voltar para o início">
+        ${Icones.svg("arrow-left", { tamanho: 24 })}
+      </a>
+      <div class="trilha-cab-texto">
+        <span class="etiqueta-nivel">
+          ${ic(trilha.icone, 14)} ${esc(trilha.nivel || "")}
+        </span>
+        <h1>${esc(trilha.titulo)}</h1>
+        <p class="desc">${esc(trilha.descricao || "")}</p>
       </div>
-      <div class="progresso-texto">
-        ${ic("trending-up", 15)}
-        ${feitos} de ${total} módulos concluídos (${pct}%)
-      </div>
+      <div class="trilha-cab-progresso">${progresso}</div>
     </div>`;
+}
+
+// O "próximo" é o primeiro módulo ainda não concluído; -1 se todos estão feitos.
+function indiceProximo() {
+  return licoes.findIndex((l) => !l.concluida);
 }
 
 function pintarListaModulos() {
   const wrap = document.getElementById("lista-modulos");
   wrap.innerHTML = "";
+  const proximo = indiceProximo();
 
   licoes.forEach((l, i) => {
+    const estado = l.concluida ? "feito" : i === proximo ? "proximo" : "";
+    const sufixo = estado === "feito" ? " — concluído" : estado === "proximo" ? " — próximo" : "";
+    const meta = l.secoes.length + " seções" + (l.questoes.length ? " · atividade" : "");
+
+    // Linha pontilhada (só desenho) entre este módulo e o anterior
+    if (i > 0) {
+      const lig = document.createElement("span");
+      lig.className = "no-ligacao " + (i % 2 ? "para-direita" : "para-esquerda");
+      lig.setAttribute("aria-hidden", "true");
+      lig.innerHTML =
+        '<svg viewBox="0 0 100 60" preserveAspectRatio="none" focusable="false">' +
+        '<path d="M0 0 C0 34 100 26 100 60" vector-effect="non-scaling-stroke"/></svg>';
+      wrap.appendChild(lig);
+    }
+
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "modulo-card" + (l.concluida ? " feito" : "");
+    btn.className = "modulo-no " + (i % 2 ? "lado-direito" : "lado-esquerdo") + (estado ? " " + estado : "");
+    // O estado e a contagem de seções ficam aria-hidden no desenho porque o
+    // aria-label já diz o estado e o aria-describedby lê a contagem; assim o
+    // texto visível (o título) está contido no nome acessível (WCAG 2.5.3).
+    btn.setAttribute("aria-label", "Módulo " + (i + 1) + ": " + l.titulo + sufixo);
+    btn.setAttribute("aria-describedby", "modulo-meta-" + i);
+
+    const bola =
+      estado === "feito"
+        ? Icones.svg("check", { tamanho: 40 })
+        : estado === "proximo"
+          ? Icones.svg("arrow-right", { tamanho: 44 })
+          : i + 1;
+    const rotulo =
+      estado === "feito"
+        ? '<span class="no-estado" aria-hidden="true">Concluído</span>'
+        : estado === "proximo"
+          ? '<span class="no-estado" aria-hidden="true">Começar</span>'
+          : "";
+
     btn.innerHTML = `
-      <span class="modulo-numero" aria-hidden="true">${l.concluida ? Icones.svg("check", { tamanho: 19 }) : i + 1}</span>
-      <span class="modulo-corpo">
-        <span class="modulo-titulo">${esc(l.titulo)}</span>
-        <span class="modulo-resumo">${esc(l.conteudo)}</span>
-        <span class="modulo-meta">
-          <span>${ic("book-open", 13)} ${l.secoes.length} seções</span>
-          ${l.questoes.length ? `<span>${ic("edit-3", 13)} atividade</span>` : ""}
-          ${l.concluida ? `<span class="feito-txt">${ic("check-circle", 13)} concluído</span>` : ""}
-        </span>
-      </span>
-      <span class="icone seta" aria-hidden="true">${Icones.svg("chevron-right", { tamanho: 20 })}</span>`;
+      <span class="no-bola" aria-hidden="true">${bola}</span>
+      <span class="no-texto">
+        ${rotulo}
+        <span class="no-titulo">${esc(l.titulo)}</span>
+        <span class="no-meta" id="modulo-meta-${i}" aria-hidden="true">${meta}</span>
+      </span>`;
     btn.addEventListener("click", () => abrirModulo(i));
     wrap.appendChild(btn);
   });
+}
+
+// Painel do próximo módulo (só aparece no computador, por CSS). No celular o
+// caminho já mostra o "Começar", então o painel seria repetição.
+function pintarPainelProximo() {
+  const alvo = document.getElementById("painel-proximo");
+  if (!alvo) return;
+  const i = indiceProximo();
+
+  if (i === -1) {
+    alvo.innerHTML = `
+      <section class="painel-proximo" aria-labelledby="painel-titulo">
+        <span class="painel-rotulo">Trilha concluída</span>
+        <h2 id="painel-titulo">Você concluiu esta trilha</h2>
+        <p class="painel-desc">Todos os módulos estão feitos. Dá para rever qualquer um quando quiser.</p>
+        <button type="button" class="btn-primary" id="painel-rever">Rever o módulo 1</button>
+        <a class="btn btn-secondary" href="/dashboard.html">Ir para o início</a>
+      </section>`;
+    document.getElementById("painel-rever").addEventListener("click", () => abrirModulo(0));
+    return;
+  }
+
+  const l = licoes[i];
+  alvo.innerHTML = `
+    <section class="painel-proximo" aria-labelledby="painel-titulo">
+      <span class="painel-rotulo">Módulo ${i + 1}</span>
+      <h2 id="painel-titulo">${esc(l.titulo)}</h2>
+      <p class="painel-desc">${esc(l.conteudo)}</p>
+      <ul class="painel-pilulas">
+        <li>${ic("book-open", 15)} ${l.secoes.length} ${l.secoes.length === 1 ? "seção curta" : "seções curtas"}</li>
+        <li>${ic("clock", 15)} Uns 10 minutos</li>
+        ${l.questoes.length ? `<li>${ic("edit-3", 15)} Atividade no fim</li>` : ""}
+      </ul>
+      <button type="button" class="btn-primary" id="painel-comecar">Começar módulo</button>
+    </section>`;
+  document.getElementById("painel-comecar").addEventListener("click", () => abrirModulo(i));
 }
 
 function mostrarTelaTrilha() {
@@ -106,6 +184,7 @@ function mostrarTelaTrilha() {
   document.getElementById("subtitulo-topo").textContent = "Trilha de aprendizagem";
   pintarCabecalhoTrilha();
   pintarListaModulos();
+  pintarPainelProximo();
   window.scrollTo(0, 0);
 }
 

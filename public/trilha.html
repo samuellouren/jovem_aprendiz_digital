@@ -15,7 +15,7 @@
 
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-<header class="topbar">
+<header class="topbar topbar-trilha">
   <a href="/dashboard.html" class="voltar" id="btn-topo-voltar" aria-label="Voltar para o início">
     <span class="icone" data-icone="arrow-left" data-icone-tamanho="22" aria-hidden="true"></span>
   </a>
@@ -32,12 +32,23 @@
     <!-- Tela 1: a trilha e seus módulos -->
     <div id="tela-trilha">
       <div id="cabecalho-trilha"></div>
-      <h2 class="secao-titulo-lista">
-        <span class="icone" data-icone="layers" data-icone-tamanho="19" aria-hidden="true"></span>
-        Módulos da trilha
-      </h2>
-      <div id="lista-modulos" aria-live="polite">
-        <p class="vazio">Carregando módulos...</p>
+      <div class="trilha-corpo">
+        <div class="trilha-caminho">
+          <h2 class="secao-titulo-lista">
+            <span class="icone" data-icone="layers" data-icone-tamanho="19" aria-hidden="true"></span>
+            Módulos da trilha
+          </h2>
+          <div id="lista-modulos" aria-live="polite">
+            <p class="vazio">Carregando módulos...</p>
+          </div>
+        </div>
+        <div class="trilha-lateral">
+          <div id="painel-proximo"></div>
+          <a class="convite-trilha" href="/comunidade.html">
+            <span class="icone" data-icone="message-circle" data-icone-tamanho="22" aria-hidden="true"></span>
+            <span><strong>Travou em algo? Pergunte para a turma</strong><br>No mural ninguém julga pergunta básica.</span>
+          </a>
+        </div>
       </div>
     </div>
 
