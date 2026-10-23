@@ -873,11 +873,14 @@ textarea { resize: vertical; min-height: 70px; }
   z-index: 1;
 }
 /* Opacidade calibrada: no pico (bem na borda) a sombra ainda precisa manter
-   4.5:1 para o texto mais claro das pastilhas (".passo.visitado", --ok-ink
-   #166534 sobre branco). Medido (WCAG 2): sem sombra 7.13:1; com a sombra
-   por cima no pico (fundo = 0.08*ink + 0.92*branco, texto = 0.08*ink +
-   0.92*#166534) 6.53:1. Folga grande, mas não aumentar sem refazer a conta
-   (ver DOCUMENTACAO_IHC.md). Outras pastilhas no pico: --sub 6.88, coral-dark 6.76. */
+   4.5:1 em todos os pares de texto das pastilhas. Medido (WCAG 2), sem sombra
+   -> no pico (texto e fundo compostos com 0.08*ink por cima):
+   nome da visitada --ok-ink/branco 7.13 -> 6.53; bolinha da visitada
+   --ok-ink/--ok-bg 6.49 -> 5.96; nome padrão --sub/branco 7.58 -> 6.88;
+   bolinha padrão --teal-dark/--teal-soft 6.73 -> 6.15; atual branco/--ink
+   14.63 -> 12.59; atividade --coral-dark/branco 7.31 -> 6.76 (atual
+   branco/--coral 5.18 -> 4.91, o mais apertado: não aumentar a sombra sem
+   refazer a conta; ver DOCUMENTACAO_IHC.md). */
 .stepper-wrap::before { left: 0; background: linear-gradient(to right, var(--fade-stepper), var(--fade-stepper-zero)); }
 .stepper-wrap::after { right: 0; background: linear-gradient(to left, var(--fade-stepper), var(--fade-stepper-zero)); }
 /* trilha.js só acrescenta estas classes quando o stepper tem mesmo conteúdo
@@ -896,6 +899,7 @@ textarea { resize: vertical; min-height: 70px; }
 .stepper::-webkit-scrollbar { display: none; }
 
 .passo {
+  position: relative; /* contém os .sr-only da pastilha: sem isso eles escapam do overflow do stepper e criam rolagem horizontal na página */
   display: inline-flex; align-items: center; gap: var(--s2);
   flex-shrink: 0;
   background: var(--card);
@@ -909,10 +913,19 @@ textarea { resize: vertical; min-height: 70px; }
   cursor: pointer;
   white-space: nowrap;
 }
+/* Número da parte, numa bolinha antes do nome (peso 900). Escopado ao
+   stepper porque ".passo-num" também é a bolinha de "Como funciona". */
+.passo .passo-num {
+  width: 24px; height: 24px; min-width: 24px;
+  margin: 0 0 0 -8px;
+  font-size: 0.8rem;
+}
 .passo.visitado { color: var(--ok-ink); border-color: var(--ok-borda); }
+.passo.visitado .passo-num { background: var(--ok-bg); color: var(--ok-ink); }
 .passo.atual {
   background: var(--ink); border-color: var(--ink); color: #fff;
 }
+.passo.atual .passo-num { background: #fff; color: var(--ink); }
 .passo.passo-teste { border-color: var(--coral-borda); color: var(--coral-dark); }
 .passo.passo-teste.atual { background: var(--coral); border-color: var(--coral); color: #fff; border-style: solid; }
 
@@ -925,12 +938,22 @@ textarea { resize: vertical; min-height: 70px; }
   margin-bottom: var(--s4);
   border-left: 5px solid var(--teal);
 }
+/* Cabeçalho da seção: "Parte N de M" e, quando ajuda, o selo do tipo
+   (Introdução, Exemplo prático, Dica e erro comum, Resumo). A cor vem do tipo
+   da seção e herda para os dois; o selo tem contorno para não depender só
+   da cor. */
 .secao-tipo {
-  display: inline-flex; align-items: center; gap: var(--s2);
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2);
   font-size: 0.7rem; font-weight: 900;
   text-transform: uppercase; letter-spacing: 0.7px;
-  color: var(--teal);
+  color: var(--teal-dark);
   margin-bottom: var(--s2);
+}
+.secao-selo {
+  display: inline-flex; align-items: center; gap: var(--s1);
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  padding: 2px var(--s3) 2px var(--s2);
 }
 .secao h2 {
   font-size: 1.22rem;
@@ -953,7 +976,7 @@ textarea { resize: vertical; min-height: 70px; }
 .secao-introducao { border-left-color: var(--ink); }
 .secao-introducao .secao-tipo { color: var(--ink); }
 
-.secao-explicacao { border-left-color: var(--teal); }
+.secao-explicacao { border-left-color: var(--teal); } /* sem selo: só "Parte N de M" */
 
 .secao-exemplo {
   border-left-color: var(--amber-borda);

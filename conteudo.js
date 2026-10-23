@@ -3,6 +3,7 @@
 // Três blocos:
 //   TRILHAS    — as trilhas e os títulos das lições de cada uma
 //   SECOES     — o módulo de estudo de cada lição, em seções ordenadas
+//                [tipo, titulo, conteudo, tituloCurto]
 //   ATIVIDADES — a atividade de múltipla escolha que fecha cada módulo
 //
 // Sobre o formato do texto das seções:
@@ -82,8 +83,12 @@ const TRILHAS = [
 
 // ---------------------------------------------------------------
 // SECOES — o módulo de estudo de cada lição.
-// Cada item é [tipo, titulo, conteudo]. A ordem do array é a ordem
-// em que a pessoa percorre o módulo.
+// Cada item é [tipo, titulo, conteudo, tituloCurto]. A ordem do array é a
+// ordem em que a pessoa percorre o módulo.
+// O 4º elemento (tituloCurto) é opcional: se faltar, a tela usa o título
+// completo. É o nome que aparece no stepper do módulo e nas dicas
+// ("Revise o capítulo 'X'"). Deve ter até ~26 caracteres, dizer do que o
+// capítulo trata (nunca o tipo da seção) e não se repetir dentro do módulo.
 // ---------------------------------------------------------------
 const SECOES = {
   // ===============================================================
@@ -102,6 +107,7 @@ A boa notícia é que organizar arquivos não exige talento especial nem equipam
 **Este módulo é escrito para quem faz tudo pelo celular**, que é a realidade da maior parte das pessoas que estão começando agora. Onde o computador muda alguma coisa, está avisado no meio do caminho — assim, no dia em que você sentar na frente de um, nada vai ser novidade.
 
 Ao final você vai saber criar uma estrutura de pastas que faz sentido, nomear arquivos de um jeito que o "você do futuro" agradeça, e encontrar qualquer coisa em segundos usando a busca.`,
+      "Por que isso importa",
     ],
     [
       "explicacao",
@@ -128,6 +134,7 @@ Duas coisas do celular que confundem no começo:
 - O que você baixa não fica solto na tela inicial: vai para uma pasta chamada **Download**, e o que chega pelo WhatsApp vai para pastas do próprio aplicativo. Nenhuma das duas é lugar de morar: são lugares de passagem.
 
 E no computador, quando você tiver acesso a um: o mesmo programa se chama **Explorador de Arquivos** no Windows (o ícone de pastinha na barra de tarefas) e **Finder** no Mac. Muda o nome e o desenho; arquivo, pasta e caminho são os mesmos.`,
+      "Arquivo, pasta e caminho",
     ],
     [
       "explicacao",
@@ -148,6 +155,7 @@ Compare os dois lados:
 - Bom: 2024-03-15-comprovante-matricula-senai.pdf — você sabe o que é, de onde é e de quando é sem abrir.
 
 Regra de bolso: se o nome do arquivo não faz sentido lido em voz alta por outra pessoa, ele ainda não está bom.`,
+      "Nomes que fazem sentido",
     ],
     [
       "explicacao",
@@ -168,6 +176,7 @@ Dentro de Trabalho e Estudos, o segundo nível pode ser por ano (2024, 2025) ou 
 **E a pasta Download?** Trate como caixa de entrada, não como armário. Tudo que você baixa cai ali, e é normal. O mesmo vale para o que chega pelo WhatsApp, que fica guardado em pastas do próprio aplicativo. O que não pode é ficar ali para sempre. Uma vez por semana, abra a pasta Download e, para cada arquivo, faça uma de três coisas: renomear e mover para a pasta certa, apagar, ou deixar se ainda for usar hoje. São cinco minutos por semana — cabem numa viagem de ônibus.
 
 **A busca é sua rede de segurança.** Mesmo bem organizado, você vai esquecer onde salvou algo. Tanto no aplicativo Arquivos quanto no Google Drive existe uma **lupa** no alto da tela: toque nela e digite um pedaço do nome. Se lembrar só de "matricula", digite só isso. É por isso que nomes descritivos importam: eles são o que a busca consegue encontrar. (No computador é a mesma ideia: no Windows, aperte a tecla Windows e comece a digitar.)`,
+      "Estrutura de pastas",
     ],
     [
       "exemplo",
@@ -192,6 +201,7 @@ Na sexta-feira, no ônibus, ela parou dez minutos e fez o seguinte.
 Duas semanas depois, o RH pediu no WhatsApp: "me manda o contrato assinado". Ela abriu o Drive, buscou, tocou em compartilhar e enviou. Onze segundos. Antes, teria levado dez minutos remexendo na pasta Download — e um pouco de vergonha.
 
 **Se o seu celular for diferente:** os nomes dos botões mudam de aparelho para aparelho — pode ser "Meus Arquivos" no lugar de "Arquivos", "Enviar para" no lugar de "Mover para". O caminho é sempre o mesmo: segurar o dedo no arquivo para marcá-lo, procurar o menu de três pontinhos e escolher renomear ou mover.`,
+      "Na prática: 1ª semana",
     ],
     [
       "dica",
@@ -213,6 +223,7 @@ Comer a extensão ao renomear. Se o seu celular mostra o final do nome (.pdf, .j
 Confiar numa cópia só. Celular cai no chão, molha, some no busão, e um dia a assistência técnica formata tudo "para resolver". Documento importante merece estar em dois lugares: no aparelho e no **Google Drive** (ou OneDrive). Arquivo que existe em um lugar só é arquivo que você já perdeu, só ainda não sabe. Vale ligar o backup automático do Google Fotos e mandar para o Drive, na hora em que chegar, todo documento que importa.
 
 E tem um bônus: com os documentos no Drive, no dia em que você precisar usar um computador — na escola, na empresa, na casa de alguém — é só entrar na sua conta do Google e está tudo lá.`,
+      "Erros comuns",
     ],
     [
       "resumo",
@@ -229,6 +240,7 @@ E tem um bônus: com os documentos no Drive, no dia em que você precisar usar u
 - Nunca crie a pasta "Diversos". E mantenha o que é importante em dois lugares: no aparelho e no Google Drive.
 
 No celular, três gestos resolvem quase tudo: **tocar e segurar** para marcar um arquivo, os **três pontinhos** para abrir o menu (renomear, mover, apagar) e a **lupa** para buscar. No dia em que você usar um computador com Windows, os equivalentes são **F2** para renomear, **Ctrl+X** e **Ctrl+V** para mover e **Ctrl+Z** para desfazer.`,
+      "Resumo",
     ],
   ],
 
@@ -243,6 +255,7 @@ O problema é que ninguém ensina a escrever um. A pessoa abre a caixa de mensag
 A verdade é que e-mail profissional tem uma fórmula. É a mesma há décadas, cabe em cinco partes, e depois que você aprende dá para escrever qualquer e-mail em três minutos.
 
 Neste módulo você vai montar essa estrutura peça por peça, ver um e-mail completo pronto para copiar e adaptar, e conhecer os deslizes que fazem um e-mail parecer amador mesmo quando o conteúdo está certo.`,
+      "Por que isso importa",
     ],
     [
       "explicacao",
@@ -262,6 +275,7 @@ Neste módulo você vai montar essa estrutura peça por peça, ver um e-mail com
 - Bom: "Envio do comprovante de matrícula — Maria Alice Silva"
 
 **Anexo** — o arquivo que vai junto (aquele que você aprendeu a nomear direito na lição anterior). O nome do anexo aparece para quem recebe, então comprovante-matricula-maria-alice.pdf passa uma impressão bem diferente de documento(3).pdf.`,
+      "Campos do e-mail",
     ],
     [
       "explicacao",
@@ -279,6 +293,7 @@ Neste módulo você vai montar essa estrutura peça por peça, ver um e-mail com
 **5. Despedida e assinatura.** "Obrigada desde já," ou "Atenciosamente," seguido do seu nome numa linha. Se for contato externo, acrescente o cargo e um telefone. Três linhas no máximo.
 
 Sobre o tamanho: um e-mail de trabalho bom raramente passa de cinco ou seis linhas. Se o seu está muito maior, provavelmente tem rodeio para cortar — ou o assunto pedia uma conversa, não um e-mail.`,
+      "Como montar o texto",
     ],
     [
       "explicacao",
@@ -305,6 +320,7 @@ Dois hábitos que elevam qualquer e-mail:
 **Releia antes de enviar.** Uma leitura de trinta segundos pega erro de digitação, o nome errado e o anexo esquecido. Ler em voz alta baixinho ajuda ainda mais.
 
 **Responda no mesmo assunto.** Quando alguém te escreve, use Responder em vez de criar um e-mail novo. Assim a conversa fica junta e a pessoa não precisa procurar o que foi dito antes. Só troque o assunto se o tema realmente mudou.`,
+      "O tom certo",
     ],
     [
       "exemplo",
@@ -334,6 +350,7 @@ Jovem aprendiz — Setor administrativo
 Repare no que mudou. O assunto agora diz o que é e dá a data. A primeira frase apresenta quem escreve. A segunda diz exatamente o que falta. O pedido tem prazo e um motivo curto e razoável. A despedida tem nome e cargo. E some tudo o que não era necessário — nada de desculpas, nada de exclamação tripla.
 
 Mesmo tamanho de leitura, resultado completamente diferente: o segundo e-mail é respondido no mesmo dia; o primeiro fica esperando alguém ter paciência para decifrar.`,
+      "Na prática: e-mail pronto",
     ],
     [
       "dica",
@@ -351,6 +368,7 @@ Outros três deslizes que valem conhecer:
 **Endereço de e-mail informal.** Se o seu e-mail pessoal é algo como gatinha_do_role@..., crie um endereço separado só para trabalho e estudo. O formato seguro é nome.sobrenome@ ou uma variação com número, se o seu nome já estiver em uso. É gratuito e leva três minutos.
 
 **Prazo de resposta.** Num ambiente de trabalho, o combinado tácito é responder em até 24 horas úteis, mesmo que seja para dizer "recebi, vou verificar e te retorno amanhã". Silêncio preocupa mais do que uma resposta parcial.`,
+      "Erros comuns",
     ],
     [
       "resumo",
@@ -368,6 +386,7 @@ Outros três deslizes que valem conhecer:
 - E-mail é registro permanente. Escreveu com raiva? Salve como rascunho e releia depois.
 
 Um endereço profissional (nome.sobrenome@) e uma releitura de trinta segundos antes de enviar já colocam você à frente de muita gente.`,
+      "Resumo",
     ],
   ],
 
@@ -384,6 +403,7 @@ O ponto que muda tudo: **você não precisa saber fórmula avançada.** Quem usa
 Neste módulo você vai entender o vocabulário da planilha, escrever sua primeira fórmula, montar uma lista organizada do jeito que a planilha entende, e conhecer os erros que fazem uma planilha parar de funcionar do nada.
 
 Onde praticar de graça: **Google Planilhas** (basta ter uma conta Google, funciona no navegador e no celular) ou **Excel Online**. Não precisa comprar nada.`,
+      "Por que isso importa",
     ],
     [
       "explicacao",
@@ -409,6 +429,7 @@ Três detalhes práticos que evitam confusão logo no começo. No celular, quem 
 **Desfazer.** A **seta curva para a esquerda**, no alto da tela, volta atrás na última coisa que você fez. Você vai usar bastante.
 
 No computador é a mesma lógica, com teclado: dois cliques (ou F2) editam a célula, Enter desce uma linha, Tab anda uma para a direita, as setas movem em qualquer direção e Ctrl+Z desfaz.`,
+      "Célula, linha e coluna",
     ],
     [
       "explicacao",
@@ -440,6 +461,7 @@ Outras três que resolvem o dia a dia:
 Um atalho que vale ouro: selecione a célula logo abaixo de uma coluna de números e toque no botão de somatório (o símbolo Σ, na barra de ferramentas). A planilha escreve a fórmula de SOMA sozinha, já com o intervalo certo.
 
 **Copiando fórmula para o lado.** Toque na célula com a fórmula, segure o quadradinho do canto inferior direito e arraste. A planilha ajusta os endereços automaticamente: se em C2 estava =A2*B2, ao arrastar para C3 ela vira =A3*B3. É assim que se preenche uma coluna inteira em dois segundos.`,
+      "Sua primeira fórmula",
     ],
     [
       "explicacao",
@@ -463,6 +485,7 @@ Com a lista nesse formato, três recursos passam a funcionar:
 **Congelar o cabeçalho.** Em Exibir > Congelar > 1 linha, o cabeçalho fica fixo enquanto você rola a lista para baixo. Numa lista longa, isso resolve o problema de esquecer qual coluna é qual.
 
 Um toque final de apresentação: selecione a coluna de dinheiro e toque no botão de formato de moeda. A planilha passa a exibir R$ 18,00 em vez de 18 — sem mudar o número que ela usa nas contas.`,
+      "Montando a lista",
     ],
     [
       "exemplo",
@@ -490,6 +513,7 @@ Na sexta ela lembrou de mais um gasto e inseriu uma linha nova. Aqui está o det
 Depois ela criou o filtro (Dados > Criar filtro), tocou na setinha da coluna Categoria e deixou marcado só "Transporte". O total visível mostrou 27,60 — e ficou claro na hora que transporte era metade de tudo. Com essa informação ela pediu ajuda ao RH sobre o vale-transporte.
 
 Repare que ela não usou nada além de: cabeçalho, uma coluna por tipo de informação, uma fórmula de SOMA e um filtro. Isso é planilha suficiente para muito trabalho de verdade.`,
+      "Na prática: os gastos",
     ],
     [
       "dica",
@@ -513,6 +537,7 @@ Isso acontece quando a célula tem, junto do número, alguma coisa que a planilh
 **Não salvar.** No Google Planilhas isso não é problema, nem no celular nem no computador: ele salva sozinho a cada mudança, e é por isso que ele é a melhor porta de entrada. Só no Excel instalado num computador é preciso salvar na mão, com Ctrl+S, conferindo a pasta onde o arquivo está indo.
 
 E o mais importante para quem está começando: **experimentar não quebra nada.** A seta de desfazer volta qualquer coisa (Ctrl+Z, no computador), e no Google Planilhas o menu Arquivo > Histórico de versões traz a planilha de volta para como ela estava ontem. Pode mexer sem medo.`,
+      "Erros comuns",
     ],
     [
       "resumo",
@@ -531,6 +556,7 @@ E o mais importante para quem está começando: **experimentar não quebra nada.
 - Evite **célula mesclada** e **linha em branco** dentro da tabela.
 
 E lembre: a seta de desfazer volta atrás (Ctrl+Z, no computador), e o histórico de versões traz a planilha de volta. Dá para experimentar sem medo de estragar.`,
+      "Resumo",
     ],
   ],
 
@@ -548,6 +574,7 @@ Só que a IA já está na sua mão há anos. Quando o celular sugere a próxima 
 O que mudou de uns anos para cá foi o surgimento de ferramentas de IA com as quais você **conversa em português comum**, como o ChatGPT, o Gemini e o Claude. Antes, para usar IA era preciso programar. Agora basta escrever o que você quer, como escreveria para uma pessoa. Isso é o que colocou a IA ao alcance de quem nunca escreveu uma linha de código.
 
 Neste módulo você vai entender, sem termo técnico, o que essas ferramentas realmente fazem por baixo, onde elas ajudam de verdade e — a parte que quase ninguém conta — em que situações elas erram com uma confiança perigosa.`,
+      "Por que isso importa",
     ],
     [
       "explicacao",
@@ -565,6 +592,7 @@ Duas consequências importantes disso, e elas explicam quase tudo:
 **Ela não "sabe" as coisas do jeito que uma pessoa sabe.** Ela não tem certeza nem dúvida; ela tem padrão. Por isso, quando não tem uma boa base sobre algo, ela não diz "não sei" — ela completa com o que **parece** certo. E parece muito bem.
 
 Duas palavras que você vai ouvir e agora não precisam assustar: **modelo** é o programa treinado em si; **prompt** é simplesmente o pedido que você escreve. Ponto final, sem mistério.`,
+      "Como a IA funciona",
     ],
     [
       "explicacao",
@@ -584,6 +612,7 @@ Duas palavras que você vai ouvir e agora não precisam assustar: **modelo** é 
 **Organizar o que está bagunçado.** Jogue lá suas anotações soltas de reunião e peça uma lista de tarefas com responsáveis e prazos.
 
 Duas coisas que ela **não** é: não é buscador — para saber o horário de um posto de saúde hoje, use o site oficial; e não é conselheiro médico, jurídico ou financeiro. Ela ajuda a entender um assunto; a decisão continua sendo de gente qualificada.`,
+      "Onde a IA ajuda",
     ],
     [
       "explicacao",
@@ -601,6 +630,7 @@ Duas coisas que ela **não** é: não é buscador — para saber o horário de u
 **Cuidado com o que você digita nela.** Não coloque dado sensível: CPF, senha, dados de cliente, informação confidencial da empresa. Muitas ferramentas guardam as conversas. A regra prática: se você não escreveria num grupo de WhatsApp do trabalho, não escreva na IA.
 
 **Usar não é o mesmo que entregar.** No trabalho e no curso, use a IA para entender e rascunhar. O que sai com o seu nome tem que ser revisado e entendido por você — porque a responsabilidade pelo resultado é sua, e porque numa reunião vão te perguntar sobre ele.`,
+      "Limites e erros da IA",
     ],
     [
       "exemplo",
@@ -622,6 +652,7 @@ Resposta: uma explicação clara de que banco de horas é um acerto entre horas 
 **O que ela fez em seguida, e é a parte mais importante:** levou a dúvida ao RH. "Entendi que existe um prazo para compensar as horas. Qual é o prazo aqui na empresa?"
 
 Repare no papel que a IA teve. Ela não decidiu nada e não substituiu o RH. Ela transformou um texto intimidador em algo compreensível, e com isso a Maria Alice conseguiu fazer uma pergunta específica em vez de ficar calada por não saber nem o que perguntar. Esse é o uso mais valioso da ferramenta.`,
+      "Na prática: duas respostas",
     ],
     [
       "dica",
@@ -641,6 +672,7 @@ Três hábitos que resolvem quase todo o risco:
 Não cole resposta de IA e mande como sua num trabalho ou tarefa sem entender o conteúdo. Além da questão de honestidade, é constrangedor: alguém pergunta um detalhe e você não sabe responder sobre o texto que assinou.
 
 Cuidado com o efeito "muleta". Usar IA para entender é ótimo; usar IA para nunca precisar entender atrofia justamente o que faria você crescer no trabalho. A pergunta certa é: depois desta conversa, eu sei mais do que sabia antes? Se a resposta for não, você usou como atalho, não como ferramenta de aprendizado.`,
+      "Erros comuns",
     ],
     [
       "resumo",
@@ -658,6 +690,7 @@ Cuidado com o efeito "muleta". Usar IA para entender é ótimo; usar IA para nun
 - Usar IA para **entender e rascunhar** é ótimo. O que sai com o seu nome, você revisa e entende.
 
 E a mensagem central: IA é ferramenta, como planilha ou e-mail. Não é coisa de outro mundo, e você não precisa de nenhuma formação prévia para começar a usar hoje.`,
+      "Resumo",
     ],
   ],
 
@@ -672,6 +705,7 @@ Aqui a IA muda o jogo de forma concreta. Ela não estuda por você (isso não ex
 Esse segundo ponto merece um destaque. Muita gente não tira dúvida por vergonha — de perguntar de novo, de parecer que não acompanhou, de tomar o tempo do outro. Com a IA você pode pedir a mesma explicação cinco vezes, de cinco jeitos diferentes, às onze da noite, sem julgamento nenhum. Para quem tem medo de "não entender", isso vale muito.
 
 Neste módulo você vai aprender a pedir um resumo que realmente serve, a fazer a IA explicar no seu nível, e a usá-la como parceira de estudo — inclusive fazendo ela te dar prova antes da prova de verdade.`,
+      "Por que isso importa",
     ],
     [
       "explicacao",
@@ -703,6 +737,7 @@ Compare os resultados:
 Um cuidado prático: se o texto é muito longo, mande em pedaços e peça o resumo de cada parte, e só no fim um resumo dos resumos. Material grande de uma vez costuma sair superficial.
 
 E a regra que fecha tudo: **resumo é para orientar a leitura, não para substituí-la.** Leia o resumo, depois vá ao material original nas partes que importam. Quem só decora resumo trava na primeira pergunta que sai do roteiro.`,
+      "Resumir para estudar",
     ],
     [
       "explicacao",
@@ -724,6 +759,7 @@ E a regra que fecha tudo: **resumo é para orientar a leitura, não para substit
 "Deixa eu ver se entendi: banco de horas é quando as horas extras viram folga em vez de dinheiro, e existe um prazo para usar. Está certo? O que eu errei ou deixei de fora?"
 
 Isso se chama aprender ensinando, e é uma das formas mais eficientes que existem. Você descobre na hora exatamente onde seu entendimento está furado — e essa é uma informação que resumo nenhum te dá.`,
+      "A IA no seu nível",
     ],
     [
       "explicacao",
@@ -743,6 +779,7 @@ Isso se chama aprender ensinando, e é uma das formas mais eficientes que existe
 Uma técnica que vale conhecer: **teste antes de estudar.** Peça as perguntas do simulado *antes* de ler o material. Você vai errar quase tudo — e é esse o ponto. Errar primeiro faz o cérebro prestar muito mais atenção quando a resposta certa aparece na leitura. Parece contraintuitivo e funciona.
 
 E o ritual que fecha o ciclo, cinco minutos por sessão: no fim do estudo, escreva de memória o que ficou, sem olhar o material, e mande para a IA conferir. É a diferença entre "eu li" e "eu sei".`,
+      "Estudar antes da prova",
     ],
     [
       "exemplo",
@@ -760,6 +797,7 @@ E o ritual que fecha o ciclo, cinco minutos por sessão: no fim do estudo, escre
 **Segunda, no ônibus (15 min).** Só os flashcards que tinha pedido no sábado.
 
 Duas horas e meia bem distribuídas, em vez de uma virada de noite lendo 40 páginas no domingo. E o mais importante: ela chegou sabendo o que sabia — o que, para quem tem medo de não entender, vale tanto quanto a nota.`,
+      "Na prática: a prova",
     ],
     [
       "dica",
@@ -781,6 +819,7 @@ O antídoto é simples: **nunca termine uma sessão de estudo lendo. Termine tes
 **Estudar sem contexto.** Se você não disser à IA o que é a prova, de que curso, e o seu nível, ela devolve o resumo médio da internet — e não o que serve para você.
 
 E um lembrete que importa mais do que parece: **a IA não substitui perguntar ao professor ou ao colega.** Ela é ótima para você chegar na aula com uma pergunta boa, específica, em vez de um "não entendi nada". Quem faz pergunta específica é quem parece mais preparado — não menos.`,
+      "Erros comuns",
     ],
     [
       "resumo",
@@ -799,6 +838,7 @@ E um lembrete que importa mais do que parece: **a IA não substitui perguntar ao
 - A IA te ajuda a chegar na aula com uma **pergunta específica** — ela não substitui o professor.
 
 E vale repetir: pode pedir a mesma explicação quantas vezes precisar. Ninguém vai perder a paciência, e não existe pergunta boba aqui.`,
+      "Resumo",
     ],
   ],
 
@@ -815,6 +855,7 @@ Um exemplo que resume tudo. Pedido: "escreva um e-mail". A IA não sabe para que
 A boa notícia: escrever bons pedidos não é técnico. É a mesma habilidade de explicar uma tarefa para um colega novo que acabou de chegar — competente, disposto, mas que não conhece nada da sua realidade e vai fazer exatamente o que você mandar, ao pé da letra.
 
 Neste módulo você vai aprender as quatro peças de um pedido que funciona, como usar exemplos, e por que a segunda tentativa quase sempre é melhor que a primeira.`,
+      "Por que isso importa",
     ],
     [
       "explicacao",
@@ -837,6 +878,7 @@ Juntando tudo, veja a diferença:
 O segundo pedido leva vinte segundos a mais para escrever e devolve um e-mail que você usa quase sem mexer. O primeiro devolve um texto que você reescreve inteiro.
 
 Um teste rápido antes de enviar: **se um colega recém-chegado lesse só o seu pedido, ele conseguiria fazer a tarefa?** Se não, falta contexto.`,
+      "As quatro peças do pedido",
     ],
     [
       "explicacao",
@@ -858,6 +900,7 @@ Um teste rápido antes de enviar: **se um colega recém-chegado lesse só o seu 
 **Peça para ela te perguntar antes.** "Antes de escrever, me faça as perguntas que você precisa para fazer isso bem." Ótimo quando você mesmo não sabe explicar direito o que quer — ela conduz.
 
 **Peça mais de uma versão.** "Me dê 3 versões deste assunto de e-mail, uma mais formal, uma mais direta e uma mais curta." Escolher entre opções é mais fácil do que avaliar uma opção sozinha.`,
+      "Exemplos e papéis",
     ],
     [
       "explicacao",
@@ -882,6 +925,7 @@ Duas práticas de quem usa bem:
 **Guarde os pedidos que funcionaram.** Anote num bloco de notas os cinco ou seis que você mais usa (revisar e-mail, resumir texto, simulado de estudo). Colar e adaptar é mais rápido que reescrever.
 
 **Faça uma coisa por vez.** Pedido que junta cinco tarefas devolve as cinco pela metade. Peça o texto, ajuste, depois peça a revisão. Fica melhor e você mantém o controle do resultado.`,
+      "Conversar com a IA",
     ],
     [
       "exemplo",
@@ -918,6 +962,7 @@ Obrigada,
 Maria Alice Silva
 
 Repare no caminho: da tentativa 1 para a 3 o que mudou não foi a ferramenta, foi a especificidade. E note que o ajuste mais importante — propor uma solução junto com o problema — veio dela, não da IA. A IA escreveu; o julgamento profissional foi dela.`,
+      "Na prática: 3 tentativas",
     ],
     [
       "dica",
@@ -937,6 +982,7 @@ O que volta é uma resposta enorme com todas as sete tarefas feitas pela metade 
 **Aceitar um resultado que não é seu.** Se o texto não soa como você falaria, ajuste antes de enviar. Um e-mail com cara de robô é tão ruim quanto um e-mail mal escrito — e num ambiente de trabalho, as pessoas percebem.
 
 E o hábito que fecha o módulo, o mais valioso de todos: **releia como se você fosse quem vai receber.** A pergunta não é "a IA fez o que pedi?", é "isso resolve para quem vai ler?". Esse julgamento é seu, e é ele que continua sendo a sua parte do trabalho.`,
+      "Erros comuns",
     ],
     [
       "resumo",
@@ -955,6 +1001,7 @@ E o hábito que fecha o módulo, o mais valioso de todos: **releia como se você
 - Nada de dado sensível. Use dados fictícios quando precisar de exemplo.
 
 O teste que resolve quase tudo antes de enviar o pedido: **um colega que chegou hoje conseguiria fazer essa tarefa lendo só isso?**`,
+      "Resumo",
     ],
   ],
 
@@ -974,6 +1021,7 @@ Quem contrata aprendiz sabe que você está começando. O que está sendo avalia
 E existe um segundo documento hoje: o **perfil online**. Muita gente que recebe seu currículo vai procurar seu nome na internet. Ter um perfil simples e organizado no LinkedIn não é frescura de executivo — é a versão pública e sempre atualizada do seu currículo, e é gratuita.
 
 Neste módulo você vai montar as seções do currículo, aprender a descrever o que já fez de um jeito que conte, e configurar um perfil online básico sem precisar inventar nada.`,
+      "Por que isso importa",
     ],
     [
       "explicacao",
@@ -995,6 +1043,7 @@ O que **não** vai: RG, CPF, estado civil, nome dos pais, número da carteira de
 **6. Habilidades.** Ferramentas e idiomas, com honestidade: "Pacote Office — nível básico", "Google Planilhas — básico", "Inglês — leitura básica".
 
 Formato do arquivo: **PDF, sempre**. Word desconfigura no computador dos outros. E o nome do arquivo (você já sabe da primeira trilha): curriculo-maria-alice-silva.pdf.`,
+      "As partes do currículo",
     ],
     [
       "explicacao",
@@ -1026,6 +1075,7 @@ Veja como fica em quatro casos que aparecem muito:
 Repare no que essas descrições provam sem precisar dizer: responsabilidade, prazo, trabalho em grupo, uso de ferramenta. É isso que quem contrata está procurando em alguém sem experiência formal.
 
 **E cuidado com o extremo oposto: nunca invente.** Não é só uma questão ética — é prático. Currículo é roteiro de entrevista. Tudo que está escrito ali pode virar pergunta, e a hora de descobrir que você não sabe é a pior possível. Descrever bem o que é verdade sempre funciona melhor do que inventar o que não é.`,
+      "Descrevendo o que fez",
     ],
     [
       "explicacao",
@@ -1047,6 +1097,7 @@ O mínimo que já funciona, e leva menos de uma hora:
 **E a higiene digital, que é a parte que mais elimina candidato:** pesquise seu próprio nome no Google. O que aparece é o que quem contrata vai ver. Deixe privado o que não gostaria que sua supervisora visse, e confira se sua foto de perfil do WhatsApp — que aparece para qualquer contato de trabalho — passa a imagem que você quer.
 
 Uma boa prática por semana: comente algo relevante num post da sua área ou publique o que aprendeu num curso. Perfil com movimento aparece mais nas buscas do que perfil parado.`,
+      "Perfil online",
     ],
     [
       "exemplo",
@@ -1085,6 +1136,7 @@ Curso Técnico em Administração — Senai (em andamento, 2º semestre)
 - Inglês — leitura básica
 
 Uma página. Nada inventado. E repare: o que parecia "não ter nada" virou dois blocos sólidos de experiência assim que ela descreveu com verbo, detalhe e tamanho. É quase sempre assim — a experiência já existia, faltava a descrição.`,
+      "Na prática: o currículo",
     ],
     [
       "dica",
@@ -1106,6 +1158,7 @@ O ajuste custa cinco minutos por vaga e muda o resultado: **leia o anúncio e al
 **Telefone ou e-mail errado.** Parece impossível e acontece o tempo todo. Confira dígito por dígito, e mantenha o WhatsApp com uma foto e um nome apresentáveis — é por ali que muito recrutador faz o primeiro contato.
 
 E um lembrete que importa: **não ser chamada não significa que seu currículo é ruim.** Processo de aprendiz tem centenas de candidatos para poucas vagas. Continue enviando, continue fazendo curso, continue melhorando a descrição. O número de tentativas faz parte do processo, e não é medida do seu valor.`,
+      "Erros comuns",
     ],
     [
       "resumo",
@@ -1124,6 +1177,7 @@ E um lembrete que importa: **não ser chamada não significa que seu currículo 
 - **Adapte o currículo para cada vaga** — objetivo com o nome da vaga e o que ela pede na frente.
 
 E-mail profissional (nome.sobrenome@), zero erro de português e PDF: três detalhes pequenos que colocam você à frente de muita gente na primeira triagem.`,
+      "Resumo",
     ],
   ],
 
@@ -1140,6 +1194,7 @@ A verdade que tira metade do peso: **reunião online tem umas seis funções, e 
 E vale dizer: **problema técnico acontece com todo mundo**, inclusive com o gerente, inclusive com quem trabalha com isso há vinte anos. O que separa o profissional do amador não é nunca ter problema — é resolver sem drama.
 
 Neste módulo você vai ver o que fazer antes, durante e depois da reunião, incluindo o plano B para quando a internet cai.`,
+      "Por que isso importa",
     ],
     [
       "explicacao",
@@ -1157,6 +1212,7 @@ Neste módulo você vai ver o que fazer antes, durante e depois da reunião, inc
 **Escolha o lugar e avise em casa.** Um canto com o mínimo de circulação, e um recado para quem mora com você: "vou estar em reunião das 14h às 15h".
 
 **Entre dois ou três minutos antes.** Chegar em cima da hora é onde mora o desastre — é quando o link não abre, a atualização começa ou o áudio não funciona. Alguns minutos de folga transformam pânico em ajuste tranquilo.`,
+      "Antes da reunião",
     ],
     [
       "explicacao",
@@ -1176,6 +1232,7 @@ Neste módulo você vai ver o que fazer antes, durante e depois da reunião, inc
 **Sobre falar:** espere um instante quando alguém terminar — o áudio tem um pequeno atraso, e é aí que nascem as falas sobrepostas. Se acontecer de falarem juntos, resolva rápido e sem constrangimento: "pode falar" e pronto.
 
 **E se você não entendeu algo:** pergunte. "Só para eu confirmar se entendi: a entrega é na quinta ou na sexta?" Essa frase não expõe você — ela mostra atenção. Quem nunca pergunta é quem entrega errado depois.`,
+      "Durante a reunião",
     ],
     [
       "explicacao",
@@ -1195,6 +1252,7 @@ Neste módulo você vai ver o que fazer antes, durante e depois da reunião, inc
 **Confirme o que é seu.** Se ficou alguma tarefa para você, mande uma mensagem curta: "só confirmando o que ficou comigo: organizar a planilha de estoque até quinta". Isso evita mal-entendido e mostra que você acompanhou.
 
 **Se ficou uma dúvida.** Aquela que você não teve coragem de fazer na hora — mande depois, por mensagem. Pergunta feita depois ainda é pergunta feita. Pergunta engolida vira trabalho errado.`,
+      "Quando dá problema",
     ],
     [
       "exemplo",
@@ -1216,6 +1274,7 @@ Neste módulo você vai ver o que fazer antes, durante e depois da reunião, inc
 **14h58 — depois.** Anotou no bloco de notas do celular as três decisões da reunião e a tarefa dela. Às 15h05, mandou uma mensagem: "Confirmando o que ficou comigo: planilha de estoque organizada até sexta. Qualquer coisa te aviso antes."
 
 Nenhum truque avançado. Fone, luz, chegar antes, usar o chat, confirmar a tarefa. E ela saiu da reunião tendo sido notada pelo motivo certo.`,
+      "Na prática: 1ª reunião",
     ],
     [
       "dica",
@@ -1237,6 +1296,7 @@ Nenhum truque avançado. Fone, luz, chegar antes, usar o chat, confirmar a taref
 **Passar a reunião inteira invisível.** Câmera desligada, mudo, zero participação, sempre. Do lado de fora, isso parece desinteresse — mesmo quando é só vergonha. Você não precisa falar muito: uma pergunta no chat, um "bom dia" no começo, um "combinado" ao receber uma tarefa. É pouco e muda completamente a impressão que fica.
 
 E o alívio final: **ninguém está te avaliando pela sua internet.** Trava, corta, cai — acontece com todo mundo. O que fica registrado é como você lida: avisar, resolver, voltar. Isso, sim, as pessoas notam.`,
+      "Erros comuns",
     ],
     [
       "resumo",
@@ -1255,6 +1315,7 @@ E o alívio final: **ninguém está te avaliando pela sua internet.** Trava, cor
 - Não passe a reunião inteira invisível. Um cumprimento e uma pergunta já mudam a impressão.
 
 Problema técnico acontece com todo mundo, inclusive com quem manda na reunião. O que conta é resolver sem drama.`,
+      "Resumo",
     ],
   ],
 
@@ -1271,6 +1332,7 @@ Aqui vale desfazer um mito: organização não é sobre disciplina de ferro nem 
 Outro mito que atrapalha: o de que é preciso um aplicativo sofisticado. Não é. Papel funciona. O bloco de notas do celular funciona. O que faz diferença não é a ferramenta, é o hábito de olhar para ela.
 
 Neste módulo você vai montar um sistema simples e gratuito, com quatro peças, que sobrevive a uma semana ruim — porque é justamente na semana ruim que os sistemas complicados desmoronam.`,
+      "Por que isso importa",
     ],
     [
       "explicacao",
@@ -1293,6 +1355,7 @@ Duas coisas acontecem quando você faz isso. A primeira é que a lista costuma s
 **Depois, a regra de manutenção:** toda tarefa nova entra na lista **na hora em que aparece**. Alguém te pede algo no corredor, você anota ali mesmo, na frente da pessoa. Isso não é falta de memória — é o que profissional organizado faz, e passa uma ótima impressão.
 
 **E a regra dos dois minutos:** se a tarefa leva menos de dois minutos, faça agora em vez de anotar. Anotar custaria quase o mesmo.`,
+      "Uma lista só",
     ],
     [
       "explicacao",
@@ -1318,6 +1381,7 @@ E uma distinção útil: **calendário é o que tem hora marcada; lista é o que
 O limite de **três itens em "Hoje"** é o detalhe mais importante desta seção. Parece pouco. É exatamente o ponto: uma lista de doze itens para hoje termina com dois feitos e uma sensação de fracasso; três itens escolhidos com cuidado terminam com três feitos e a sensação de que o dia rendeu. Essa diferença de sensação é o que faz você continuar usando o sistema na semana seguinte.
 
 E quando a tarefa for grande demais para caber num dia — "estudar para a prova" — quebre em pedaços concretos: "ler capítulo 3", "fazer os exercícios do 3", "fazer simulado". Tarefa vaga é tarefa adiada.`,
+      "Prazo e prioridade",
     ],
     [
       "explicacao",
@@ -1340,6 +1404,7 @@ Essa última pergunta é a que mais rende com o tempo. Se toda semana você trav
 **Aproveite o transporte.** Se você passa uma hora no ônibus, isso é sete horas por semana. Não precisa ser estudo pesado: flashcards, ouvir uma explicação, reler o resumo, planejar o dia. Muita coisa cabe aí.
 
 **E proteja o descanso como se fosse uma tarefa.** Rotina de trabalho mais curso já é pesada. Sono e um tempo sem obrigação nenhuma não são luxo — são o que permite você aguentar o semestre inteiro. Cansaço acumulado é o que mais faz gente desistir de curso técnico, mais do que dificuldade de conteúdo.`,
+      "Revisão semanal",
     ],
     [
       "exemplo",
@@ -1373,6 +1438,7 @@ Escolheu as três prioridades da semana: **estudar para a prova, entregar a plan
 Foi esse lembrete que salvou a semana. Na terça de manhã ela viu que o compras não tinha respondido, cobrou na hora, e os dados chegaram na quarta. Sem o lembrete, ela descobriria na sexta — quando já não daria tempo.
 
 **Sexta, 17h.** Planilha entregue, prova feita, documentos entregues no sábado. E o mais importante: ela passou a semana sem aquela sensação de estar esquecendo alguma coisa.`,
+      "Na prática: a semana",
     ],
     [
       "dica",
@@ -1396,6 +1462,7 @@ Você é. O sistema é que era grande demais.
 **Abandonar tudo depois de uma semana ruim.** Vai ter semana em que nada funciona — doença, imprevisto, cansaço. Isso não quebra o sistema. Na revisão semanal seguinte, você recomeça. **Um sistema de organização não é uma prova que dá para reprovar; é uma ferramenta que está lá quando você voltar.**
 
 E o lembrete final: o objetivo não é fazer mais coisas. É parar de carregar tudo na cabeça o tempo todo. Se no fim da semana você está menos ansiosa, o sistema está funcionando — mesmo que a lista não tenha sido zerada. Ninguém zera a lista.`,
+      "Erros comuns",
     ],
     [
       "resumo",
@@ -1416,6 +1483,7 @@ E o lembrete final: o objetivo não é fazer mais coisas. É parar de carregar t
 - Semana ruim não quebra o sistema. Você recomeça na revisão seguinte.
 
 E proteja o descanso: numa rotina de trabalho mais curso, dormir bem não é luxo — é o que permite chegar até o fim.`,
+      "Resumo",
     ],
   ],
 };

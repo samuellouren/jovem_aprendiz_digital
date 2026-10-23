@@ -296,7 +296,7 @@ rota("GET", /^\/api\/trilhas\/(\d+)$/, async (req, res, params) => {
 
   // Seções de todos os módulos da trilha, numa consulta só
   const secoes = await db.all(
-    `SELECT s.id, s.licao_id, s.tipo, s.titulo, s.conteudo, s.ordem
+    `SELECT s.id, s.licao_id, s.tipo, s.titulo, s.titulo_curto, s.conteudo, s.ordem
      FROM secoes s JOIN licoes l ON l.id = s.licao_id
      WHERE l.trilha_id = ? ORDER BY s.licao_id, s.ordem, s.id`,
     [trilhaId]
@@ -308,6 +308,7 @@ rota("GET", /^\/api\/trilhas\/(\d+)$/, async (req, res, params) => {
       id: s.id,
       tipo: s.tipo,
       titulo: s.titulo,
+      titulo_curto: s.titulo_curto,
       conteudo: s.conteudo,
       ordem: s.ordem,
     });

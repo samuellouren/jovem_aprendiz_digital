@@ -228,10 +228,10 @@ async function semearSecoes() {
     if (!licao) continue; // lição não existe nesse banco — segue o baile
 
     for (let i = 0; i < secoes.length; i++) {
-      const [tipo, titulo, conteudo] = secoes[i];
+      const [tipo, titulo, conteudo, tituloCurto] = secoes[i];
       await run(
-        "INSERT INTO secoes (licao_id, tipo, titulo, conteudo, ordem) VALUES (?, ?, ?, ?, ?)",
-        [licao.id, tipo, titulo, conteudo, i + 1]
+        "INSERT INTO secoes (licao_id, tipo, titulo, conteudo, ordem, titulo_curto) VALUES (?, ?, ?, ?, ?, ?)",
+        [licao.id, tipo, titulo, conteudo, i + 1, tituloCurto ?? null]
       );
       total++;
     }
@@ -291,29 +291,32 @@ async function sincronizarSecoes() {
     const licao = await get("SELECT id FROM licoes WHERE titulo = ?", [tituloLicao]);
     if (!licao) continue;
 
-    const gravadas = await all("SELECT id, ordem, tipo, titulo, conteudo FROM secoes WHERE licao_id = ?", [licao.id]);
+    const gravadas = await all("SELECT id, ordem, tipo, titulo, conteudo, titulo_curto FROM secoes WHERE licao_id = ?", [licao.id]);
     if (!gravadas.length) continue; // banco novo: quem semeia é semearSecoes
 
     for (let i = 0; i < secoes.length; i++) {
-      const [tipo, titulo, conteudo] = secoes[i];
+      const [tipo, titulo, conteudo, tituloCurto = null] = secoes[i];
       const ordem = i + 1;
       const atual = gravadas.find((s) => s.ordem === ordem);
 
       if (!atual) {
         // Seção nova no fim de um módulo que já existia
-        await run("INSERT INTO secoes (licao_id, tipo, titulo, conteudo, ordem) VALUES (?, ?, ?, ?, ?)", [
-          licao.id,
-          tipo,
-          titulo,
-          conteudo,
-          ordem,
-        ]);
+        await run(
+          "INSERT INTO secoes (licao_id, tipo, titulo, conteudo, ordem, titulo_curto) VALUES (?, ?, ?, ?, ?, ?)",
+          [licao.id, tipo, titulo, conteudo, ordem, tituloCurto]
+        );
         mudancas++;
-      } else if (atual.tipo !== tipo || atual.titulo !== titulo || atual.conteudo !== conteudo) {
-        await run("UPDATE secoes SET tipo = ?, titulo = ?, conteudo = ? WHERE id = ?", [
+      } else if (
+        atual.tipo !== tipo ||
+        atual.titulo !== titulo ||
+        atual.conteudo !== conteudo ||
+        (atual.titulo_curto ?? null) !== tituloCurto
+      ) {
+        await run("UPDATE secoes SET tipo = ?, titulo = ?, conteudo = ?, titulo_curto = ? WHERE id = ?", [
           tipo,
           titulo,
           conteudo,
+          tituloCurto,
           atual.id,
         ]);
         mudancas++;
@@ -411,6 +414,29 @@ async function migrarConteudo() {
   if (mudancas) console.log(`Migração de conteúdo: ${mudancas} registro(s) atualizado(s).`);
 }
 
+// Acrescenta a uma tabela as colunas que ainda não existem nela e devolve os
+// nomes das que acabou de criar. Idempotente: confere com PRAGMA table_info
+// antes de cada ALTER TABLE, então rodar de novo não falha nem duplica nada.
+async function adicionarColunas(tabela, colunas) {
+  const existentes = await all(`PRAGMA table_info(${tabela})`);
+  const nomes = new Set(existentes.map((c) => c.name));
+  const criadas = [];
+  for (const [nome, tipo] of colunas) {
+    if (!nomes.has(nome)) {
+      await run(`ALTER TABLE ${tabela} ADD COLUMN ${nome} ${tipo}`);
+      criadas.push(nome);
+    }
+  }
+  return criadas;
+}
+
+// Nome curto do capítulo (stepper do módulo). Coluna nova em `secoes`:
+// nula nas linhas antigas até `sincronizarSecoes` preenchê-la a partir de
+// conteudo.js — nenhuma seção é apagada nem recriada por causa disso.
+async function migrarTituloCurtoSecoes() {
+  await adicionarColunas("secoes", [["titulo_curto", "TEXT"]]);
+}
+
 // Colunas de verificação de e-mail e redefinição de senha.
 //
 // Vão direto em `usuarios` (em vez de tabelas próprias) porque só existe
@@ -420,28 +446,18 @@ async function migrarConteudo() {
 // "ADD COLUMN IF NOT EXISTS" nesta versão; a checagem via PRAGMA garante
 // que rodar de novo não falhe nem duplique nada.
 async function migrarVerificacaoUsuarios() {
-  const colunas = await all("PRAGMA table_info(usuarios)");
-  const nomes = new Set(colunas.map((c) => c.name));
-  const novasColunas = [
+  const criadas = await adicionarColunas("usuarios", [
     ["email_verificado", "INTEGER NOT NULL DEFAULT 0"],
     ["verificacao_token", "TEXT"],
     ["redefinicao_token", "TEXT"],
     ["redefinicao_expira", "TEXT"],
-  ];
-
-  let criouEmailVerificado = false;
-  for (const [nome, tipo] of novasColunas) {
-    if (!nomes.has(nome)) {
-      await run(`ALTER TABLE usuarios ADD COLUMN ${nome} ${tipo}`);
-      if (nome === "email_verificado") criouEmailVerificado = true;
-    }
-  }
+  ]);
 
   // Quem já tinha conta antes deste recurso existir nunca passou por
   // nenhum fluxo de confirmação — não faz sentido cobrar isso agora.
   // Só roda na vez em que a coluna é criada (contas novas já nascem
   // com email_verificado = 0, defeito da coluna).
-  if (criouEmailVerificado) {
+  if (criadas.includes("email_verificado")) {
     await run("UPDATE usuarios SET email_verificado = 1");
   }
 }
@@ -449,6 +465,7 @@ async function migrarVerificacaoUsuarios() {
 async function iniciar() {
   await criarTabelas();
   await migrarVerificacaoUsuarios();
+  await migrarTituloCurtoSecoes();
   await semearTrilhas();
   await semearAtividades();
   await semearSecoes();

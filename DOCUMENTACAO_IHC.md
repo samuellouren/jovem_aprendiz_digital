@@ -94,13 +94,34 @@ arrastar. A tabela abaixo é atualizada página a página conforme a revisão av
 **Nota sobre a sombra do stepper e contraste (1.4.3):** a sombra fica por cima
 das pastilhas (elas têm fundo próprio opaco, então uma sombra "atrás" delas
 seria invisível). Isso significa que ela também passa por cima do texto nas
-pastilhas mais próximas da borda — a opacidade foi calibrada para o pior caso
-(pastilha `.visitado`, texto verde sobre fundo branco). Com a paleta da AV2
-a pastilha usa `--ok-ink` (#166534): 7.13:1 sem a sombra e **6.53:1 no pico
-da sombra** (sombra `--ink` a 8% composta por cima do texto e do fundo),
-bem acima do mínimo de 4.5:1. As demais pastilhas ficam em 6.88:1 (`--sub`)
-e 6.76:1 (`--coral-dark`) no pico. A opacidade continua 0.08: uma maior
-(testada em 0.16 na paleta antiga) derrubava o pior caso abaixo de 4.5:1.
+pastilhas mais próximas da borda — a opacidade foi calibrada para o pior caso.
+Cada pastilha mostra o número da parte numa bolinha e o nome curto do capítulo;
+na concluída (`.visitado`) o número continua na bolinha e um ✓ vem depois do
+nome (o "(concluída)" é só para leitor de tela). Medido com a fórmula de
+luminância do WCAG 2, sem sombra e no pico da sombra (`--ink` a 8% composto
+por cima do texto e do fundo):
+
+| Par | Sem sombra | No pico |
+|---|---|---|
+| Nome da pastilha concluída: `--ok-ink` sobre branco | 7.13:1 | 6.53:1 |
+| Bolinha da concluída: `--ok-ink` sobre `--ok-bg` | 6.49:1 | 5.96:1 |
+| Nome da pastilha comum: `--sub` sobre branco | 7.58:1 | 6.88:1 |
+| Bolinha da comum: `--teal-dark` sobre `--teal-soft` | 6.73:1 | 6.15:1 |
+| Pastilha atual: branco sobre `--ink` (nome e, invertido, a bolinha) | 14.63:1 | 12.59:1 |
+| Atividade: `--coral-dark` sobre branco | 7.31:1 | 6.76:1 |
+| Atividade atual: branco sobre `--coral` | 5.18:1 | 4.91:1 |
+
+O mais apertado é a atividade atual (4.91:1), ainda acima de 4.5:1. A
+opacidade continua 0.08: uma maior (testada em 0.16 na paleta antiga)
+derrubava o pior caso abaixo de 4.5:1.
+
+O cabeçalho de cada seção mostra "Parte N de M" (o mesmo total do topo do
+módulo) e, só para introdução, exemplo, dica e resumo, um selo com o tipo. A
+seção comum não tem selo. Pares (sem a sombra, que não chega ali): `--ink`
+sobre branco 14.63:1 (introdução), `--teal-dark` sobre branco 7.58:1
+(seção comum), `--amber-ink` sobre `--amber-tint` 8.75:1 (exemplo),
+`--coral-dark` sobre `--coral-soft` 6.63:1 (dica) e `--ok-ink` sobre `--ok-bg`
+6.49:1 (resumo).
 
 **Falso positivo conhecido do axe em `comunidade.html`:** rodar o axe nessa
 página aponta "incomplete" (não confirmado) de contraste nos dois `<textarea>`

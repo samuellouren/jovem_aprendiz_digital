@@ -27,15 +27,18 @@ function marcarPassoVisto(licaoId, indice) {
   passosVistos.get(licaoId).add(indice);
 }
 
-// Como cada tipo de seção se apresenta: rótulo e ícone.
+// Como cada tipo de seção se apresenta: ícone e, quando ajuda, um selo com o
+// rótulo. A seção comum ("explicacao") não ganha selo — "Explicação" não
+// diz nada que a pessoa já não saiba —, então não tem rótulo. Quem identifica
+// a seção é o "Parte N de M" e o título.
 const TIPOS = {
   introducao: { rotulo: "Introdução", icone: "compass" },
-  explicacao: { rotulo: "Explicação", icone: "book-open" },
+  explicacao: { rotulo: null, icone: "book-open" },
   exemplo: { rotulo: "Exemplo prático", icone: "layers" },
   dica: { rotulo: "Dica e erro comum", icone: "lightbulb" },
   resumo: { rotulo: "Resumo", icone: "list-checks" },
 };
-const TIPO_PADRAO = { rotulo: "Conteúdo", icone: "file-text" };
+const TIPO_PADRAO = { rotulo: null, icone: "file-text" };
 const tipoDe = (t) => TIPOS[t] || TIPO_PADRAO;
 
 // ic() vem de api.js (carregado antes deste script).
@@ -255,22 +258,29 @@ function pintarTopoModulo(licao) {
 }
 
 // Stepper: uma pastilha por seção, mais a da atividade.
-// Rola sozinho para deixar a pastilha atual visível no celular.
+// Cada pastilha mostra o número da parte e o nome curto do capítulo (cai no
+// título completo se a seção não tiver nome curto). Rola sozinho para deixar
+// a pastilha atual visível no celular.
 function pintarStepper(licao) {
   const vistos = passosVistos.get(licao.id);
   const stepper = document.getElementById("stepper");
   stepper.innerHTML = "";
 
   licao.secoes.forEach((s, i) => {
-    const t = tipoDe(s.tipo);
     const jaVisto = i !== passoAtual && vistos.has(i);
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "passo" + (i === passoAtual ? " atual" : jaVisto ? " visitado" : "");
     if (i === passoAtual) btn.setAttribute("aria-current", "step");
+    // O nome acessível contém o texto visível ("2 Nome do capítulo"), como
+    // pede o WCAG 2.5.3; "Parte" e "(concluída)" só existem para leitor de
+    // tela. Na pastilha concluída o número continua na bolinha e o ✓ vem
+    // depois do nome — o estado não depende só da cor.
     btn.innerHTML =
-      Icones.svg(jaVisto ? "check" : t.icone, { tamanho: 14 }) +
-      "<span>" + esc(t.rotulo) + (jaVisto ? " (concluída)" : "") + "</span>";
+      '<span class="sr-only">Parte </span>' +
+      '<span class="passo-num">' + (i + 1) + "</span> " +
+      "<span>" + esc(s.titulo_curto || s.titulo) + "</span>" +
+      (jaVisto ? Icones.svg("check", { tamanho: 14 }) + '<span class="sr-only"> (concluída)</span>' : "");
     btn.addEventListener("click", () => irParaPasso(i));
     stepper.appendChild(btn);
   });
@@ -323,7 +333,10 @@ function pintarPasso(licao) {
   const tipoClasse = TIPOS[s.tipo] ? s.tipo : "explicacao";
   artigo.className = "secao secao-" + tipoClasse;
   artigo.innerHTML = `
-    <span class="secao-tipo">${ic(t.icone, 15)} ${esc(t.rotulo)}</span>
+    <div class="secao-tipo">
+      <span class="secao-parte">Parte ${passoAtual + 1} de ${totalPassos(licao)}</span>
+      ${t.rotulo ? `<span class="secao-selo">${ic(t.icone, 15)} ${esc(t.rotulo)}</span>` : ""}
+    </div>
     <h2>${esc(s.titulo)}</h2>
     <div class="secao-texto">${Formato.paraHtml(s.conteudo)}</div>`;
   alvo.appendChild(artigo);
