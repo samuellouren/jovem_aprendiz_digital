@@ -337,13 +337,18 @@ async function sincronizarSecoes() {
 //
 // Mesmo espírito de sincronizarSecoes: `semearAtividades` só age em banco
 // vazio, então um banco que já tinha as questões (e as respostas das
-// pessoas) nunca receberia os textos novos. Aqui as questões de cada lição
-// são lidas por ordem e só as colunas explicacao/dica são atualizadas, e só
-// quando diferem do arquivo.
+// pessoas) nunca receberia os textos novos. Cada questão do arquivo é casada
+// com a gravada da mesma lição pelo ENUNCIADO igual (e não pela posição:
+// num banco com questão a mais, a menos ou fora de ordem, casar por posição
+// mandaria a explicação para a questão errada). Sem casamento, a questão é
+// pulada. Só as colunas explicacao/dica são atualizadas, e só quando diferem
+// do arquivo.
 //
 // Não toca no enunciado nem nas alternativas, não insere questão nova e não
 // apaga nada: os ids das questões e das alternativas continuam os mesmos, e
-// as respostas e o progresso das pessoas ficam intactos.
+// as respostas e o progresso das pessoas ficam intactos. Por isso roda
+// depois das trocas de enunciado de migrarConteudo — um enunciado antigo
+// ainda não casaria com o do arquivo.
 async function sincronizarQuestoes() {
   let mudancas = 0;
 
@@ -351,18 +356,82 @@ async function sincronizarQuestoes() {
     const licao = await get("SELECT id FROM licoes WHERE titulo = ?", [tituloLicao]);
     if (!licao) continue;
 
-    const gravadas = await all(
-      "SELECT id, explicacao, dica FROM questoes WHERE licao_id = ? ORDER BY ordem, id",
-      [licao.id]
-    );
+    const gravadas = await all("SELECT id, enunciado, explicacao, dica FROM questoes WHERE licao_id = ?", [licao.id]);
 
-    // ?? null: texto ausente no arquivo e NULL no banco contam como iguais
-    for (let i = 0; i < questoes.length && i < gravadas.length; i++) {
-      const explicacao = questoes[i].explicacao ?? null;
-      const dica = questoes[i].dica ?? null;
-      const atual = gravadas[i];
+    for (const q of questoes) {
+      const candidatas = gravadas.filter((g) => g.enunciado === q.enunciado);
+      if (candidatas.length !== 1) continue; // sem casamento (ou ambíguo): não mexe
+
+      // ?? null: texto ausente no arquivo e NULL no banco contam como iguais
+      const explicacao = q.explicacao ?? null;
+      const dica = q.dica ?? null;
+      const atual = candidatas[0];
       if ((atual.explicacao ?? null) !== explicacao || (atual.dica ?? null) !== dica) {
         await run("UPDATE questoes SET explicacao = ?, dica = ? WHERE id = ?", [explicacao, dica, atual.id]);
+        mudancas++;
+      }
+    }
+  }
+
+  return mudancas;
+}
+
+// Deixa a ordem das alternativas gravadas igual à de conteudo.js.
+//
+// Existe porque a alternativa certa já foi sempre a primeira (letra A) e
+// agora a posição dela varia de propósito. O servidor manda as alternativas
+// por `ordem`, então um banco antigo continuaria mostrando a certa em A.
+//
+// Segurança: só faz UPDATE da coluna `ordem`. Cada questão do arquivo é
+// casada com a gravada da mesma lição pelo enunciado igual e, dentro dela,
+// cada alternativa é casada com a gravada pelo texto igual. Se algo não
+// casar (enunciado ou texto não encontrado, ou repetido), a questão inteira
+// é pulada sem mexer em nada — melhor deixar a ordem antiga do que embaralhar
+// pela metade. Não insere, não apaga e não toca em `texto` nem em `correta`:
+// os ids das alternativas não mudam, então as respostas já dadas (que apontam
+// para alternativas.id) continuam válidas. Roda depois das trocas de texto de
+// migrarConteudo, senão os textos antigos não casariam. Idempotente: só
+// escreve onde a ordem gravada difere da do arquivo. Devolve o nº de mudanças.
+async function sincronizarOrdemAlternativas() {
+  let mudancas = 0;
+  let avisou = false;
+  const avisar = (msg) => {
+    if (avisou) return; // um aviso só, para não poluir o log a cada subida
+    avisou = true;
+    console.warn(`Aviso: ${msg}; a ordem das alternativas dessa questão não foi ajustada.`);
+  };
+
+  for (const [tituloLicao, questoes] of Object.entries(ATIVIDADES)) {
+    const licao = await get("SELECT id FROM licoes WHERE titulo = ?", [tituloLicao]);
+    if (!licao) continue;
+
+    const gravadas = await all("SELECT id, enunciado FROM questoes WHERE licao_id = ?", [licao.id]);
+
+    for (const q of questoes) {
+      const candidatas = gravadas.filter((g) => g.enunciado === q.enunciado);
+      if (candidatas.length !== 1) {
+        avisar(`questão não encontrada (ou repetida) em "${tituloLicao}"`);
+        continue;
+      }
+
+      const alts = await all("SELECT id, texto, ordem FROM alternativas WHERE questao_id = ?", [candidatas[0].id]);
+      const trocas = [];
+      let casou = alts.length === q.alternativas.length;
+      for (let a = 0; casou && a < q.alternativas.length; a++) {
+        const achadas = alts.filter((g) => g.texto === q.alternativas[a][0]);
+        if (achadas.length !== 1) {
+          casou = false;
+        } else if (achadas[0].ordem !== a + 1) {
+          trocas.push([a + 1, achadas[0].id]);
+        }
+      }
+      if (!casou) {
+        avisar(`alternativas não casam em "${tituloLicao}"`);
+        continue;
+      }
+
+      for (const [ordem, id] of trocas) {
+        await run("UPDATE alternativas SET ordem = ? WHERE id = ?", [ordem, id]);
         mudancas++;
       }
     }
@@ -400,7 +469,6 @@ async function migrarConteudo() {
   }
 
   mudancas += await sincronizarSecoes();
-  mudancas += await sincronizarQuestoes();
 
   // O corpo do e-mail passou de 4 para 5 partes na lição reescrita:
   // a questão correspondente é atualizada junto, senão a atividade
@@ -439,6 +507,11 @@ async function migrarConteudo() {
   for (const [tabela, coluna, de, para] of trocasQuestao) {
     contar(await run(`UPDATE ${tabela} SET ${coluna} = ? WHERE ${coluna} = ?`, [para, de]));
   }
+
+  // Só depois das trocas acima: elas levam enunciados e textos antigos aos
+  // atuais, que são os que estes dois passos usam para casar com o arquivo.
+  mudancas += await sincronizarQuestoes();
+  mudancas += await sincronizarOrdemAlternativas();
 
   // O post de boas-vindas tinha um emoji no fim (o sistema não usa mais emoji)
   contar(
