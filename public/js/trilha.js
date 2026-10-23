@@ -437,6 +437,18 @@ function marcarSelecionada(questaoEl) {
   });
 }
 
+// Monta a atividade do módulo.
+//
+// Fluxo: a pessoa escolhe uma alternativa em cada pergunta e clica em
+// "Verificar respostas". O servidor corrige e devolve, por pergunta, o
+// resultado e o texto que explica (explicacao se acertou, dica se errou).
+// Depois de verificar, as alternativas ficam TRAVADAS e:
+//   - acertou tudo: faixa verde, "Voltar aos módulos" e "Refazer atividade";
+//   - errou alguma: o botão principal vira "Refazer atividade".
+// Refazer limpa a tela e destrava tudo; a nova tentativa sobrescreve a
+// anterior no servidor. Só apresentação: licao.concluida e passosVistos
+// nunca são desfeitos por refazer nem por errar (o módulo concluído
+// continua concluído).
 function montarAtividade(licao) {
   const box = document.createElement("div");
   box.className = "bloco-teste";
@@ -474,11 +486,30 @@ function montarAtividade(licao) {
       </p>
     </div>
     ${perguntas}
+    <p class="sr-only anuncio-refazer" role="status" aria-live="polite"></p>
     <div class="teste-barra">
       <button type="button" class="btn-primary verificar">Verificar respostas</button>
       <div class="feedback-final" role="status" aria-live="polite"></div>
       <button type="button" class="btn-ok voltar-modulos" hidden>${ic("layers", 18)} Voltar aos módulos</button>
+      <button type="button" class="btn btn-secondary refazer-secundario" hidden>${ic("rotate-ccw", 18)} Refazer atividade</button>
     </div>`;
+
+  const btn = box.querySelector(".verificar");
+  const final = box.querySelector(".feedback-final");
+  const barra = box.querySelector(".teste-barra");
+  const voltarOk = box.querySelector(".voltar-modulos");
+  const refazerSec = box.querySelector(".refazer-secundario");
+  const anuncio = box.querySelector(".anuncio-refazer");
+  voltarOk.addEventListener("click", mostrarTelaTrilha);
+
+  // O botão principal tem dois papéis: "Verificar respostas" e, depois de
+  // errar, "Refazer atividade". É o mesmo elemento, então o foco do teclado
+  // continua nele depois da troca.
+  function modoBotao(modo) {
+    btn.dataset.modo = modo;
+    btn.innerHTML = modo === "refazer" ? ic("rotate-ccw", 18) + " Refazer atividade" : "Verificar respostas";
+  }
+  modoBotao("verificar");
 
   // Deixa marcada a resposta que a pessoa já tinha dado antes
   licao.questoes.forEach((q) => {
@@ -490,33 +521,109 @@ function montarAtividade(licao) {
   });
   box.querySelectorAll(".questao").forEach(marcarSelecionada);
 
-  // Ao trocar de alternativa, limpa o feedback anterior daquela pergunta
+  // Trocar de alternativa só atualiza o destaque da escolhida. Depois de
+  // verificar, as alternativas ficam travadas; o único caminho de volta é
+  // "Refazer atividade".
   box.querySelectorAll(".questao").forEach((questaoEl) => {
-    questaoEl.addEventListener("change", () => {
-      marcarSelecionada(questaoEl);
-      questaoEl.classList.remove("certa", "errada");
-      questaoEl.querySelector(".feedback-questao").classList.remove("show");
-      // Depois de concluída, trocar uma resposta devolve o botão de verificar
-      // (só apresentação: licao.concluida e passosVistos não são desfeitos).
-      const barraEl = box.querySelector(".teste-barra");
-      if (barraEl.classList.contains("concluida")) {
-        barraEl.classList.remove("concluida");
-        box.querySelector(".verificar").hidden = false;
-        box.querySelector(".voltar-modulos").hidden = true;
-        const fin = box.querySelector(".feedback-final");
-        fin.className = "feedback-final";
-        fin.innerHTML = "";
-      }
-    });
+    questaoEl.addEventListener("change", () => marcarSelecionada(questaoEl));
   });
 
-  const btn = box.querySelector(".verificar");
-  const final = box.querySelector(".feedback-final");
-  const barra = box.querySelector(".teste-barra");
-  const voltarOk = box.querySelector(".voltar-modulos");
-  voltarOk.addEventListener("click", mostrarTelaTrilha);
+  // Pinta o resultado de uma verificação: status + caixa de explicação em
+  // cada pergunta, alternativas travadas e a barra de ação. Serve tanto para
+  // a resposta do POST quanto para a atividade reaberta com respostas salvas.
+  // resultados: [{ questao_id, correta, texto }] — texto é a explicação (se
+  // acertou) ou a dica (se errou), já escolhido pelo servidor.
+  // `foco` é false quando a pessoa só abriu a tela: não mexe no foco.
+  function pintarResultado(resultados, { foco }) {
+    resultados.forEach((res) => {
+      const questaoEl = box.querySelector(`.questao[data-questao="${res.questao_id}"]`);
+      const fb = questaoEl.querySelector(".feedback-questao");
+      const idCaixa = "explicacao-" + res.questao_id;
+      questaoEl.classList.toggle("certa", res.correta);
+      questaoEl.classList.toggle("errada", !res.correta);
+      fb.className = "feedback-questao show " + (res.correta ? "certa" : "errada");
+      // A cor nunca é a única pista: ícone + texto no status, e rótulo
+      // ("Por quê:" / "Dica:") na caixa de explicação. A dica não usa
+      // vermelho: errar aqui é parte de aprender, não uma bronca.
+      fb.innerHTML =
+        `<p class="fb-status">${ic(res.correta ? "check-circle" : "x-circle", 16)}<span>${
+          res.correta ? "Isso mesmo!" : "Revise esta resposta"
+        }</span></p>` +
+        (res.texto
+          ? `<div class="explicacao-questao ${res.correta ? "explicacao-certa" : "explicacao-dica"}" id="${idCaixa}">` +
+            (res.correta ? "" : ic("lightbulb", 20)) +
+            `<p><strong class="expl-rotulo">${res.correta ? "Por quê:" : "Dica:"}</strong> ${esc(res.texto)}</p></div>`
+          : "");
+      if (res.texto) questaoEl.setAttribute("aria-describedby", idCaixa);
+      else questaoEl.removeAttribute("aria-describedby");
+      questaoEl.querySelectorAll("input").forEach((inp) => (inp.disabled = true));
+    });
+    box.classList.add("travada");
+
+    const acertos = resultados.filter((x) => x.correta).length;
+    if (acertos === resultados.length) {
+      final.className = "feedback-final tudo-certo show";
+      final.innerHTML =
+        ic("award", 22) +
+        "<span class='txt'>Você acertou tudo!" +
+        "<span class='sub'>Módulo concluído.</span></span>";
+      // Só apresentação: a barra vira a faixa verde com a saída para os módulos
+      barra.classList.add("concluida");
+      btn.hidden = true;
+      voltarOk.hidden = false;
+      refazerSec.hidden = false;
+      if (foco) voltarOk.focus();
+    } else {
+      barra.classList.remove("concluida");
+      final.className = "feedback-final tente-de-novo show";
+      final.innerHTML =
+        ic("trending-up", 20) +
+        `<span class='txt'>Você acertou ${acertos} de ${resultados.length}. Leia as dicas e tente de novo.` +
+        (licao.concluida ? "<span class='sub'>Seu módulo continua concluído.</span>" : "") +
+        "</span>";
+      voltarOk.hidden = true;
+      refazerSec.hidden = true;
+      btn.hidden = false;
+      modoBotao("refazer");
+      if (foco) btn.focus();
+    }
+  }
+
+  function refazer() {
+    box.querySelectorAll(".questao").forEach((questaoEl) => {
+      questaoEl.querySelectorAll("input").forEach((inp) => {
+        inp.checked = false;
+        inp.disabled = false;
+      });
+      marcarSelecionada(questaoEl);
+      questaoEl.classList.remove("certa", "errada");
+      questaoEl.removeAttribute("aria-describedby");
+      const fb = questaoEl.querySelector(".feedback-questao");
+      fb.className = "feedback-questao";
+      fb.innerHTML = "";
+    });
+    box.classList.remove("travada");
+    barra.classList.remove("concluida");
+    final.className = "feedback-final";
+    final.innerHTML = "";
+    voltarOk.hidden = true;
+    refazerSec.hidden = true;
+    btn.hidden = false;
+    modoBotao("verificar");
+    anuncio.textContent = "Atividade reiniciada";
+
+    const primeira = box.querySelector(".questao");
+    const reduz = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    primeira.scrollIntoView({ behavior: reduz ? "auto" : "smooth", block: "start" });
+    const radio = primeira.querySelector("input");
+    if (radio) radio.focus({ preventScroll: true });
+  }
+  refazerSec.addEventListener("click", refazer);
 
   btn.addEventListener("click", async () => {
+    if (btn.dataset.modo === "refazer") return refazer();
+
+    anuncio.textContent = "";
     const respostas = [];
     let faltando = false;
     licao.questoes.forEach((q) => {
@@ -538,58 +645,51 @@ function montarAtividade(licao) {
     try {
       const r = await Api.chamar("POST", "/licoes/" + licao.id + "/responder", { respostas });
 
-      r.resultados.forEach((res) => {
-        const questaoEl = box.querySelector(`.questao[data-questao="${res.questao_id}"]`);
-        const fb = questaoEl.querySelector(".feedback-questao");
-        questaoEl.classList.toggle("certa", res.correta);
-        questaoEl.classList.toggle("errada", !res.correta);
-        fb.className = "feedback-questao show " + (res.correta ? "certa" : "errada");
-        // A cor nunca é a única pista: ícone + texto sempre acompanham
-        // ("✓ Isso mesmo" / "Revise esta resposta").
-        fb.innerHTML =
-          ic(res.correta ? "check-circle" : "x-circle", 16) +
-          "<span>" +
-          (res.correta
-            ? "Isso mesmo!"
-            : "Revise esta resposta — volte no resumo do módulo e tente de novo.") +
-          "</span>";
+      // Guarda a tentativa na cópia local: se a pessoa sair da atividade e
+      // voltar, ela reabre como o servidor a gravou, não como veio na carga.
+      const porId = new Map(respostas.map((x) => [x.questao_id, x.alternativa_id]));
+      const resultados = r.resultados.map((res) => {
+        const texto = res.correta ? res.explicacao : res.dica;
+        const q = licao.questoes.find((x) => x.id === res.questao_id);
+        if (q) {
+          q.respondida = true;
+          q.alternativa_escolhida = porId.get(res.questao_id);
+          q.acertou = res.correta;
+          q.feedback = texto || null;
+        }
+        return { questao_id: res.questao_id, correta: res.correta, texto };
       });
+      if (r.concluida || r.todas_corretas) licao.concluida = true;
+
+      btn.disabled = false; // antes de pintar: o foco pode ir para este botão
+      pintarResultado(resultados, { foco: true });
 
       if (r.todas_corretas) {
-        final.className = "feedback-final tudo-certo show";
-        final.innerHTML =
-          ic("award", 22) +
-          "<span class='txt'>Você acertou tudo!" +
-          "<span class='sub'>Módulo concluído.</span></span>";
-        // Só apresentação: a barra vira a faixa verde com a saída para os módulos
-        barra.classList.add("concluida");
-        btn.hidden = true;
-        voltarOk.hidden = false;
-        voltarOk.focus();
-        licao.concluida = true;
         // A atividade em si só conta como "parte concluída" quando acertada
         // por completo — não por só ter clicado nela. Repinta a barra do
         // topo do módulo para refletir isso na hora, sem mexer no resto.
         marcarPassoVisto(licao.id, passoAtual);
         pintarTopoModulo(licao);
-      } else {
-        const acertos = r.resultados.filter((x) => x.correta).length;
-        barra.classList.remove("concluida");
-        final.className = "feedback-final tente-de-novo show";
-        final.innerHTML =
-          ic("trending-up", 20) +
-          `<span class='txt'>Você acertou ${acertos} de ${r.resultados.length}. Quase lá!` +
-          "<span class='sub'>Reveja o resumo do módulo e tente de novo — sem pressa, dá pra refazer quantas vezes quiser.</span></span>";
       }
-      btn.textContent = "Verificar respostas";
     } catch (err) {
       final.className = "feedback-final tente-de-novo show";
       final.innerHTML = ic("alert-circle", 18) + "<span class='txt'>" + esc(err.message) + "</span>";
-      btn.textContent = "Verificar respostas";
+      modoBotao("verificar");
     } finally {
       btn.disabled = false;
     }
   });
+
+  // Atividade reaberta com a última tentativa salva (todas as perguntas já
+  // respondidas): pinta o resultado direto, sem chamar o servidor e sem
+  // tirar o foco de onde está. Com respostas só em parte (pergunta nova
+  // acrescentada depois), abre limpa, apenas com as escolhas marcadas.
+  if (licao.questoes.length && licao.questoes.every((q) => q.respondida && q.alternativa_escolhida)) {
+    pintarResultado(
+      licao.questoes.map((q) => ({ questao_id: q.id, correta: !!q.acertou, texto: q.feedback })),
+      { foco: false }
+    );
+  }
 
   return box;
 }

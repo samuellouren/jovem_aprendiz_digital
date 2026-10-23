@@ -252,12 +252,11 @@ async function semearAtividades() {
     if (!licao) continue; // lição não existe nesse banco — segue o baile
 
     for (let q = 0; q < questoes.length; q++) {
-      const { enunciado, alternativas } = questoes[q];
-      const r = await run("INSERT INTO questoes (licao_id, enunciado, ordem) VALUES (?, ?, ?)", [
-        licao.id,
-        enunciado,
-        q + 1,
-      ]);
+      const { enunciado, alternativas, explicacao, dica } = questoes[q];
+      const r = await run(
+        "INSERT INTO questoes (licao_id, enunciado, ordem, explicacao, dica) VALUES (?, ?, ?, ?, ?)",
+        [licao.id, enunciado, q + 1, explicacao ?? null, dica ?? null]
+      );
       const questaoId = Number(r.lastInsertRowid);
       for (let a = 0; a < alternativas.length; a++) {
         const [texto, correta] = alternativas[a];
@@ -334,6 +333,44 @@ async function sincronizarSecoes() {
   return mudancas;
 }
 
+// Deixa a explicação e a dica das questões gravadas iguais às de conteudo.js.
+//
+// Mesmo espírito de sincronizarSecoes: `semearAtividades` só age em banco
+// vazio, então um banco que já tinha as questões (e as respostas das
+// pessoas) nunca receberia os textos novos. Aqui as questões de cada lição
+// são lidas por ordem e só as colunas explicacao/dica são atualizadas, e só
+// quando diferem do arquivo.
+//
+// Não toca no enunciado nem nas alternativas, não insere questão nova e não
+// apaga nada: os ids das questões e das alternativas continuam os mesmos, e
+// as respostas e o progresso das pessoas ficam intactos.
+async function sincronizarQuestoes() {
+  let mudancas = 0;
+
+  for (const [tituloLicao, questoes] of Object.entries(ATIVIDADES)) {
+    const licao = await get("SELECT id FROM licoes WHERE titulo = ?", [tituloLicao]);
+    if (!licao) continue;
+
+    const gravadas = await all(
+      "SELECT id, explicacao, dica FROM questoes WHERE licao_id = ? ORDER BY ordem, id",
+      [licao.id]
+    );
+
+    // ?? null: texto ausente no arquivo e NULL no banco contam como iguais
+    for (let i = 0; i < questoes.length && i < gravadas.length; i++) {
+      const explicacao = questoes[i].explicacao ?? null;
+      const dica = questoes[i].dica ?? null;
+      const atual = gravadas[i];
+      if ((atual.explicacao ?? null) !== explicacao || (atual.dica ?? null) !== dica) {
+        await run("UPDATE questoes SET explicacao = ?, dica = ? WHERE id = ?", [explicacao, dica, atual.id]);
+        mudancas++;
+      }
+    }
+  }
+
+  return mudancas;
+}
+
 // ---------------------------------------------------------------
 // Migração de conteúdo (idempotente e não-destrutiva)
 //
@@ -363,6 +400,7 @@ async function migrarConteudo() {
   }
 
   mudancas += await sincronizarSecoes();
+  mudancas += await sincronizarQuestoes();
 
   // O corpo do e-mail passou de 4 para 5 partes na lição reescrita:
   // a questão correspondente é atualizada junto, senão a atividade
@@ -437,6 +475,17 @@ async function migrarTituloCurtoSecoes() {
   await adicionarColunas("secoes", [["titulo_curto", "TEXT"]]);
 }
 
+// Explicação (quando acerta) e dica (quando erra) de cada questão. Colunas
+// novas em `questoes`: nulas nas linhas antigas até `sincronizarQuestoes`
+// preenchê-las a partir de conteudo.js — nenhuma questão é apagada nem
+// recriada por causa disso.
+async function migrarFeedbackQuestoes() {
+  await adicionarColunas("questoes", [
+    ["explicacao", "TEXT"],
+    ["dica", "TEXT"],
+  ]);
+}
+
 // Colunas de verificação de e-mail e redefinição de senha.
 //
 // Vão direto em `usuarios` (em vez de tabelas próprias) porque só existe
@@ -466,6 +515,7 @@ async function iniciar() {
   await criarTabelas();
   await migrarVerificacaoUsuarios();
   await migrarTituloCurtoSecoes();
+  await migrarFeedbackQuestoes();
   await semearTrilhas();
   await semearAtividades();
   await semearSecoes();

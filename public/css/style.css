@@ -1141,28 +1141,66 @@ textarea { resize: vertical; min-height: 70px; }
 .questao.errada .alternativa:has(input:checked) .alt-letra,
 .questao.errada .alternativa.marcada .alt-letra { background: var(--erro); }
 @media (hover: hover) and (pointer: fine) {
-  .alternativa:hover { border-color: var(--border-strong); }
-  .alternativa:has(input:checked):hover,
-  .alternativa.marcada:hover { border-color: var(--teal); }
+  .bloco-teste:not(.travada) .alternativa:hover { border-color: var(--border-strong); }
+  .bloco-teste:not(.travada) .alternativa:has(input:checked):hover,
+  .bloco-teste:not(.travada) .alternativa.marcada:hover { border-color: var(--teal); }
 }
-.alternativa:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--border); }
+.bloco-teste:not(.travada) .alternativa:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--border); }
 @media (prefers-reduced-motion: reduce) {
-  .alternativa:active { transform: none; }
+  .bloco-teste:not(.travada) .alternativa:active { transform: none; }
 }
 
+/* Atividade verificada: as alternativas ficam travadas (os radios estão
+   disabled; aqui é só a aparência). Sem sombra de "apertável", sem hover e
+   com cursor comum. As não escolhidas ficam apagadas por fundo e borda — o
+   texto NÃO perde opacidade (--ink sobre --bg: 13.50:1). A escolhida mantém a
+   cor de certa/errada e o ícone ✓/✕. */
+.bloco-teste.travada .questao .alternativa { cursor: default; box-shadow: none; }
+.bloco-teste.travada .questao .alternativa:not(.marcada) {
+  background: var(--bg);
+  border-color: var(--border);
+}
+
+/* Feedback de cada pergunta: a linha de status (ícone + texto) e, logo abaixo,
+   a caixa de explicação. O contêiner inteiro é a região aria-live. */
 .feedback-questao {
   margin-top: var(--s4);
   font-size: 0.95rem;
   font-weight: 800;
   display: none;
-  align-items: flex-start;
-  gap: var(--s2);
+  flex-direction: column;
+  gap: var(--s3);
   line-height: 1.4;
 }
 .feedback-questao.show { display: flex; }
-.feedback-questao svg { flex: 0 0 auto; margin-top: 2px; }
-.feedback-questao.certa { color: var(--ok-ink); }
-.feedback-questao.errada { color: var(--erro-ink); }
+.fb-status { display: flex; align-items: flex-start; gap: var(--s2); margin: 0; }
+.fb-status svg { flex: 0 0 auto; margin-top: 2px; }
+.feedback-questao.certa .fb-status { color: var(--ok-ink); }
+.feedback-questao.errada .fb-status { color: var(--erro-ink); }
+
+/* Caixa de explicação (acerto) / dica (erro). Contrastes medidos (WCAG):
+   --ok-ink sobre --ok-bg 6.49; --amber-ink sobre --amber-tint 8.75. A dica é
+   âmbar e não vermelha (errar é parte de aprender); além da cor, cada caixa
+   leva um rótulo em negrito ("Por quê:" / "Dica:") e a da dica tem a lâmpada.
+   scroll-margin-bottom: ao rolar até a caixa, a barra de ação sticky (quando
+   ainda é sticky) não fica por cima dela. */
+.explicacao-questao {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s3);
+  padding: var(--s3) var(--s4);
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.5;
+  scroll-margin-bottom: calc(var(--s7) * 2);
+}
+.explicacao-questao p { margin: 0; flex: 1; min-width: 0; }
+.explicacao-questao svg { flex: 0 0 auto; margin-top: 2px; }
+.expl-rotulo { font-weight: 900; }
+.explicacao-certa { background: var(--ok-bg); color: var(--ok-ink); border-color: var(--ok-borda); }
+.explicacao-dica { background: var(--amber-tint); color: var(--amber-ink); border-color: var(--amber-borda); }
 
 /* Barra de ação presa no rodapé da área (no celular a trilha não tem barra
    inferior; no computador o menu é lateral). Fundo opaco + sombra para cima. */
@@ -1180,15 +1218,18 @@ textarea { resize: vertical; min-height: 70px; }
   border-radius: var(--radius) var(--radius) 0 0;
   box-shadow: 0 -6px 16px var(--fade-stepper);
 }
-/* No celular, com o feedback aberto a barra ficaria alta demais e cobriria
-   alternativas: deixa de grudar enquanto há mensagem; só-botão continua fixa. */
-@media (max-width: 859.98px) {
-  .teste-barra:has(.feedback-final.show) { position: static; }
-}
+/* Com resultado na tela (celular e computador) a barra deixa de grudar: ela
+   ficaria alta e cobriria as alternativas e, agora, a caixa de explicação da
+   última pergunta, que fica logo acima dela. Só-botão (antes de verificar)
+   continua fixa. */
+.teste-barra:has(.feedback-final.show) { position: static; }
 /* Atividade concluída: a saída verde da barra basta (evita dois "Voltar") */
 #tela-modulo:has(.teste-barra.concluida) #secao-nav { display: none; }
 .teste-barra .btn-primary { margin: 0; }
 .teste-barra .btn-primary[hidden] { display: none; }
+/* "Refazer atividade" ao lado do "Voltar aos módulos": mesmo tamanho, 44px+ */
+.teste-barra .btn-secondary { margin: 0; min-height: 52px; }
+.teste-barra .btn-secondary[hidden] { display: none; }
 .feedback-final {
   border-radius: var(--radius-sm);
   padding: var(--s3) var(--s4);
@@ -1233,7 +1274,8 @@ textarea { resize: vertical; min-height: 70px; }
   .alternativas { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
   .teste-barra { flex-direction: row; align-items: center; margin: 0; }
   .teste-barra .btn-primary,
-  .teste-barra .btn-ok { width: auto; flex: 0 0 auto; min-width: 240px; margin-bottom: 0; }
+  .teste-barra .btn-ok,
+  .teste-barra .btn-secondary { width: auto; flex: 0 0 auto; min-width: 240px; margin-bottom: 0; }
   .teste-barra .feedback-final { flex: 1; }
 }
 

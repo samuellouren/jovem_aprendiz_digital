@@ -5,6 +5,8 @@
 //   SECOES     — o módulo de estudo de cada lição, em seções ordenadas
 //                [tipo, titulo, conteudo, tituloCurto]
 //   ATIVIDADES — a atividade de múltipla escolha que fecha cada módulo
+//                { enunciado, alternativas: [[texto, correta]], explicacao, dica }
+//                (explicacao e dica: ver o comentário acima de ATIVIDADES)
 //
 // Sobre o formato do texto das seções:
 //   - parágrafos são separados por uma linha em branco
@@ -1488,6 +1490,19 @@ E proteja o descanso: numa rotina de trabalho mais curso, dormir bem não é lux
   ],
 };
 
+// Atividade que fecha cada módulo: uma lista de questões por título de lição.
+// Cada questão tem:
+//   enunciado    — a pergunta
+//   alternativas — [texto, correta]; só uma é verdadeira. O campo "correta"
+//                  nunca vai para o navegador (a correção é no servidor)
+//   explicacao   — aparece quando a pessoa ACERTA: diz por que está certo e
+//                  cita o capítulo do módulo onde o assunto foi explicado
+//   dica         — aparece quando a pessoa ERRA: empurra para o raciocínio e
+//                  para o capítulo certo, sem entregar a resposta
+// explicacao e dica são opcionais (questão sem elas só mostra certo/errado).
+// O servidor só envia cada texto depois que a pessoa respondeu aquela questão.
+// A ordem das questões é a identidade delas: sincronizarQuestoes (db.js)
+// atualiza esses dois textos num banco já em uso comparando por (lição, ordem).
 const ATIVIDADES = {
   "Organizando arquivos e pastas": [
     {
@@ -1499,6 +1514,10 @@ const ATIVIDADES = {
         ["novo (2).pdf", false],
         ["aaaaa.pdf", false],
       ],
+      explicacao:
+        "Isso! Um nome que diz o que é e de que assunto trata você reconhece em segundos, mesmo meses depois, sem abrir nada. É a regra do capítulo 'Nomes que fazem sentido'.",
+      dica:
+        "Pense em qual desses nomes você reconheceria daqui a um mês sem precisar abrir o arquivo. Ele conta o que é e de que assunto trata? Revise o capítulo 'Nomes que fazem sentido'.",
     },
     {
       enunciado: "Pra que serve criar pastas no celular ou no computador?",
@@ -1508,6 +1527,10 @@ const ATIVIDADES = {
         ["Pra apagar sozinho os arquivos antigos", false],
         ["Pra proteger o aparelho de vírus", false],
       ],
+      explicacao:
+        "Exato! Pasta é como uma caixa que agrupa o que tem a ver, e por isso tudo fica fácil de achar depois. Isso foi explicado no capítulo 'Arquivo, pasta e caminho'.",
+      dica:
+        "Lembre da imagem da caixa: o que muda quando coisas parecidas ficam guardadas juntas em vez de espalhadas pelo aparelho? Revise o capítulo 'Arquivo, pasta e caminho'.",
     },
   ],
   "Escrevendo um e-mail profissional": [
@@ -1520,6 +1543,10 @@ const ATIVIDADES = {
         ["URGENTE!!!!! responde", false],
         ["Deixar o assunto em branco", false],
       ],
+      explicacao:
+        "Isso! Um assunto específico mostra de cara do que se trata, ajuda a pessoa a decidir se abre agora e a achar a mensagem depois. Está no capítulo 'Campos do e-mail'.",
+      dica:
+        "Pense em quem vai ler: no meio de vários e-mails, qual assunto faria a pessoa entender do que se trata antes mesmo de abrir? Revise o capítulo 'Campos do e-mail'.",
     },
     {
       enunciado: "Qual é a ordem das cinco partes do corpo de um e-mail formal, como vimos na lição?",
@@ -1529,6 +1556,10 @@ const ATIVIDADES = {
         ["Despedida, motivo, contexto, saudação e pedido", false],
         ["Só o pedido — o resto não precisa", false],
       ],
+      explicacao:
+        "Exato! Você cumprimenta, diz quem é, explica o motivo, faz o pedido e se despede. É uma sequência natural, explicada no capítulo 'Como montar o texto'.",
+      dica:
+        "Imagine uma conversa educada com alguém que você mal conhece: o que você diria logo no começo e o que deixaria para o final? Revise o capítulo 'Como montar o texto'.",
     },
   ],
   "Introdução a planilhas": [
@@ -1540,6 +1571,10 @@ const ATIVIDADES = {
         ["Um tipo de gráfico colorido", false],
         ["O nome do programa de planilhas", false],
       ],
+      explicacao:
+        "Isso! A célula é cada pedacinho da grade, e cabe uma informação só em cada uma. Ela tem um endereço, como A1. Veja o capítulo 'Célula, linha e coluna'.",
+      dica:
+        "Releia como a lição apresenta as palavras básicas da planilha — linha, coluna e endereço — e veja onde a célula entra nessa lista. Revise o capítulo 'Célula, linha e coluna'.",
     },
     {
       enunciado:
@@ -1550,6 +1585,10 @@ const ATIVIDADES = {
         ["Só soma se você souber programar", false],
         ["Só soma na versão paga", false],
       ],
+      explicacao:
+        "Boa! A planilha é uma tabela que faz conta sozinha. Com a fórmula de soma o total aparece e ainda se atualiza se você mudar um valor. Veja 'Sua primeira fórmula'.",
+      dica:
+        "Quase! Releia a diferença entre digitar 2+2 e =2+2 numa célula, e o que a lição diz sobre a fórmula SOMA. Revise o capítulo 'Sua primeira fórmula'.",
     },
   ],
   "O que é inteligência artificial (sem enrolação)": [
@@ -1561,6 +1600,10 @@ const ATIVIDADES = {
         ["Um programa que só cientistas conseguem usar", false],
         ["Um site de buscas igual a qualquer outro", false],
       ],
+      explicacao:
+        "Isso! A IA leu muito texto, aprendeu padrões e ajuda principalmente em tarefas de linguagem, sem pensar nem sentir como gente. Veja o capítulo 'Como a IA funciona'.",
+      dica:
+        "Pense no que a IA fez antes de você usá-la: o que ela 'estudou' e para que tipo de tarefa isso serve na rotina. Revise o capítulo 'Como a IA funciona'.",
     },
     {
       enunciado:
@@ -1571,6 +1614,10 @@ const ATIVIDADES = {
         ["Que só dá pra usar com um computador muito caro", false],
         ["Que é preciso fazer faculdade antes de usar", false],
       ],
+      explicacao:
+        "Boa! A IA já está no seu celular há anos, e hoje você conversa com ela em português comum, sem programar. Qualquer pessoa aprende no seu ritmo: capítulo 'Por que isso importa'.",
+      dica:
+        "Lembre dos exemplos que a lição dá de coisas do seu celular que você já usa. Será que a IA é mesmo tão distante de quem está começando? Revise o capítulo 'Por que isso importa'.",
     },
   ],
   "Usando IA para resumir e estudar": [
@@ -1582,6 +1629,10 @@ const ATIVIDADES = {
         ["Apagando o texto pra você não precisar ler", false],
         ["Não ajuda: IA só serve pra escrever textos novos", false],
       ],
+      explicacao:
+        "Isso! A IA transforma um material longo em algo que cabe no seu tempo, mas o estudo continua sendo seu: o resumo orienta a leitura. Veja 'Resumir para estudar'.",
+      dica:
+        "Pense no que você ainda precisa fazer sozinho ao estudar e no que a IA pode te entregar para economizar tempo. Revise o capítulo 'Resumir para estudar'.",
     },
     {
       enunciado: "A IA explicou um assunto, mas teve uma parte que você não entendeu. Qual é a melhor atitude?",
@@ -1591,6 +1642,10 @@ const ATIVIDADES = {
         ["Desistir do assunto: se não entendeu de primeira, é difícil demais", false],
         ["Apagar a conversa e nunca mais perguntar", false],
       ],
+      explicacao:
+        "Exato! Dizer onde travou e pedir uma explicação mais simples ou com exemplo costuma resolver, e a IA não perde a paciência. É a ideia do capítulo 'A IA no seu nível'.",
+      dica:
+        "Lembre que a IA explica o mesmo assunto de dez jeitos, sem cansar nem julgar, mas só se você pedir. O que dá para pedir? Revise o capítulo 'A IA no seu nível'.",
     },
   ],
   "Criando pedidos (prompts) simples e úteis": [
@@ -1602,6 +1657,10 @@ const ATIVIDADES = {
         ["'texto'", false],
         ["'faz aí pra mim'", false],
       ],
+      explicacao:
+        "Isso! Esse pedido diz a tarefa, o contexto, o tamanho e o tom, então a IA não precisa chutar. É o que o capítulo 'As quatro peças do pedido' ensina.",
+      dica:
+        "Imagine passar a tarefa para um colega novo que só vai ler a frase. Em qual pedido ele entenderia o que fazer, para quem e como? Revise o capítulo 'As quatro peças do pedido'.",
     },
     {
       enunciado: "Segundo a lição, o que faz um pedido para a IA ser bom?",
@@ -1611,6 +1670,10 @@ const ATIVIDADES = {
         ["Usar palavras técnicas difíceis pra IA levar a sério", false],
         ["Escrever tudo em letras maiúsculas", false],
       ],
+      explicacao:
+        "Boa! Um bom pedido é preciso, não comprido: tem tarefa, contexto, formato e tom. A IA faz exatamente o que você escreve. Veja 'As quatro peças do pedido'.",
+      dica:
+        "Lembre do colega recém-chegado, que faz ao pé da letra o que lhe é pedido. O que ele precisaria saber para acertar? Revise o capítulo 'As quatro peças do pedido'.",
     },
   ],
   "Currículo e perfil online básico": [
@@ -1622,6 +1685,10 @@ const ATIVIDADES = {
         ["Inventar uma experiência que você não teve", false],
         ["Só o nome e o telefone, o resto não importa", false],
       ],
+      explicacao:
+        "Isso! Experiência vale em sentido amplo: cursos, voluntariado e ajudar a família contam, desde que seja verdade. Veja o capítulo 'As partes do currículo'.",
+      dica:
+        "Pense em tudo o que já passou pela sua vida além de um emprego com carteira assinada e que mostra responsabilidade. Revise o capítulo 'As partes do currículo'.",
     },
     {
       enunciado: "Qual endereço de e-mail passa uma imagem mais profissional num currículo?",
@@ -1631,6 +1698,10 @@ const ATIVIDADES = {
         ["naoseioquecolocaraqui@email.com", false],
         ["Nenhum: currículo não precisa de e-mail", false],
       ],
+      explicacao:
+        "Exato! Nome e sobrenome passam seriedade e são fáceis de lembrar. Um endereço brincalhão pode tirar candidato do processo cedo, como mostra 'Erros comuns'.",
+      dica:
+        "Imagine quem recebe o currículo lendo o e-mail no topo da página: qual endereço lembra uma pessoa a quem se confiaria um trabalho? Revise o capítulo 'Erros comuns'.",
     },
   ],
   "Reuniões online sem susto": [
@@ -1642,6 +1713,10 @@ const ATIVIDADES = {
         ["Sair e entrar de novo várias vezes", false],
         ["Desligar a internet até chegar a sua vez", false],
       ],
+      explicacao:
+        "Isso! Ficar no mudo e abrir o microfone só na hora de falar evita que sons de casa atrapalhem todo mundo. É a regra do capítulo 'Durante a reunião'.",
+      dica:
+        "Pense no que acontece com os sons da sua casa quando o microfone fica aberto e todos escutam. Qual hábito protege você e o grupo? Revise o capítulo 'Durante a reunião'.",
     },
     {
       enunciado:
@@ -1652,6 +1727,10 @@ const ATIVIDADES = {
         ["O botão de aumentar o volume", false],
         ["O botão de desligar a câmera, que envia a pergunta", false],
       ],
+      explicacao:
+        "Boa! O chat deixa você escrever a dúvida sem interromper ninguém, e uma pergunta bem escrita ainda chama atenção positiva. Veja o capítulo 'Durante a reunião'.",
+      dica:
+        "Releia a parte sobre a barra de controles da reunião e para que serve cada botão dela. Revise o capítulo 'Durante a reunião'.",
     },
   ],
   "Organizando sua rotina de estudo e trabalho": [
@@ -1663,6 +1742,10 @@ const ATIVIDADES = {
         ["Deixar tudo pra última hora, que rende mais", false],
         ["Pedir pra outra pessoa lembrar por você", false],
       ],
+      explicacao:
+        "Isso! Tarefa sem data fica sendo empurrada. Anotar com o dia tira o peso da cabeça, e o calendário ainda avisa você. Veja o capítulo 'Prazo e prioridade'.",
+      dica:
+        "Pense em qual informação toda tarefa precisa ter para deixar de ser empurrada, e em qual ferramenta pode te avisar na hora certa. Revise o capítulo 'Prazo e prioridade'.",
     },
     {
       enunciado: "Qual é um bom jeito de começar a se organizar sem se sobrecarregar?",
@@ -1672,6 +1755,10 @@ const ATIVIDADES = {
         ["Planejar o ano inteiro numa tarde só", false],
         ["Esperar sobrar bastante tempo livre pra só então começar", false],
       ],
+      explicacao:
+        "Exato! Começar pequeno é o que faz o sistema durar. Sistema grande demais costuma ser abandonado na primeira semana corrida. Está no capítulo 'Erros comuns'.",
+      dica:
+        "Pense no que costuma acontecer com quem começa empolgado e monta um sistema cheio de peças. Qual seria o mínimo que se sustenta numa semana corrida? Revise o capítulo 'Erros comuns'.",
     },
   ],
 };

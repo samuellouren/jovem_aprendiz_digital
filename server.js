@@ -275,6 +275,9 @@ rota("GET", /^\/api\/trilhas$/, async (req, res) => {
 // esperar carregamento a cada passo (importante: a persona usa 3G/4G).
 // O campo `correta` das alternativas NUNCA vai para o cliente — a correção
 // acontece só no servidor, em POST /api/licoes/:id/responder.
+// A explicação/dica de uma questão também só sai depois que ESSA pessoa a
+// respondeu, e só o texto que cabe ao resultado dela (explicação se acertou,
+// dica se errou), no campo `feedback` — nunca os dois, nunca crus.
 rota("GET", /^\/api\/trilhas\/(\d+)$/, async (req, res, params) => {
   const trilhaId = Number(params[0]);
   const trilha = await db.get("SELECT * FROM trilhas WHERE id = ?", [trilhaId]);
@@ -316,7 +319,7 @@ rota("GET", /^\/api\/trilhas\/(\d+)$/, async (req, res, params) => {
 
   // Questões e alternativas da trilha inteira em duas consultas só
   const questoes = await db.all(
-    `SELECT q.id, q.licao_id, q.enunciado, q.ordem
+    `SELECT q.id, q.licao_id, q.enunciado, q.ordem, q.explicacao, q.dica
      FROM questoes q JOIN licoes l ON l.id = q.licao_id
      WHERE l.trilha_id = ? ORDER BY q.licao_id, q.ordem, q.id`,
     [trilhaId]
@@ -362,6 +365,8 @@ rota("GET", /^\/api\/trilhas\/(\d+)$/, async (req, res, params) => {
       respondida: !!resposta,
       alternativa_escolhida: resposta ? resposta.alternativa_id : null,
       acertou: resposta ? !!resposta.correta : null,
+      // Só para quem já respondeu: o texto que corresponde ao resultado dela
+      feedback: resposta ? (resposta.correta ? q.explicacao : q.dica) ?? null : null,
     });
   });
 
@@ -389,7 +394,7 @@ rota("POST", /^\/api\/licoes\/(\d+)\/responder$/, async (req, res, params) => {
     return sendJson(res, 400, { erro: "Escolha uma resposta em cada pergunta antes de verificar." });
   }
 
-  const questoesDaLicao = await db.all("SELECT id FROM questoes WHERE licao_id = ? ORDER BY ordem, id", [licaoId]);
+  const questoesDaLicao = await db.all("SELECT id, explicacao, dica FROM questoes WHERE licao_id = ? ORDER BY ordem, id", [licaoId]);
   if (!questoesDaLicao.length) {
     return sendJson(res, 400, { erro: "Essa lição ainda não tem atividade." });
   }
@@ -430,11 +435,18 @@ rota("POST", /^\/api\/licoes\/(\d+)\/responder$/, async (req, res, params) => {
          respondido_em = CURRENT_TIMESTAMP`,
       [user.id, q.id, alt.id, acertou]
     );
-    resultados.push({ questao_id: q.id, correta: !!acertou });
+    // Já gravada a resposta desta pessoa, o texto correspondente pode sair:
+    // explicacao se acertou, dica se errou (nunca os dois).
+    const item = { questao_id: q.id, correta: !!acertou };
+    if (acertou) item.explicacao = q.explicacao ?? null;
+    else item.dica = q.dica ?? null;
+    resultados.push(item);
   }
 
   // 3) Acertou tudo => lição concluída automaticamente.
-  //    Se errar numa refeita, o que já foi conquistado não é tirado dela.
+  //    Se errar numa refeita, o que já foi conquistado não é tirado dela:
+  //    acertar tudo só INSERE o progresso e errar nunca o apaga (o único
+  //    DELETE de progresso é o desmarcar manual em DELETE /api/progresso).
   const todasCorretas = resultados.every((r) => r.correta);
   if (todasCorretas) {
     await db.run("INSERT OR IGNORE INTO progresso (usuario_id, licao_id) VALUES (?, ?)", [user.id, licaoId]);
