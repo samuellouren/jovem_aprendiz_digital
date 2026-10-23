@@ -1,0 +1,257 @@
+{
+  "geradoEm": "2026-10-23T07:36:12.363Z",
+  "estados": [
+    {
+      "nome": "mobile-modulo",
+      "estado": "modulo",
+      "viewport": "mobile",
+      "erro": null,
+      "checks": [
+        {
+          "ok": true,
+          "msg": "fotos modulo e stepper salvas"
+        }
+      ],
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1,
+        "incompleteIds": {
+          "color-contrast": 1
+        }
+      },
+      "scrollHorizontal": false,
+      "console": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ]
+    },
+    {
+      "nome": "mobile-atividade-erro",
+      "estado": "atividade-erro",
+      "viewport": "mobile",
+      "erro": null,
+      "checks": [
+        {
+          "ok": true,
+          "msg": "explicacao-questao em cada questao: [1,1]"
+        },
+        {
+          "ok": true,
+          "msg": "texto do botao .verificar: \"Refazer atividade\""
+        },
+        {
+          "ok": true,
+          "msg": "ha questao marcada como errada"
+        }
+      ],
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1,
+        "incompleteIds": {
+          "color-contrast": 1
+        }
+      },
+      "scrollHorizontal": false,
+      "console": []
+    },
+    {
+      "nome": "mobile-atividade-refazer",
+      "estado": "atividade-refazer",
+      "viewport": "mobile",
+      "erro": null,
+      "checks": [
+        {
+          "ok": true,
+          "msg": "nenhum radio marcado (0/8)"
+        },
+        {
+          "ok": true,
+          "msg": "nenhum radio desabilitado (0)"
+        },
+        {
+          "ok": true,
+          "msg": "explicacoes removidas (0)"
+        }
+      ],
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1,
+        "incompleteIds": {
+          "color-contrast": 1
+        }
+      },
+      "scrollHorizontal": false,
+      "console": []
+    },
+    {
+      "nome": "mobile-atividade-certa",
+      "estado": "atividade-certa",
+      "viewport": "mobile",
+      "erro": null,
+      "checks": [
+        {
+          "ok": true,
+          "msg": "barra concluida"
+        }
+      ],
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1,
+        "incompleteIds": {
+          "color-contrast": 1
+        }
+      },
+      "scrollHorizontal": false,
+      "console": []
+    },
+    {
+      "nome": "mobile-atividade-concluida-reaberta",
+      "estado": "atividade-concluida-reaberta",
+      "viewport": "mobile",
+      "erro": null,
+      "checks": [
+        {
+          "ok": true,
+          "msg": "explicacao-questao sem verificar: [1,1]"
+        },
+        {
+          "ok": true,
+          "msg": "barra concluida ao reabrir"
+        }
+      ],
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1,
+        "incompleteIds": {
+          "color-contrast": 1
+        }
+      },
+      "scrollHorizontal": false,
+      "console": []
+    },
+    {
+      "nome": "desktop-modulo",
+      "estado": "modulo",
+      "viewport": "desktop",
+      "erro": null,
+      "checks": [
+        {
+          "ok": true,
+          "msg": "fotos modulo e stepper salvas"
+        }
+      ],
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1,
+        "incompleteIds": {
+          "color-contrast": 1
+        }
+      },
+      "scrollHorizontal": false,
+      "console": []
+    },
+    {
+      "nome": "desktop-atividade-erro",
+      "estado": "atividade-erro",
+      "viewport": "desktop",
+      "erro": null,
+      "checks": [
+        {
+          "ok": true,
+          "msg": "explicacao-questao em cada questao: [1,1]"
+        },
+        {
+          "ok": true,
+          "msg": "texto do botao .verificar: \"Refazer atividade\""
+        },
+        {
+          "ok": true,
+          "msg": "ha questao marcada como errada"
+        }
+      ],
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1,
+        "incompleteIds": {
+          "color-contrast": 1
+        }
+      },
+      "scrollHorizontal": false,
+      "console": []
+    },
+    {
+      "nome": "desktop-atividade-refazer",
+      "estado": "atividade-refazer",
+      "viewport": "desktop",
+      "erro": null,
+      "checks": [
+        {
+          "ok": true,
+          "msg": "nenhum radio marcado (0/8)"
+        },
+        {
+          "ok": true,
+          "msg": "nenhum radio desabilitado (0)"
+        },
+        {
+          "ok": true,
+          "msg": "explicacoes removidas (0)"
+        }
+      ],
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1,
+        "incompleteIds": {
+          "color-contrast": 1
+        }
+      },
+      "scrollHorizontal": false,
+      "console": []
+    },
+    {
+      "nome": "desktop-atividade-certa",
+      "estado": "atividade-certa",
+      "viewport": "desktop",
+      "erro": null,
+      "checks": [
+        {
+          "ok": true,
+          "msg": "barra concluida"
+        }
+      ],
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1,
+        "incompleteIds": {
+          "color-contrast": 1
+        }
+      },
+      "scrollHorizontal": false,
+      "console": []
+    },
+    {
+      "nome": "desktop-atividade-concluida-reaberta",
+      "estado": "atividade-concluida-reaberta",
+      "viewport": "desktop",
+      "erro": null,
+      "checks": [
+        {
+          "ok": true,
+          "msg": "explicacao-questao sem verificar: [1,1]"
+        },
+        {
+          "ok": true,
+          "msg": "barra concluida ao reabrir"
+        }
+      ],
+      "axe": {
+        "violacoes": [],
+        "incomplete": 1,
+        "incompleteIds": {
+          "color-contrast": 1
+        }
+      },
+      "scrollHorizontal": false,
+      "console": []
+    }
+  ]
+}

@@ -71,7 +71,7 @@ Nenhuma dependência nova foi usada — tudo em HTML/CSS/JS puro.
 | 9 | Técnica de suporte a **4.1.2 / 2.4.6** (ocultar sem tirar do leitor de tela) | `public/css/style.css`, `.sr-only` | Classe `.sr-only` (clip-technique padrão) usada no rótulo da caixa de resposta de cada post do mural, que não tem espaço visual para um rótulo próprio |
 | 10 | **1.4.3 Contraste (Mínimo)** | `public/css/style.css`, variáveis `:root` | Na AV2 a paleta foi trocada pela paleta lúdica (seção 8). Cada par de texto/fundo usado foi calculado com a fórmula de luminância relativa do WCAG antes de entrar no CSS — todos ≥ 4.5:1; a tabela completa está na seção 8. Nenhuma cor literal fica fora do `:root` (só `#fff`) |
 | 11 | **2.3.3 Animação por Interações** (nível AAA, aplicado aqui por precaução) | `public/css/style.css` | `@media (prefers-reduced-motion: reduce)` zera a duração de toda transição/animação do projeto (barras de progresso, seta do "Responder", skip link, pulso do esqueleto de carregamento) e tira o `transform` dos botões grossos e dos cards ao tocar, para quem pede menos movimento ao sistema operacional |
-| 12 | **1.4.1 Uso de Cor** | `public/js/trilha.js` | O feedback de acerto/erro da atividade sempre combina cor **com** ícone e texto — nunca só a cor: `✓ Isso mesmo!` / ícone de X + "Revise esta resposta — volte no resumo do módulo e tente de novo." Na AV2, como o radio da alternativa ficou visualmente escondido (continua real e focável), a alternativa escolhida ganhou um ícone de check, e a errada um X, além da cor da borda |
+| 12 | **1.4.1 Uso de Cor** | `public/js/trilha.js` | O feedback de acerto/erro da atividade sempre combina cor **com** ícone e texto — nunca só a cor: `✓ Isso mesmo!` / ícone de X + "Revise esta resposta". Na rodada 4 cada pergunta ganhou uma caixa de explicação (verde, rótulo "Por quê:") ou de dica (âmbar, lâmpada e rótulo "Dica:"), então também ali o rótulo e o ícone carregam a informação, não a cor. Na AV2, como o radio da alternativa ficou visualmente escondido (continua real e focável), a alternativa escolhida ganhou um ícone de check, e a errada um X, além da cor da borda |
 
 ---
 
@@ -247,7 +247,11 @@ ativo, navegue pela mesma sequência acima. Pontos para prestar atenção:
 - As mensagens de erro de login/cadastro/publicação são anunciadas assim
   que aparecem (`role="alert"`), sem precisar navegar até elas.
 - O feedback de "Isso mesmo!" / "Revise esta resposta" na atividade é lido
-  na hora (`aria-live="polite"`), com o texto completo — nunca só a cor.
+  na hora (`aria-live="polite"`), com o texto completo — nunca só a cor —,
+  seguido da explicação ("Por quê: …") ou da dica ("Dica: …"). Ao errar, o
+  foco fica no botão, que passa a se chamar "Refazer atividade"; ao refazer,
+  o foco vai para a primeira alternativa e é anunciado "Atividade
+  reiniciada".
 - O botão "Responder" de um post anuncia se está expandido ou recolhido
   (`aria-expanded`).
 
@@ -388,7 +392,10 @@ pouco mais de ar).
 - **Atividade**: alternativas como cards com a letra A–D. O radio continua
   real, só fica visualmente escondido e recebe foco. A escolha aparece pela
   borda **e** por um ícone de check (ou de X, se estiver errada). O
-  "Verificar respostas" fica preso no rodapé da tela.
+  "Verificar respostas" fica preso no rodapé da tela até haver resultado.
+  Depois de verificar, as alternativas ficam travadas e cada pergunta mostra
+  a explicação (acertou) ou a dica (errou); se errou, o botão vira "Refazer
+  atividade" (ver rodada 4).
 
 ### Itens da matriz da 2ª avaliação
 
@@ -421,3 +428,72 @@ Lighthouse 100** nas 9 páginas, nos dois tamanhos. Fotos dos estados novos
 | Comunidade (computador) | [antes](auditorias/av2/antes/desktop-comunidade.png) | [depois](auditorias/av2/depois/desktop-comunidade.png) |
 | Carregando (R2-C) | — | [depois](auditorias/av2/depois/extra/m390-c-esqueleto-dashboard.png) |
 | Erro com saída (R2-D) | — | [depois](auditorias/av2/depois/extra/m390-d-erro-dashboard.png) |
+
+---
+
+## 9. Rodada 4 — Feedback da avaliação da professora
+
+A professora avaliou o sistema e pediu três ajustes. Cada um virou um item
+da matriz de iteração, com a heurística de Nielsen que ele fere. A matriz
+completa, com as rodadas 1 a 3, está no documento de apresentação
+([`documentacao-av2/index.html`](documentacao-av2/index.html), seção "Matriz
+de iteração"), que também recebeu esta rodada.
+
+| Item | Problema | Heurística | Grav. | Correção | Situação |
+|---|---|---|---|---|---|
+| R4-1 | O Design System não documentava as fontes tipográficas, e o CSS tinha 28 tamanhos de fonte soltos (de 0.7rem a 2.125rem), sem escala | 4 · Consistência e padrões | 2 | Escala de 7 tamanhos em tokens (`--fs-xs` 12px … `--fs-2xl` 34px), com tokens de altura de linha, espaçamento entre letras e peso; nenhum `font-size` solto fora do `:root`; nenhum texto de leitura abaixo de 14px; peso 700 removido do CSS e do link do Google Fonts. Seção [Tipografia](#tipografia) com família, licença, pesos, pilha de reserva, `display=swap` e tabela da escala | **Corrigido** |
+| R4-2 | No módulo, o stepper mostrava "Explicação, Explicação, Explicação": o rótulo era o tipo da seção, não o assunto. A pessoa precisava lembrar em que parte estava cada coisa | 6 · Reconhecer em vez de lembrar; 4 · Consistência | 3 | Cada seção ganhou um nome curto de capítulo (até 26 caracteres, sem repetir no módulo), mostrado no stepper como "número + nome". O cabeçalho da seção diz "Parte N de M" (o mesmo número do topo do módulo) e só mostra selo de tipo quando ajuda (Introdução, Exemplo prático, Dica e erro comum, Resumo). Contraste das pastilhas recalculado sob a sombra de fade (pior caso 4.91:1, ver seção 4) | **Corrigido** |
+| R4-3 | A atividade dizia só "Isso mesmo!" ou "Revise esta resposta", sem explicar o porquê; depois de errar, não havia uma saída clara (trocar a resposta apagava o resultado da tela) | 9 · Ajudar a reconhecer, diagnosticar e recuperar de erros; 3 · Controle e liberdade | 3 | Cada questão tem uma **explicação** (aparece ao acertar e cita o capítulo) e uma **dica** (aparece ao errar, diz o que revisar sem entregar a resposta). Depois de verificar, as alternativas travam; se errou, o botão vira **"Refazer atividade"**, que limpa tudo, volta o foco para a primeira pergunta e anuncia "Atividade reiniciada". Módulo concluído reabre com as explicações e com "Refazer" como botão secundário; refazer nunca desfaz a conclusão. Substitui o comportamento do R3-1 (trocar a resposta devolvia o botão de verificar) | **Corrigido** |
+
+**Segurança da resposta e do banco.** O campo `correta` continua sem ir para
+o navegador, e a explicação/dica de uma questão só sai do servidor depois
+que a pessoa respondeu aquela questão, e só o texto que cabe ao resultado
+dela. As colunas novas (`secoes.titulo_curto`, `questoes.explicacao`,
+`questoes.dica`) entram por migração idempotente (`ALTER TABLE` só se a
+coluna não existir, conferido com `PRAGMA table_info`), e o conteúdo é
+atualizado no lugar, casando pelo enunciado/texto — nenhuma questão,
+alternativa, resposta ou progresso é apagado ou recriado. Testado duas vezes
+sobre uma cópia de um banco antigo: mesmas linhas e mesmos ids.
+
+**Achados da revisão independente desta rodada.** Um revisor sem histórico
+leu o diff e apontou, além de detalhes, que a alternativa certa era **sempre
+a primeira (letra A)** — quem marcasse A em tudo acertava sem ler. Isso já
+existia antes, mas esvaziava a atividade, então foi corrigido junto: a
+posição da certa agora varia (A 5×, B 4×, C 4×, D 5×), por `UPDATE` só da
+coluna `ordem` (os ids das alternativas, para onde apontam as respostas
+salvas, não mudam). Ele também apontou dicas que estreitavam demais as
+opções; elas foram reescritas para indicar o capítulo e o tema a revisar,
+sem repetir as palavras da alternativa certa.
+
+**Acessibilidade do feedback novo.** Status de cada pergunta com ícone **e**
+texto (nunca só cor); caixa de explicação verde (`--ok-ink` sobre `--ok-bg`,
+6.49:1) com o rótulo "Por quê:", e caixa de dica âmbar (`--amber-ink` sobre
+`--amber-tint`, 8.75:1) com lâmpada e o rótulo "Dica:" — sem vermelho, porque
+é ajuda e não bronca. A caixa fica ligada à pergunta por `aria-describedby`
+no `fieldset` e dentro da região `aria-live` da pergunta. Com resultado na
+tela, a barra de ação deixa de ficar presa (celular e computador) para não
+cobrir a última caixa de explicação — extensão da correção R3-2.
+
+**Auditoria.** axe (WCAG 2.1 A/AA) **0 violações** e Lighthouse
+Acessibilidade **100** nas 9 páginas, em 390px e 1440px; axe 0 violações
+também nos estados novos (módulo aberto, atividade com erro, depois de
+refazer, tudo certo, módulo concluído reaberto). Resultados em
+[`auditorias/av3/depois/resumo.md`](auditorias/av3/depois/resumo.md);
+inventário de seções e questões do antes em
+[`auditorias/av3/secoes.md`](auditorias/av3/secoes.md) e
+[`auditorias/av3/questoes.md`](auditorias/av3/questoes.md).
+
+| Item | Tela | Antes | Depois |
+|---|---|---|---|
+| R4-1 | Início (celular) | [antes](auditorias/av3/antes/tipografia-mobile-dashboard.png) | [depois](auditorias/av3/depois/tipografia-mobile-dashboard.png) |
+| R4-1 | Trilha (celular) | [antes](auditorias/av3/antes/tipografia-mobile-trilha.png) | [depois](auditorias/av3/depois/tipografia-mobile-trilha.png) |
+| R4-1 | Comunidade (computador) | [antes](auditorias/av3/antes/tipografia-desktop-comunidade.png) | [depois](auditorias/av3/depois/tipografia-desktop-comunidade.png) |
+| R4-1 | Entrar (computador) | [antes](auditorias/av3/antes/tipografia-desktop-login.png) | [depois](auditorias/av3/depois/tipografia-desktop-login.png) |
+| R4-2 | Módulo aberto (celular) | [antes](auditorias/av3/antes/mobile-modulo.png) | [depois](auditorias/av3/depois/mobile-modulo.png) |
+| R4-2 | Stepper (computador) | [antes](auditorias/av3/antes/desktop-modulo-stepper.png) | [depois](auditorias/av3/depois/desktop-modulo-stepper.png) |
+| R4-3 | Pergunta errada, recorte (celular) | [antes](auditorias/av3/antes/recorte-atividade-erro.png) | [depois](auditorias/av3/depois/recorte-atividade-erro.png) |
+| R4-3 | Atividade com erro (celular) | [antes](auditorias/av3/antes/mobile-atividade-erro.png) | [depois](auditorias/av3/depois/mobile-atividade-erro.png) |
+| R4-3 | Atividade com erro (computador) | [antes](auditorias/av3/antes/desktop-atividade-erro.png) | [depois](auditorias/av3/depois/desktop-atividade-erro.png) |
+| R4-3 | Tudo certo (celular) | [antes](auditorias/av3/antes/mobile-atividade-certa.png) | [depois](auditorias/av3/depois/mobile-atividade-certa.png) |
+| R4-3 | Depois de "Refazer" (celular) | — | [depois](auditorias/av3/depois/mobile-atividade-refazer.png) |
+| R4-3 | Módulo concluído reaberto (celular) | — | [depois](auditorias/av3/depois/mobile-atividade-reaberta.png) |

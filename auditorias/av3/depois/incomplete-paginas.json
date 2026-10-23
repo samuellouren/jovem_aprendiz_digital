@@ -1,0 +1,224 @@
+[
+  {
+    "nome": "desktop-login",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          ".painel-marca-titulo",
+          ".painel-marca-texto",
+          "li:nth-child(1)",
+          "li:nth-child(2)",
+          "li:nth-child(3)"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "desktop-cadastro",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          ".painel-marca-titulo",
+          ".painel-marca-texto",
+          "li:nth-child(1)",
+          "li:nth-child(2)",
+          "li:nth-child(3)"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "desktop-esqueci-senha",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          ".painel-marca-titulo",
+          ".painel-marca-texto",
+          "li:nth-child(1)",
+          "li:nth-child(2)",
+          "li:nth-child(3)"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "desktop-redefinir-senha",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          ".painel-marca-titulo",
+          ".painel-marca-texto",
+          "li:nth-child(1)",
+          "li:nth-child(2)",
+          "li:nth-child(3)"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "desktop-verificar-email",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          ".painel-marca-titulo",
+          ".painel-marca-texto",
+          "li:nth-child(1)",
+          "li:nth-child(2)",
+          "li:nth-child(3)"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "mobile-comunidade",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          "#novo-post"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "desktop-comunidade",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          "#novo-post"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "mobile-dashboard-progresso",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          ".anel-num"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "desktop-dashboard-progresso",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          ".anel-num",
+          ".anel-rotulo"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "mobile-trilha-modulo",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          ".atual > .passo-num",
+          ".atual > span:nth-child(3)",
+          ".passo:nth-child(2) > .passo-num",
+          ".passo:nth-child(2) > span:nth-child(3)",
+          ".passo:nth-child(3) > .passo-num",
+          ".passo:nth-child(3) > span:nth-child(3)",
+          ".passo:nth-child(4) > .passo-num",
+          ".passo:nth-child(4) > span:nth-child(3)",
+          ".passo:nth-child(5) > .passo-num",
+          ".passo:nth-child(5) > span:nth-child(3)",
+          ".passo:nth-child(6) > .passo-num",
+          ".passo:nth-child(6) > span:nth-child(3)",
+          ".passo:nth-child(7) > .passo-num",
+          ".passo:nth-child(7) > span:nth-child(3)",
+          ".passo-teste > span"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "desktop-trilha-modulo",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          ".atual > .passo-num",
+          ".atual > span:nth-child(3)",
+          ".passo:nth-child(2) > .passo-num",
+          ".passo:nth-child(2) > span:nth-child(3)",
+          ".passo:nth-child(3) > .passo-num",
+          ".passo:nth-child(3) > span:nth-child(3)",
+          ".passo:nth-child(4) > .passo-num",
+          ".passo:nth-child(4) > span:nth-child(3)",
+          ".passo:nth-child(5) > .passo-num",
+          ".passo:nth-child(5) > span:nth-child(3)",
+          ".passo:nth-child(6) > .passo-num",
+          ".passo:nth-child(6) > span:nth-child(3)",
+          ".passo:nth-child(7) > .passo-num",
+          ".passo:nth-child(7) > span:nth-child(3)",
+          ".passo-teste > span"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "mobile-trilha-atividade",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          ".passo:nth-child(6) > .passo-num",
+          ".passo:nth-child(6) > span:nth-child(3)",
+          ".passo:nth-child(7) > .passo-num",
+          ".passo:nth-child(7) > span:nth-child(3)",
+          ".passo-teste > span"
+        ]
+      }
+    ]
+  },
+  {
+    "nome": "desktop-trilha-atividade",
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impacto": "serious",
+        "alvos": [
+          ".passo:nth-child(1) > span:nth-child(3)",
+          ".passo:nth-child(2) > .passo-num",
+          ".passo:nth-child(2) > span:nth-child(3)",
+          ".passo:nth-child(3) > .passo-num",
+          ".passo:nth-child(3) > span:nth-child(3)",
+          ".passo:nth-child(4) > .passo-num",
+          ".passo:nth-child(4) > span:nth-child(3)",
+          ".passo:nth-child(5) > .passo-num",
+          ".passo:nth-child(5) > span:nth-child(3)",
+          ".passo:nth-child(6) > .passo-num",
+          ".passo:nth-child(6) > span:nth-child(3)",
+          ".passo:nth-child(7) > .passo-num",
+          ".passo:nth-child(7) > span:nth-child(3)",
+          ".passo-teste > span"
+        ]
+      }
+    ]
+  }
+]
