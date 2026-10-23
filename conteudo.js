@@ -1522,7 +1522,7 @@ const ATIVIDADES = {
       explicacao:
         "Isso! Um nome que diz o que é e de que assunto trata você reconhece em segundos, mesmo meses depois, sem abrir nada. É a regra do capítulo 'Nomes que fazem sentido'.",
       dica:
-        "Errar aqui faz parte. O capítulo trata de como dar nomes aos arquivos para reencontrá-los depois, e vale reler com calma. Revise o capítulo 'Nomes que fazem sentido'.",
+        "Um bom nome responde, sem você abrir o arquivo, duas perguntas: o que ele é e de que assunto trata. Nomes genéricos, números repetidos ou letras aleatórias parecem rápidos na hora, mas daqui a um mês não dizem nada. Teste: lendo só o nome, você saberia o que tem dentro? Mais no capítulo 'Nomes que fazem sentido'.",
     },
     {
       enunciado: "Pra que serve criar pastas no celular ou no computador?",
@@ -1535,7 +1535,7 @@ const ATIVIDADES = {
       explicacao:
         "Exato! Pasta é como uma caixa que agrupa o que tem a ver, e por isso tudo fica fácil de achar depois. Isso foi explicado no capítulo 'Arquivo, pasta e caminho'.",
       dica:
-        "Sem pressa. O capítulo apresenta a ideia de pasta com uma imagem do dia a dia e explica a diferença entre arquivo, pasta e caminho. Revise o capítulo 'Arquivo, pasta e caminho'.",
+        "Pense numa gaveta de documentos em casa: cada envelope guarda os papéis de um mesmo assunto, e é por isso que você acha tudo rápido. A pasta funciona igual no celular: ela não faz nada sozinha, só reúne o que você coloca nela, para você saber onde procurar depois. Mais no capítulo 'Arquivo, pasta e caminho'.",
     },
   ],
   "Escrevendo um e-mail profissional": [
@@ -1551,7 +1551,7 @@ const ATIVIDADES = {
       explicacao:
         "Isso! Um assunto específico mostra de cara do que se trata, ajuda a pessoa a decidir se abre agora e a achar a mensagem depois. Está no capítulo 'Campos do e-mail'.",
       dica:
-        "Errar aqui faz parte. O capítulo percorre cada campo de um e-mail e o papel de cada um. Vale reler com calma. Revise o capítulo 'Campos do e-mail'.",
+        "O assunto é a primeira coisa que a pessoa lê na caixa de entrada, antes de abrir a mensagem. Ele funciona como um título: em poucas palavras, conta do que o e-mail trata. Imagine quem recebe 30 e-mails por dia: qual título faz essa pessoa entender o seu pedido sem abrir? Mais no capítulo 'Campos do e-mail'.",
     },
     {
       enunciado: "Qual é a ordem das cinco partes do corpo de um e-mail formal, como vimos na lição?",
@@ -1564,7 +1564,7 @@ const ATIVIDADES = {
       explicacao:
         "Exato! Você cumprimenta, diz quem é, explica o motivo, faz o pedido e se despede. É uma sequência natural, explicada no capítulo 'Como montar o texto'.",
       dica:
-        "Sem pressa. O capítulo mostra, passo a passo, como o texto de um e-mail formal é montado. Reler ajuda a fixar. Revise o capítulo 'Como montar o texto'.",
+        "Pense em como você falaria pessoalmente com alguém que não te conhece: primeiro cumprimenta, depois se apresenta e situa a pessoa, aí explica por que veio, faz o pedido e, por fim, se despede. O e-mail formal segue essa mesma ordem de uma boa conversa. Mais no capítulo 'Como montar o texto'.",
     },
   ],
   "Introdução a planilhas": [
@@ -1579,7 +1579,7 @@ const ATIVIDADES = {
       explicacao:
         "Isso! A célula é cada pedacinho da grade, e cabe uma informação só em cada uma. Ela tem um endereço, como A1. Veja o capítulo 'Célula, linha e coluna'.",
       dica:
-        "Tudo bem, esses termos confundem no começo. O capítulo apresenta o vocabulário básico da planilha, com exemplos para olhar com calma. Revise o capítulo 'Célula, linha e coluna'.",
+        "A planilha é uma grade. As linhas são numeradas (1, 2, 3...) e as colunas têm letras (A, B, C...). Onde uma linha cruza uma coluna fica o menor espaço da grade, com um endereço próprio, como B3 — e é nesse espaço que você digita cada informação. Mais no capítulo 'Célula, linha e coluna'.",
     },
     {
       enunciado:
@@ -1593,7 +1593,7 @@ const ATIVIDADES = {
       explicacao:
         "Boa! A planilha é uma tabela que faz conta sozinha. Com a fórmula de soma o total aparece e ainda se atualiza se você mudar um valor. Veja 'Sua primeira fórmula'.",
       dica:
-        "Errar aqui faz parte. O capítulo mostra o que a planilha consegue fazer com os números que você digita. Vale reler com calma. Revise o capítulo 'Sua primeira fórmula'.",
+        "A grande vantagem da planilha sobre o caderno é fazer contas sozinha: você escreve uma fórmula, como =SOMA(B2:B8), e ela calcula o total da coluna. Se você mudar algum valor, o total se atualiza na hora. As planilhas gratuitas do celular já fazem isso, sem precisar programar. Mais no capítulo 'Sua primeira fórmula'.",
     },
   ],
   "O que é inteligência artificial (sem enrolação)": [
@@ -1608,7 +1608,7 @@ const ATIVIDADES = {
       explicacao:
         "Isso! A IA leu muito texto, aprendeu padrões e ajuda principalmente em tarefas de linguagem, sem pensar nem sentir como gente. Veja o capítulo 'Como a IA funciona'.",
       dica:
-        "Sem problema, é um assunto novo para muita gente. O capítulo explica a ideia geral por trás da IA, em linguagem simples. Revise o capítulo 'Como a IA funciona'.",
+        "A IA que você usa no dia a dia não pensa nem sente como uma pessoa. Ela foi treinada com uma quantidade enorme de textos e exemplos, aprendeu padrões e usa isso para ajudar em tarefas como resumir, explicar e escrever. E você conversa com ela em português comum, sem ser especialista. Mais no capítulo 'Como a IA funciona'.",
     },
     {
       enunciado:
@@ -1622,7 +1622,7 @@ const ATIVIDADES = {
       explicacao:
         "Boa! A IA já está no seu celular há anos, e hoje você conversa com ela em português comum, sem programar. Qualquer pessoa aprende no seu ritmo: capítulo 'Por que isso importa'.",
       dica:
-        "Errar aqui faz parte. O capítulo conversa sobre o que a IA tem a ver com o seu dia a dia. Vale reler com calma. Revise o capítulo 'Por que isso importa'.",
+        "A lição insiste numa ideia: IA é uma ferramenta, como o corretor do teclado ou as sugestões do celular, que você já usa sem perceber. Ninguém precisou de faculdade para aprender a mandar áudio no WhatsApp; com a IA é igual: se aprende usando, no seu ritmo, até pelo celular. Mais no capítulo 'Por que isso importa'.",
     },
   ],
   "Usando IA para resumir e estudar": [
@@ -1637,7 +1637,7 @@ const ATIVIDADES = {
       explicacao:
         "Isso! A IA transforma um material longo em algo que cabe no seu tempo, mas o estudo continua sendo seu: o resumo orienta a leitura. Veja 'Resumir para estudar'.",
       dica:
-        "Sem pressa. O capítulo mostra como usar a IA diante de um material de estudo grande e qual é o papel de cada um nessa parceria. Revise o capítulo 'Resumir para estudar'.",
+        "Resumir é uma das coisas que a IA faz melhor: ela lê um texto longo e devolve os pontos principais em poucas linhas. Mas ela não aprende por você. O resumo serve de mapa para você estudar com mais foco, e o estudo continua sendo seu. Mais no capítulo 'Resumir para estudar'.",
     },
     {
       enunciado: "A IA explicou um assunto, mas teve uma parte que você não entendeu. Qual é a melhor atitude?",
@@ -1650,7 +1650,7 @@ const ATIVIDADES = {
       explicacao:
         "Exato! Dizer onde travou e pedir uma explicação mais simples ou com exemplo costuma resolver, e a IA não perde a paciência. É a ideia do capítulo 'A IA no seu nível'.",
       dica:
-        "Errar aqui faz parte. O capítulo mostra como conduzir a conversa com a IA quando algo não fica claro. Vale reler com calma. Revise o capítulo 'A IA no seu nível'.",
+        "A IA não se cansa nem julga suas perguntas. Quando algo não fica claro, o caminho é continuar a conversa: diga qual parte você não entendeu e peça outra explicação, mais simples ou com um exemplo do seu dia a dia. Você pode pedir quantas vezes precisar. Mais no capítulo 'A IA no seu nível'.",
     },
   ],
   "Criando pedidos (prompts) simples e úteis": [
@@ -1665,7 +1665,7 @@ const ATIVIDADES = {
       explicacao:
         "Isso! Esse pedido deixa claro o que se quer, então a IA não precisa chutar. É o que o capítulo 'As quatro peças do pedido' ensina.",
       dica:
-        "Tudo bem, pedir bem é uma habilidade que se treina. O capítulo mostra o que compõe um pedido bem feito, com exemplos. Revise o capítulo 'As quatro peças do pedido'.",
+        "A IA só sabe o que você escreve, então ela precisa adivinhar quando o pedido é vago. Um bom pedido diz a tarefa (o que fazer), o assunto e como a resposta deve ser (curta, educada, em tópicos...). Compare as opções: qual delas uma pessoa conseguiria cumprir sem te fazer nenhuma pergunta? Mais no capítulo 'As quatro peças do pedido'.",
     },
     {
       enunciado: "Segundo a lição, o que faz um pedido para a IA ser bom?",
@@ -1678,7 +1678,7 @@ const ATIVIDADES = {
       explicacao:
         "Boa! Um bom pedido é preciso, não comprido. A IA faz exatamente o que você escreve, então quanto mais claro, melhor. Veja 'As quatro peças do pedido'.",
       dica:
-        "Errar aqui faz parte. O capítulo explica o que torna um pedido para a IA bom, com exemplos fracos e melhores. Vale reler. Revise o capítulo 'As quatro peças do pedido'.",
+        "Um pedido bom não é o mais longo nem o mais difícil: é o mais claro. Ele responde três perguntas: o que eu quero, para quem é e como a resposta deve vir (tamanho, tom, formato). Escrever mais palavras ou palavras complicadas não faz a IA entender melhor. Mais no capítulo 'As quatro peças do pedido'.",
     },
   ],
   "Currículo e perfil online básico": [
@@ -1693,7 +1693,7 @@ const ATIVIDADES = {
       explicacao:
         "Isso! Experiência vale em sentido amplo: cursos, voluntariado e ajudar a família contam, desde que seja verdade. Veja o capítulo 'As partes do currículo'.",
       dica:
-        "Sem problema, muita gente começa sem carteira assinada. O capítulo mostra o que entra em cada parte do currículo. Vale reler com calma. Revise o capítulo 'As partes do currículo'.",
+        "No primeiro currículo, “experiência” vai além de carteira assinada. Cursos (como este!), trabalho voluntário, ajudar no negócio da família e habilidades como montar uma planilha ou atender pessoas mostram o que você sabe fazer. A única regra é ser verdade, porque tudo que está escrito pode ser perguntado na entrevista. Mais no capítulo 'As partes do currículo'.",
     },
     {
       enunciado: "Qual endereço de e-mail passa uma imagem mais profissional num currículo?",
@@ -1706,7 +1706,7 @@ const ATIVIDADES = {
       explicacao:
         "Exato! Nome e sobrenome passam seriedade e são fáceis de lembrar. Um endereço brincalhão pode tirar candidato do processo cedo, como mostra 'Erros comuns'.",
       dica:
-        "Errar aqui faz parte. O capítulo reúne deslizes comuns em currículos, e é bom conhecê-los antes de enviar o seu. Revise o capítulo 'Erros comuns'.",
+        "O e-mail é a primeira impressão, antes mesmo da entrevista. Para currículo, o ideal é um endereço simples, com o seu nome e sobrenome, que pareça sério e seja fácil de lembrar e digitar. Se o seu atual é um apelido ou uma brincadeira, vale criar outro só para assuntos profissionais. Mais no capítulo 'Erros comuns'.",
     },
   ],
   "Reuniões online sem susto": [
@@ -1721,7 +1721,7 @@ const ATIVIDADES = {
       explicacao:
         "Isso! Ficar no mudo e abrir o microfone só na hora de falar evita que sons de casa atrapalhem todo mundo. É a regra do capítulo 'Durante a reunião'.",
       dica:
-        "Sem pressa. O capítulo reúne cuidados e hábitos para o momento em que a reunião está acontecendo. Vale reler com calma. Revise o capítulo 'Durante a reunião'.",
+        "Numa reunião online, qualquer som da sua casa — TV, conversa, cachorro, louça — vai para todo mundo e atrapalha quem está falando. Por isso o costume é entrar com o microfone desligado e ligar só na hora em que for a sua vez de falar. Mais no capítulo 'Durante a reunião'.",
     },
     {
       enunciado:
@@ -1735,7 +1735,7 @@ const ATIVIDADES = {
       explicacao:
         "Boa! O chat deixa você escrever a dúvida sem interromper ninguém, e uma pergunta bem escrita ainda chama atenção positiva. Veja o capítulo 'Durante a reunião'.",
       dica:
-        "Errar aqui faz parte. O capítulo também apresenta os recursos que a reunião online oferece a quem participa. Vale reler. Revise o capítulo 'Durante a reunião'.",
+        "Além do áudio e da câmera, quase toda reunião online tem um espaço para mensagens escritas, que todos os participantes veem. Ali você deixa sua pergunta sem interromper ninguém e sem precisar falar, e quem conduz a reunião costuma ler e responder. Mais no capítulo 'Durante a reunião'.",
     },
   ],
   "Organizando sua rotina de estudo e trabalho": [
@@ -1750,7 +1750,7 @@ const ATIVIDADES = {
       explicacao:
         "Isso! Tarefa sem data fica sendo empurrada. Anotar com o dia tira o peso da cabeça, e o calendário ainda avisa você. Veja o capítulo 'Prazo e prioridade'.",
       dica:
-        "Tudo bem, esquecer coisas é normal. O capítulo explica como organizar as tarefas para que nada se perca. Vale reler com calma. Revise o capítulo 'Prazo e prioridade'.",
+        "A memória falha quando há muita coisa ao mesmo tempo. O jeito mais simples de não perder prazo é tirar a tarefa da cabeça e registrar num lugar só, junto com a data de entrega. O calendário do celular ainda pode te avisar antes do dia. Mais no capítulo 'Prazo e prioridade'.",
     },
     {
       enunciado: "Qual é um bom jeito de começar a se organizar sem se sobrecarregar?",
@@ -1763,7 +1763,7 @@ const ATIVIDADES = {
       explicacao:
         "Exato! Começar pequeno é o que faz o sistema durar. Sistema grande demais costuma ser abandonado na primeira semana corrida. Está no capítulo 'Erros comuns'.",
       dica:
-        "Errar aqui faz parte. O capítulo lista tropeços comuns de quem começa a se organizar e como evitá-los. Revise o capítulo 'Erros comuns'.",
+        "Quem tenta organizar a vida inteira de uma vez costuma desistir na primeira semana corrida. A lição recomenda começar pequeno: uma ferramenta só, bem simples, e poucas tarefas por dia. Depois que isso vira hábito, você vai aumentando. Mais no capítulo 'Erros comuns'.",
     },
   ],
 };
