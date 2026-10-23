@@ -38,7 +38,6 @@ O detalhamento critério a critério — o que foi verificado e como — está e
 ## Para aprofundar
 
 - [Documentação UX online](https://documentacao-jovem-aprendiz-digital.vercel.app/) — site da documentação com os relatórios de auditoria ([repositório](https://github.com/samuellouren/documentacao-jovem-aprendiz-digital)).
-
 - [`DOCUMENTACAO_IHC.md`](DOCUMENTACAO_IHC.md) — decisões de design, rastreabilidade entre o Board UX (persona Maria Alice) e as funcionalidades, conformidade WCAG 2 AA critério a critério, e princípios de Norman aplicados.
 - [`AUDITORIA_UX.md`](AUDITORIA_UX.md) — diagnóstico de UX que originou os ajustes de conteúdo.
 - [`README_TECNICO.md`](README_TECNICO.md) — arquitetura, setup local, modelo de dados e rotas da API.
