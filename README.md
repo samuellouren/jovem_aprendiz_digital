@@ -2,7 +2,8 @@
 
 Plataforma de aprendizado de tecnologia básica para jovens aprendizes de Maceió — projeto da disciplina de Interação Humano-Computador (IHC).
 
-**Sistema no ar:** https://jovem-aprendiz-digital.onrender.com/\n**Documentação UX:** https://documentacao-jovem-aprendiz-digital.vercel.app/
+**Sistema no ar:** https://jovem-aprendiz-digital.onrender.com/  
+**Documentação UX:** https://documentacao-jovem-aprendiz-digital.vercel.app/
 
 ## Roteiro rápido de navegação (30 segundos)
 
