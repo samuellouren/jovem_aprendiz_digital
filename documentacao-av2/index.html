@@ -1490,47 +1490,58 @@
 
         <h3>Tipografia</h3>
         <p>
-          Nunito, uma fonte sem serifa de cantos arredondados que combina com o
-          tom acolhedor. Se ela não carregar, entra a fonte do sistema. Títulos
-          com peso 900 e letras um pouco mais juntas; corpo com peso 600.
-          Tamanhos em <code>rem</code> para respeitar o zoom.
+          <b>Família principal: Nunito</b>, de Vernon Adams, distribuída pelo
+          Google Fonts sob a licença SIL Open Font License 1.1. Foi escolhida
+          porque é sem serifa (como pede a avaliação), tem cantos arredondados
+          que combinam com o tom acolhedor para quem tem medo de tecnologia, e
+          suas letras abertas continuam legíveis em tela pequena.
+        </p>
+        <p>
+          <b>Pesos carregados:</b> 600 no corpo do texto; 800 em rótulos,
+          botões secundários e itens de menu; 900 em títulos e botões
+          principais. O peso 700 saiu do link da fonte: são menos arquivos para
+          baixar, o que ajuda no 3G/4G. O destaque em <code>&lt;strong&gt;</code>
+          usa 800.
+        </p>
+        <p>
+          <b>Pilha de reserva:</b> <code>system-ui</code> e
+          <code>-apple-system</code> (San Francisco no Mac e no iPhone),
+          <code>Segoe UI</code> (Windows), <code>Roboto</code> (Android),
+          <code>Arial</code> (último recurso) e <code>sans-serif</code>
+          (genérica). Com <code>display=swap</code> o texto aparece na hora com
+          a fonte do sistema e troca quando a Nunito chega: nunca fica
+          invisível.
         </p>
         <div style="font-family: Nunito, system-ui, sans-serif">
           <div class="type-row">
-            <span class="m">Título 1 · 27px · 900</span
+            <span class="m">Título 1 · 30px (34px no computador) · 900</span
             ><span
               class="s"
-              style="
-                font-family: inherit;
-                font-size: 1.7rem;
-                font-weight: 900;
-                letter-spacing: -0.02em;
-              "
+              style="font-family: inherit; font-size: 1.875rem; font-weight: 900; letter-spacing: -0.02em; line-height: 1.2;"
               >Primeiros Passos</span
             >
           </div>
           <div class="type-row">
-            <span class="m">Título 2 · 21px · 900</span
+            <span class="m">Título 2 · 24px · 900</span
             ><span
               class="s"
-              style="
-                font-family: inherit;
-                font-size: 1.3rem;
-                font-weight: 900;
-                letter-spacing: -0.01em;
-              "
+              style="font-family: inherit; font-size: 1.5rem; font-weight: 900; letter-spacing: -0.02em; line-height: 1.2;"
               >Suas trilhas</span
+            >
+          </div>
+          <div class="type-row">
+            <span class="m">Título 3 · 20px · 900</span
+            ><span
+              class="s"
+              style="font-family: inherit; font-size: 1.25rem; font-weight: 900; letter-spacing: -0.02em; line-height: 1.2;"
+              >Ferramentas de IA no Dia a Dia</span
             >
           </div>
           <div class="type-row">
             <span class="m">Corpo · 17px · 600</span
             ><span
               class="s"
-              style="
-                font-family: inherit;
-                font-size: 1.0625rem;
-                font-weight: 600;
-              "
+              style="font-family: inherit; font-size: 1.0625rem; font-weight: 600; line-height: 1.55;"
               >O primeiro módulo leva uns 10 minutos.</span
             >
           </div>
@@ -1538,25 +1549,111 @@
             <span class="m">Botão · 17px · 900</span
             ><span
               class="s"
-              style="font-family: inherit; font-size: 1.05rem; font-weight: 900"
+              style="font-family: inherit; font-size: 1.0625rem; font-weight: 900;"
               >Começar módulo</span
+            >
+          </div>
+          <div class="type-row">
+            <span class="m">Apoio · 14px · 600</span
+            ><span
+              class="s"
+              style="font-family: inherit; font-size: 0.875rem; font-weight: 600; line-height: 1.4;"
+              >3 módulos · 1d atrás</span
             >
           </div>
           <div class="type-row">
             <span class="m">Selo · 12px · 900</span
             ><span
               class="s"
-              style="
-                font-family: inherit;
-                font-size: 0.75rem;
-                font-weight: 900;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-              "
+              style="font-family: inherit; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em;"
               >Iniciante</span
             >
           </div>
         </div>
+
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>rem</th>
+                <th>px</th>
+                <th>Peso</th>
+                <th>Linha</th>
+                <th>Onde aparece</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>--fs-xs</code></td>
+                <td class="n">0.75rem</td>
+                <td class="n">12px</td>
+                <td>900</td>
+                <td class="n">1.55</td>
+                <td>Selos em caixa alta: nível da trilha, “Módulo 1 de 3”, “Agora é sua vez”</td>
+              </tr>
+              <tr>
+                <td><code>--fs-sm</code></td>
+                <td class="n">0.875rem</td>
+                <td class="n">14px</td>
+                <td>600 / 800</td>
+                <td class="n">1.4</td>
+                <td>Apoio, datas do mural, pastilhas do stepper, menu inferior do celular, legendas</td>
+              </tr>
+              <tr>
+                <td><code>--fs-base</code></td>
+                <td class="n">1.0625rem</td>
+                <td class="n">17px</td>
+                <td>600 / 900</td>
+                <td class="n">1.55</td>
+                <td>Corpo, texto da seção (linha 1.65), botões, campos, alternativas, feedback</td>
+              </tr>
+              <tr>
+                <td><code>--fs-md</code></td>
+                <td class="n">1.25rem</td>
+                <td class="n">20px</td>
+                <td>900</td>
+                <td class="n">1.2</td>
+                <td>Título de card (nome da trilha), título de seção, título 3</td>
+              </tr>
+              <tr>
+                <td><code>--fs-lg</code></td>
+                <td class="n">1.5rem</td>
+                <td class="n">24px</td>
+                <td>900</td>
+                <td class="n">1.2</td>
+                <td>Título 2: “Suas trilhas”, painel “Próximo módulo”, título da atividade</td>
+              </tr>
+              <tr>
+                <td><code>--fs-xl</code></td>
+                <td class="n">1.875rem</td>
+                <td class="n">30px</td>
+                <td>900</td>
+                <td class="n">1.2</td>
+                <td>Título 1 no celular: “Olá, Joana!”, nome da trilha</td>
+              </tr>
+              <tr>
+                <td><code>--fs-2xl</code></td>
+                <td class="n">2.125rem</td>
+                <td class="n">34px</td>
+                <td>900</td>
+                <td class="n">1.2</td>
+                <td>Título 1 no computador</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small sub">
+          Altura de linha: <code>--lh-titulo</code> 1.2,
+          <code>--lh-ui</code> 1.4 (textos curtos de interface),
+          <code>--lh-corpo</code> 1.55 e <code>--lh-leitura</code> 1.65 (texto
+          corrido do módulo). Espaçamento entre letras:
+          <code>--ls-titulo</code> −0.02em, corpo 0 e
+          <code>--ls-selo</code> 0.05em (caixa alta). Tamanhos em
+          <code>rem</code>, que respeitam o zoom e a fonte do aparelho (WCAG
+          1.4.4); nenhum texto de leitura fica abaixo de 14px, e 12px só em
+          selos em caixa alta com peso 900.
+        </p>
 
         <h3>Espaçamento e forma</h3>
         <p>

@@ -287,11 +287,89 @@ luminância relativa do WCAG 2.0:
 | roxo-dark `#5B21B6` | bg `#F3F6FB` | 8.29:1 | "Agora é sua vez", número da pergunta |
 | amber-ink `#78350F` | amber-soft `#FDE68A` | 7.28:1 | selo de nível, "Quase lá!" |
 
-### Tipografia, botões e navegação
+### Tipografia
 
-- **Nunito** (Google Fonts, pesos 600–900, `display=swap`) em tudo,
-  inclusive nos títulos, que antes usavam Georgia com serifa. Corpo em 17px,
-  peso 600; rótulos e botões em 800–900.
+Toda a tipografia é feita de tokens no `:root` de `style.css`. Não há
+`font-size`, `font-weight`, `line-height` (exceto três valores de
+alinhamento: `0` no ícone, `1` no número do círculo do módulo e `1.1` no
+centro do anel de progresso) nem `letter-spacing` com valor solto fora do
+`:root`.
+
+**Família principal: Nunito**, de Vernon Adams, distribuída pelo Google Fonts
+sob a SIL Open Font License 1.1. Foi escolhida porque:
+
+- é **sem serifa**, como pede a AV2 (os títulos antes usavam Georgia);
+- tem **cantos arredondados**, que combinam com o tom acolhedor para quem tem
+  medo de tecnologia;
+- suas **letras abertas** continuam legíveis em tela pequena.
+
+**Pesos carregados: 600, 800 e 900.** O 700 saiu do link do Google Fonts nos
+nove HTML (`wght@600;800;900`): são menos arquivos de fonte para baixar, e o
+carregamento fica mais rápido em 3G/4G. Cada peso tem um papel:
+
+| Token | Peso | Onde é usado |
+|---|---|---|
+| `--fw-corpo` | 600 | corpo do texto, texto das alternativas, apoio (`.no-meta`, `.passo-texto`, progresso da trilha) |
+| `--fw-rotulo` | 800 | rótulos de formulário, itens do menu, botões secundários e links em forma de botão, `<strong>`/`<b>` |
+| `--fw-titulo` | 900 | títulos, botões principais, selos em caixa alta |
+
+Os quatro `font-weight: 700` do CSS antigo (`.trilha-progresso-texto`,
+`.no-meta`, `.modulo-progresso .passo-texto` e `.alternativa`) viraram 600,
+porque são texto de apoio ou de resposta, não rótulo. Como o navegador põe
+`<strong>` em 700 por padrão (que cairia num negrito sintético), a regra
+`strong, b { font-weight: var(--fw-rotulo) }` leva o destaque para 800.
+
+**Pilha de reserva** (`--fonte`):
+`"Nunito", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif`.
+
+| Item | O que cobre |
+|---|---|
+| `system-ui` / `-apple-system` | San Francisco no Mac e no iPhone |
+| `"Segoe UI"` | Windows |
+| `Roboto` | Android |
+| `Arial` | último recurso |
+| `sans-serif` | família genérica do navegador |
+
+O link da fonte usa `display=swap`: o texto aparece na hora com a fonte do
+sistema e troca quando a Nunito chega. O texto nunca fica invisível, mesmo em
+conexão lenta ou se o Google Fonts não responder.
+
+**Escala de tamanhos** (sete degraus, todos em `rem`):
+
+| Token | rem | px | Peso | Altura de linha | Onde aparece |
+|---|---|---|---|---|---|
+| `--fs-xs` | 0.75rem | 12px | 900 | 1.55 (corpo) | selos em caixa alta: `.trilha-nivel`, `.etiqueta-nivel`, `.no-estado`, `.modulo-etiqueta`, `.secao-tipo` ("Parte 1 de 8"), `.painel-rotulo`, `.teste-rotulo` ("Agora é sua vez") |
+| `--fs-sm` | 0.875rem | 14px | 600–800 | 1.4–1.55 | apoio: `.no-meta`, `.post-data`, `.comentario-data`, `.previa-desc`, `.selo`, rótulos e mensagens de formulário, pastilhas do stepper, menu inferior do celular |
+| `--fs-base` | 1.0625rem | 17px | 600 (texto) / 900 (botão) | 1.55 (leitura longa 1.65) | corpo da página, `.secao-texto`, alternativas, feedback e explicações, botões, campos de formulário |
+| `--fs-md` | 1.25rem | 20px | 900 | 1.2 | título 3 (`.trilha-titulo`), título de seção (`.secao h2`), título do módulo aberto (`.modulo-topo h1`) |
+| `--fs-lg` | 1.5rem | 24px | 900 | 1.2 | título 2 (`h2`: "Suas trilhas", `.painel-proximo h2`, `.teste-cabecalho h2`), "Vamos começar?" no celular |
+| `--fs-xl` | 1.875rem | 30px | 900 | 1.2 | título 1 no celular (`h1`: "Olá, Joana!", nome da trilha), números do caminho de módulos |
+| `--fs-2xl` | 2.125rem | 34px | 900 | 1.2 | título 1 no computador (`.saudacao`, cabeçalho da trilha) |
+
+O `--fs-base` tem 17px (e não 16px) por escolha de legibilidade, e ainda
+atende ao mínimo de 16px dos campos de formulário, abaixo do qual o iOS dá
+zoom ao focar. Por isso o `textarea` de resposta, que usava 15px, sobe para
+`--fs-base`.
+
+**Altura de linha:** `--lh-titulo` 1.2 (títulos), `--lh-ui` 1.4 (textos curtos
+de interface), `--lh-corpo` 1.55 (corpo) e `--lh-leitura` 1.65 (texto corrido
+do módulo).
+
+**Espaçamento entre letras:** `--ls-titulo` −0.02em (títulos),
+`--ls-corpo` 0 (corpo) e `--ls-selo` 0.05em (caixa alta, que precisa de um
+pouco mais de ar).
+
+**Acessibilidade:**
+
+- tamanhos em `rem`, que respeitam o zoom e a fonte escolhida no aparelho
+  (WCAG 1.4.4);
+- nenhum texto de leitura abaixo de 14px; 12px só em selos em caixa alta com
+  peso 900;
+- contraste dos pares de texto já medido na tabela de cores acima. A
+  mudança de tipografia não alterou nenhuma cor.
+
+### Botões e navegação
+
 - **Espaçamento em escala de 8** (`--s1` 4px … `--s7` 48px). Os valores
   soltos do CSS antigo foram para o degrau mais próximo.
 - **Botões "grossos"**: o botão principal tem uma sombra sólida embaixo
