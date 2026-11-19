@@ -14,7 +14,7 @@ window.PORTFOLIO = {
 
   // Sessão com leitor de tela (NVDA). Escreva o que você ouviu; deixe [] se preferir só mostrar o vídeo.
   nvda: {
-    funcionouBem: ["tudo de texto foi lido sem nenhum erro."],
+    funcionouBem: ["tudos os texto foram lidos sem nenhum erro."],
     problemas: [
       "Botões de módulo da trilha: o nome que o leitor falava não continha o texto que aparece na tela. Isso quebrava o comando de voz (“clicar em Começar”), e o leitor de tela lia diferente do que estava escrito. Agora o nome acessível vem do próprio conteúdo, com “Módulo N:” só para leitor de tela. Exemplo do que o NVDA lê: “Módulo 1: Começar Organizando arquivos e pastas 7 seções · atividade”. Foi a única regra do axe violada na trilha, afetando os 3 botões.",
     ],
