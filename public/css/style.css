@@ -333,7 +333,7 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--
   margin: var(--s2) 0 0; font-size: var(--fs-sm); font-weight: var(--fw-rotulo); color: var(--erro-ink);
 }
 .campo-erro .icone { margin-top: 1px; flex-shrink: 0; }
-textarea { resize: vertical; min-height: 70px; }
+textarea { resize: vertical; min-height: 96px; } /* 4 linhas: o exemplo do campo não fica cortado no celular */
 /* Ícone + texto, nunca só a cor de fundo (WCAG 1.4.1 — Uso de Cor). */
 .erro-msg {
   background: var(--erro-bg); color: var(--erro-ink);
@@ -552,6 +552,9 @@ textarea { resize: vertical; min-height: 70px; }
 .subtitulo-pagina { color: var(--sub); margin: calc(-1 * var(--s3)) 0 var(--s5); }
 .titulo-trilhas { margin: 0 0 var(--s4); }
 #aviso-verificacao { margin: 0 0 var(--s4); }
+/* E-mail ainda não confirmado é um aviso, não um sucesso: tom âmbar (amber-ink sobre amber-tint = 8,75:1)
+   com filete lateral, para não ficar verde "deu certo" quando falta fazer algo. */
+.sucesso-msg#aviso-verificacao { background: var(--amber-tint); color: var(--amber-ink); border-left: 4px solid var(--amber-borda); }
 
 /* Resumo: no celular é UM card coral (próximo módulo + anel pequeno dentro);
    a partir de 860px vira dois cards lado a lado (ver bloco "Desktop").

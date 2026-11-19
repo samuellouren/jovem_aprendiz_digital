@@ -80,16 +80,25 @@ const MIME = {
   ".json": "application/json; charset=utf-8",
   ".svg": "image/svg+xml",
   ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".webp": "image/webp",
   ".ico": "image/x-icon",
+  ".txt": "text/plain; charset=utf-8",
 };
 
 function serveStatic(res, pathname) {
-  let filePath = pathname === "/" ? "/index.html" : pathname;
+  let filePath = pathname.endsWith("/") ? pathname + "index.html" : pathname;
   filePath = path.normalize(filePath).replace(/^(\.\.[/\\])+/, "");
   const fullPath = path.join(PUBLIC_DIR, filePath);
   if (!fullPath.startsWith(PUBLIC_DIR)) {
     res.writeHead(403);
     return res.end("Proibido");
+  }
+  // "/portfolio" (sem a barra final) é uma pasta: manda para "/portfolio/",
+  // senão os links relativos da página quebram.
+  if (!path.extname(fullPath) && fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
+    res.writeHead(301, { Location: pathname + "/" });
+    return res.end();
   }
   fs.readFile(fullPath, (err, data) => {
     if (err) {

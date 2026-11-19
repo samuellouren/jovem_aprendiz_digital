@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slides — Jovem Aprendiz Digital (3ª AV)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap">
+  <link rel="stylesheet" href="css/portfolio.css" />
+  <style>
+    html, body { height: 100%; overflow: hidden; scroll-behavior: auto; }
+    body { background: var(--ink-deep); display: flex; flex-direction: column; }
+    .palco { flex: 1; min-height: 0; width: 100%; max-width: none; margin: 0; display: flex; align-items: center; justify-content: center; padding: var(--s4); }
+    .slide { display: none; padding-top: clamp(20px, 4vw, 48px); width: 100%; max-width: 1180px; max-height: 100%; overflow: auto; background: var(--bg); border-radius: var(--radius-lg); padding: clamp(20px, 4vw, 48px); }
+    .slide.ativo { display: block; }
+    .slide h1 { font-size: clamp(2rem, 5.5vw, 3.5rem); }
+    .slide h2 { font-size: clamp(1.5rem, 3.6vw, 2.4rem); margin-bottom: var(--s4); }
+    .slide li { font-size: clamp(1rem, 1.9vw, 1.35rem); margin-bottom: var(--s2); }
+    .slide p { font-size: clamp(1rem, 1.9vw, 1.35rem); }
+    .slide .tela { max-height: 52vh; width: auto; }
+    .slide .par { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+    .slide .numeros { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .slide .diagrama { padding: var(--s2); }
+    .slide .diagrama img { max-width: 100%; max-height: 56vh; display: block; margin: 0 auto; }
+    .slide table { font-size: clamp(.8125rem, 1.5vw, 1rem); min-width: 0; }
+    .capa { text-align: left; }
+    .barra { flex: none; min-height: 64px; flex-wrap: wrap; padding: var(--s2); display: flex; align-items: center; justify-content: center; gap: var(--s3); color: #E2E8F0; font-weight: 800; }
+    .barra button, .barra a { min-height: 44px; min-width: 44px; padding: 0 var(--s4); border-radius: 12px; border: 2px solid #475569; background: transparent; color: #fff; font: inherit; font-weight: 900; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+    .barra button:hover, .barra a:hover { border-color: var(--teal-soft); }
+    .barra :focus-visible { outline-color: #fff; }
+    .dica { font-size: .8125rem; color: #94A3B8; font-weight: 600; }
+    @media (max-width: 640px) { .dica, #tela-cheia { display: none; } .barra button, .barra a { padding: 0 var(--s3); font-size: .875rem; } }
+    @media print {
+      html, body { height: auto; overflow: visible; background: #fff; }
+      .palco { display: block; height: auto; padding: 0; }
+      .slide { display: block !important; break-after: page; border-radius: 0; max-height: none; width: 100%; }
+      .barra { display: none; }
+    }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#palco">Pular para o slide</a>
+<main class="palco" id="palco">
+
+<section class="slide capa" aria-label="Slide 1: capa">
+  <span class="selo">3ª AV · IHC · Cesmac</span>
+  <h1>Jovem Aprendiz Digital</h1>
+  <p class="lead">Portfólio de UX: o que mudou, como foi medido e o que falta testar com pessoas.</p>
+  <p class="suave">Samuel · 26/11/2026</p>
+</section>
+
+<section class="slide" aria-label="Slide 2: problema e público">
+  <h2>O problema</h2>
+  <ul>
+    <li>Jovens aprendizes de Maceió (14 a 19 anos) <b>usam bem o celular</b>, mas têm pouca experiência com computador, e-mail profissional e planilhas.</li>
+    <li>É justamente o que o trabalho pede no primeiro dia.</li>
+    <li>Persona da 1ª AV: <b>Maria Alice, 16 anos</b>, aprendiz em Maceió.</li>
+  </ul>
+  <div class="par"><figure><img class="tela" src="img/mobile-index.webp" width="390" height="1000" alt="Tela inicial no celular." style="max-height:40vh"></figure>
+  <figure><img class="tela" src="img/desktop-dashboard.webp" width="1100" height="687" alt="Início no computador." style="max-height:40vh"></figure></div>
+</section>
+
+<section class="slide" aria-label="Slide 3: solução">
+  <h2>A solução</h2>
+  <ul>
+    <li><b>3 trilhas, 9 módulos curtos</b> (uns 10 minutos cada) com atividade de fixação.</li>
+    <li>Comunidade com respostas, recuperação de senha e confirmação de e-mail.</li>
+    <li>Linguagem simples, visual lúdico, no celular e no computador.</li>
+    <li>Sem sequência diária (ofensiva): o conteúdo é finito.</li>
+  </ul>
+</section>
+
+<section class="slide" aria-label="Slide 4: números da acessibilidade">
+  <h2>Acessibilidade em números (WCAG 2.1 AA)</h2>
+  <div class="numeros">
+    <div class="numero"><b>10 → 0</b><span>violações no axe-core</span></div>
+    <div class="numero"><b>1,23 → 3,47</b><span>contraste da borda dos campos (mín. 3:1)</span></div>
+    <div class="numero"><b>0</b><span>alvos de toque abaixo de 44 px</span></div>
+    <div class="numero"><b>14 de 14</b><span>testes dos formulários</span></div>
+  </div>
+  <p>Ferramenta automática <b>não viu</b> a borda fraca: só a medição à parte mostrou.</p>
+</section>
+
+<section class="slide" aria-label="Slide 5: antes e depois">
+  <h2>Antes e depois</h2>
+  <div class="par">
+    <figure><span class="rotulo antes">Antes</span><img class="tela" src="img/antes-404-mobile.webp" width="390" height="844" alt="404 antiga." style="max-height:46vh"></figure>
+    <figure><span class="rotulo depois">Depois</span><img class="tela" src="img/depois-404-mobile.webp" width="390" height="844" alt="404 nova, com explicação e dois botões." style="max-height:46vh"></figure>
+    <figure><span class="rotulo antes">Antes</span><img class="tela" src="img/antes-login-mobile.webp" width="390" height="844" alt="Login antigo." style="max-height:46vh"></figure>
+    <figure><span class="rotulo depois">Depois, com erro</span><img class="tela" src="img/form-login-erro-mobile.webp" width="390" height="918" alt="Login com erro em cada campo." style="max-height:46vh"></figure>
+  </div>
+</section>
+
+<section class="slide" aria-label="Slide 6: formulários e daltonismo">
+  <h2>Erro que explica e não depende de cor</h2>
+  <ul>
+    <li>Erro <b>logo abaixo do campo</b>, com ícone e texto que dizem como resolver.</li>
+    <li><code>aria-invalid</code> e <code>aria-describedby</code>; o foco vai ao primeiro campo com problema.</li>
+    <li>Simulação de daltonismo em 4 telas: <b>nenhuma informação depende só de cor</b>.</li>
+  </ul>
+  <figure><img class="tela" src="img/daltonismo-cadastro-erro.webp" width="1100" height="595" alt="Cadastro com erros nas quatro simulações de daltonismo." style="max-height:36vh"></figure>
+</section>
+
+<section class="slide" aria-label="Slide 7: NVDA">
+  <h2>Leitor de tela (NVDA)</h2>
+  <p>Tarefa gravada com o áudio do leitor: <b>entrar → primeiro módulo → atividade → responder e verificar</b>.</p>
+  <p><a class="btn principal" id="slide-video" href="https://youtu.be/TBN7UMd0FWk" target="_blank" rel="noopener">Abrir o vídeo (nova aba)</a></p>
+  <p class="suave">Além disso: árvore de acessibilidade extraída e login concluído só com teclado.</p>
+</section>
+
+<section class="slide" aria-label="Slide 8: design system">
+  <h2>Design System: Figma igual ao código</h2>
+  <ul>
+    <li><b>33 cores, 7 espaçamentos e 6 raios</b> como variáveis, com o nome CSS (<code>var(--border-campo)</code>).</li>
+    <li><b>10 estilos de texto</b> em Nunito (600, 800, 900).</li>
+    <li>Componentes com estados: Botão, Campo, Alerta, Cartão.</li>
+    <li>Telas de Login, Login com erro e 404 montadas só com <b>9 instâncias</b> dos componentes.</li>
+  </ul>
+  <p><a class="btn principal" href="https://www.figma.com/design/EtfKwLCiXPP42Y0eDv7FXT" target="_blank" rel="noopener">Abrir o Figma (nova aba)</a></p>
+</section>
+
+<section class="slide" aria-label="Slide 9: mapa do site">
+  <h2>Arquitetura: mapa do site</h2>
+  <div class="diagrama"><img src="diagramas/mapa-do-site.svg" alt="Mapa do site: apresentação, login, cadastro, início, trilha, módulo, atividade, comunidade e página 404." /></div>
+  <p class="suave">Menu com duas opções (Início e Comunidade), de propósito.</p>
+</section>
+
+<section class="slide" aria-label="Slide 10: fluxograma">
+  <h2>Fluxo: concluir um módulo</h2>
+  <div class="diagrama"><img src="diagramas/fluxo-resumo.svg" alt="Fluxo resumido: início, entrar ou criar conta, escolher trilha, ler as seções, responder a atividade; se não acertar tudo, explicação e refazer; se acertar, módulo concluído." /></div>
+  <p class="suave">Versão resumida. O fluxo completo, com os caminhos de erro, está no <a href="index.html#arquitetura">portfólio</a>.</p>
+</section>
+
+<section class="slide" aria-label="Slide 11: heurística">
+  <h2>Avaliação heurística (autoavaliação)</h2>
+  <div class="numeros">
+    <div class="numero"><b>11</b><span>achados (gravidade 0 a 2)</span></div>
+    <div class="numero"><b>2</b><span>corrigidos agora</span></div>
+    <div class="numero"><b>8</b><span>justificados, com plano</span></div>
+    <div class="numero"><b>1</b><span>sem problema</span></div>
+  </div>
+  <ul>
+    <li>Aviso de e-mail pendente aparecia em <b>verde de sucesso</b> → agora âmbar.</li>
+    <li>Campo da comunidade cortava o exemplo → altura de 4 linhas.</li>
+    <li>Falta: avaliação <b>cruzada</b> com outro grupo.</li>
+  </ul>
+</section>
+
+<section class="slide" aria-label="Slide 12: testes com pessoas">
+  <h2>Testes com pessoas</h2>
+  <div id="slide-testes"></div>
+</section>
+
+<section class="slide" aria-label="Slide 13: aprendizados">
+  <h2>O que aprendi</h2>
+  <div id="slide-aprendizados"></div>
+</section>
+
+<section class="slide" aria-label="Slide 14: próximos passos e perguntas">
+  <h2>Próximos passos</h2>
+  <ul>
+    <li>Testes com pessoas e atualização de persona e jornada.</li>
+    <li>Avaliação heurística cruzada.</li>
+    <li>Senha mais forte, abas do módulo com pista de rolagem, texto mais curto, "ver mais" no mural e reenvio de e-mail.</li>
+  </ul>
+  <p class="lead"><b>Perguntas?</b></p>
+  <p><a class="btn" href="index.html">Voltar ao portfólio</a></p>
+</section>
+
+</main>
+<nav class="barra" aria-label="Controles dos slides">
+  <button type="button" id="ant" aria-label="Slide anterior">← Anterior</button>
+  <span id="pos" aria-live="polite">1 / 1</span>
+  <button type="button" id="prox" aria-label="Próximo slide">Próximo →</button>
+  <button type="button" id="tela-cheia" aria-label="Tela cheia">Tela cheia</button>
+  <a href="index.html">Portfólio</a>
+  <span class="dica">Setas do teclado · F tela cheia · Ctrl+P salva em PDF</span>
+</nav>
+
+<script src="js/dados.js"></script>
+<script>
+  (function () {
+    var P = window.PORTFOLIO;
+    // Testes: só o que foi realizado aparece com detalhe; o resto mostra a situação.
+    var feitos = P.testes.filter(function (t) { return t.status === "feito"; });
+    var pend = P.testes.filter(function (t) { return t.status !== "feito"; });
+    var html = "<ul>" + feitos.map(function (t) { return "<li><b>" + t.nome + ":</b> " + t.resultado + "</li>"; }).join("") + "</ul>";
+    if (pend.length) html += '<p class="aviso-honesto"><b>Ainda sem participantes (roteiro pronto):</b> ' + pend.map(function (t) { return t.nome; }).join("; ") + ".</p>";
+    document.getElementById("slide-testes").innerHTML = html;
+    P.renderLista(document.getElementById("slide-aprendizados"), P.aprendizados, "");
+
+    var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+    var atual = 0;
+    function ir(n) {
+      atual = Math.max(0, Math.min(slides.length - 1, n));
+      slides.forEach(function (s, i) { s.classList.toggle("ativo", i === atual); });
+      document.getElementById("pos").textContent = (atual + 1) + " / " + slides.length;
+      slides[atual].scrollTop = 0;
+      try { history.replaceState(null, "", "#" + (atual + 1)); } catch (e) {}
+    }
+    document.getElementById("ant").onclick = function () { ir(atual - 1); };
+    document.getElementById("prox").onclick = function () { ir(atual + 1); };
+    document.getElementById("tela-cheia").onclick = function () {
+      if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    };
+    document.addEventListener("keydown", function (e) {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      var k = e.key;
+      if (k === "ArrowRight" || k === "PageDown") { ir(atual + 1); }
+      else if (k === "ArrowLeft" || k === "PageUp") { ir(atual - 1); }
+      else if (k === "Home") { ir(0); }
+      else if (k === "End") { ir(slides.length - 1); }
+      else if (k === "f" || k === "F") { document.getElementById("tela-cheia").click(); }
+    });
+    function doHash() { var n = parseInt((location.hash || "").replace("#", ""), 10); ir(isNaN(n) ? 0 : n - 1); }
+    window.addEventListener("hashchange", doHash);
+    doHash();
+  })();
+</script>
+</body>
+</html>

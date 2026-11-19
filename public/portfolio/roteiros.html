@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roteiros dos testes — Jovem Aprendiz Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap">
+  <link rel="stylesheet" href="css/portfolio.css" />
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header class="topo"><div class="topo-in">
+  <a class="topo-marca" href="index.html">← Portfólio</a>
+  <nav aria-label="Testes">
+    <a href="#t5s">5 segundos</a><a href="#tab">A/B</a><a href="#ttarefas">Tarefas gravadas</a><a href="#tcard">Card sorting</a><a href="#tarvore">Árvore</a><a href="#theuristica">Heurística cruzada</a>
+  </nav></div></header>
+<main id="conteudo">
+<section class="hero" style="padding-top:var(--s6)">
+  <span class="selo">Método</span>
+  <h1>Roteiros dos testes</h1>
+  <p class="lead">Como cada teste da 3ª AV é (ou será) aplicado. A situação de cada um, com participantes e resultados reais, está em <a href="index.html#testes">Testes com pessoas</a>.</p>
+  <div class="card">
+    <h2 style="margin-top:0;font-size:1.25rem">Antes de começar (vale para todos)</h2>
+    <ul>
+      <li>Peça autorização para anotar ou gravar; não grave o rosto se a pessoa preferir.</li>
+      <li>Anote por pessoa: apelido, idade, se usa mais celular ou computador, experiência com e-mail e planilha (nenhuma, pouca ou boa).</li>
+      <li>Diga: <i>"Estou testando o sistema, não você. Se algo for difícil, a culpa é do sistema. Pense em voz alta."</i></li>
+      <li>Não ajude. Anote onde a pessoa hesita e as palavras que ela usa.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="t5s"><h2>Teste de 5 segundos</h2>
+  <p>2 minutos por pessoa. Mostre a página inicial por <b>5 segundos</b>, esconda e pergunte: <i>"O que é esse sistema?"</i>, <i>"Para quem ele é?"</i> e <i>"O que você faria primeiro?"</i>. Anote as respostas com as palavras da pessoa.</p>
+  <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Anotações do teste de 5 segundos (role para o lado, se precisar)"><table><thead><tr><th scope="col">Pessoa</th><th scope="col">"O que é?"</th><th scope="col">"Para quem?"</th><th scope="col">"O que faria?"</th><th scope="col">Entendeu?</th></tr></thead><tbody><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+</section>
+
+<section id="tab"><h2>Teste A/B simples</h2>
+  <p>5 minutos por pessoa. Varie <b>um único elemento</b>, por exemplo o texto do botão do cadastro: <b>A</b> "Criar minha conta" e <b>B</b> "Começar agora". Metade das pessoas vê A e metade vê B. Meça uma coisa só: acertou o clique de primeira e quanto tempo levou. Com poucas pessoas é um indício, não uma prova, e a conclusão deve dizer isso.</p>
+  <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Anotações do teste A/B (role para o lado, se precisar)"><table><thead><tr><th scope="col">Versão</th><th scope="col">Pessoa</th><th scope="col">Acertou de primeira?</th><th scope="col">Tempo</th><th scope="col">Comentário</th></tr></thead><tbody><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+</section>
+
+<section id="ttarefas"><h2>Tarefas gravadas</h2>
+  <p>10 minutos por pessoa, com gravação de tela e voz. Tarefas:</p>
+  <ol><li>"Crie uma conta e entre."</li><li>"Encontre o primeiro módulo e comece."</li><li>"Chegue até a atividade e responda."</li><li>"Você ficou com uma dúvida. Peça ajuda para a turma."</li></ol>
+  <p>Para cada tarefa: conseguiu? onde hesitou? o que disse?</p>
+</section>
+
+<section id="tcard"><h2>Card sorting aberto</h2>
+  <p>10 minutos. Cartões (papel ou ferramenta online): <i>Entrar · Criar conta · Esqueci minha senha · Confirmar e-mail · Minhas trilhas · Primeiros Passos no Computador · Ferramentas de IA no Dia a Dia · Pronta para o Mercado de Trabalho · Progresso no mini curso · Continue de onde parou · Atividade do módulo · Refazer atividade · Mural da turma · Fazer uma pergunta · Responder alguém · Sair</i>.</p>
+  <p>Peça: <i>"Junte os cartões que combinam e dê um nome para cada grupo."</i> Compare com o menu atual (Início, Comunidade, Sair). Se vários grupos não cabem em nenhum item do menu, mude o menu e registre a mudança.</p>
+</section>
+
+<section id="tarvore"><h2>Teste de árvore</h2>
+  <p>5 minutos. Mostre só a árvore de textos, sem desenho:</p>
+  <pre class="card" tabindex="0" aria-label="Árvore de textos do teste (role para o lado, se precisar)" style="overflow:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9375rem">Início
+  Continue de onde parou
+  Progresso no mini curso
+  Trilhas
+    Primeiros Passos no Computador
+    Ferramentas de IA no Dia a Dia
+    Pronta para o Mercado de Trabalho
+Comunidade
+  Publicar
+  Responder
+Sair</pre>
+  <p>Pergunte "Onde você clicaria para…": 1) continuar o módulo em que parou? 2) aprender a escrever um e-mail? 3) tirar uma dúvida com outras pessoas? 4) sair da conta? 5) ver o quanto já fez? Anote o primeiro clique de cada pessoa e se foi o certo.</p>
+</section>
+
+<section id="theuristica"><h2>Avaliação heurística cruzada</h2>
+  <p>Troque de sistema com outro grupo. Use as 10 heurísticas de Nielsen e dê <b>gravidade de 0 a 4</b> a cada problema (0 = não é problema, 4 = catástrofe). Nossa própria avaliação está em <a href="index.html#heuristica">Avaliação heurística</a>.</p>
+  <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Anotações da avaliação heurística cruzada (role para o lado, se precisar)"><table><thead><tr><th scope="col">Problema</th><th scope="col">Heurística violada</th><th scope="col">Gravidade (0–4)</th><th scope="col">Onde</th><th scope="col">Corrigiu ou justificou?</th></tr></thead><tbody><tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+</section>
+</main>
+<footer class="rodape"><div class="rodape-in"><a href="index.html">← Voltar ao portfólio</a></div></footer>
+</body>
+</html>
