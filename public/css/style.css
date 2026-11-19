@@ -10,6 +10,7 @@
   --amber-soft: #FDE68A;   --amber-ink: #78350F;
   /* neutros */
   --bg: #F3F6FB;  --card: #FFFFFF;  --border: #E2E8F0;  --border-strong: #CBD5E1;
+  --border-campo: #7B8BA1; /* borda de campo e alternativa: 3,47:1 sobre branco (WCAG 1.4.11, mínimo 3:1) */
   --ink: #1E293B; --sub: #475569;   --sub-claro: #64748B; /* sub-claro só sobre branco */
   /* estados */
   --ok: #15803D;  --ok-ink: #166534;  --ok-bg: #DCFCE7;
@@ -320,11 +321,18 @@ input[type=text], input[type=email], input[type=password], textarea {
   width: 100%;
   font: inherit;
   padding: var(--s3) var(--s4);
-  border: 2px solid var(--border);
+  border: 2px solid var(--border-campo);
   border-radius: var(--radius-sm);
   background: #fff;
 }
 input:focus, textarea:focus { border-color: var(--teal); }
+input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--erro); }
+/* Erro junto do campo: ícone + texto, nunca só a cor da borda (WCAG 1.4.1 e 3.3.1) */
+.campo-erro {
+  display: flex; align-items: flex-start; gap: var(--s2);
+  margin: var(--s2) 0 0; font-size: var(--fs-sm); font-weight: var(--fw-rotulo); color: var(--erro-ink);
+}
+.campo-erro .icone { margin-top: 1px; flex-shrink: 0; }
 textarea { resize: vertical; min-height: 70px; }
 /* Ícone + texto, nunca só a cor de fundo (WCAG 1.4.1 — Uso de Cor). */
 .erro-msg {
@@ -1121,7 +1129,7 @@ textarea { resize: vertical; min-height: 70px; }
   min-height: 58px;
   margin: 0; /* zera a margem global de label: o espaçamento vem do gap da grade */
   padding: var(--s3) var(--s4) var(--s3) var(--s3);
-  border: 2px solid var(--border);
+  border: 2px solid var(--border-campo);
   border-radius: var(--radius);
   box-shadow: 0 4px 0 var(--border);
   background: #fff;
@@ -1438,7 +1446,7 @@ textarea { resize: vertical; min-height: 70px; }
 }
 
 .vazio { display: block; text-align: center; color: var(--sub); padding: var(--s6) var(--s3); }
-.vazio .icone { display: flex; margin: 0 auto var(--s3); color: var(--border); }
+.vazio .icone { display: flex; justify-content: center; margin: 0 auto var(--s3); color: var(--border-campo); }
 
 .ajuda-form { font-size: var(--fs-sm); color: var(--sub); margin: 0 0 var(--s3); }
 
@@ -1750,3 +1758,18 @@ textarea { resize: vertical; min-height: 70px; }
   }
   .trilha-lateral { margin-top: 0; position: sticky; top: var(--s5); }
 }
+
+
+/* ---------- Página não encontrada (404) ---------- */
+.pagina-404 { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; justify-content: center; padding: var(--s5); }
+.pagina-404 main { max-width: 480px; width: 100%; text-align: center; }
+.erro-404-icone {
+  width: 88px; height: 88px; margin: 0 auto var(--s5); border-radius: 50%;
+  background: var(--amber-soft); color: var(--amber-ink);
+  display: flex; align-items: center; justify-content: center;
+}
+.erro-404-codigo { font-size: var(--fs-sm); font-weight: var(--fw-titulo); letter-spacing: var(--ls-selo); text-transform: uppercase; color: var(--sub); margin: 0 0 var(--s2); }
+.pagina-404 h1 { font-size: var(--fs-xl); line-height: var(--lh-titulo); letter-spacing: var(--ls-titulo); margin: 0 0 var(--s3); }
+.pagina-404 p { color: var(--sub); line-height: var(--lh-corpo); margin: 0 0 var(--s5); }
+.pagina-404 .acoes-form { display: grid; gap: var(--s3); }
+.pagina-404 .acoes-form .btn { width: 100%; }

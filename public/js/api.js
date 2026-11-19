@@ -65,6 +65,81 @@ function mostrarSucessoForm(el, mensagem) {
   el.classList.add("show");
 }
 
+
+// ---------- Erro ligado ao campo (WCAG 3.3.1 e 3.3.3) ----------
+// A mensagem fica logo abaixo do campo, com ícone + texto, e o campo recebe
+// aria-invalid e aria-describedby: o leitor de tela lê "campo inválido" e a
+// explicação de como resolver quando o foco chega nele.
+function limparCampoInvalido(input) {
+  input.removeAttribute("aria-invalid");
+  const idErro = input.id + "-erro";
+  const el = document.getElementById(idErro);
+  if (el) el.remove();
+  const ds = (input.getAttribute("aria-describedby") || "").split(" ").filter((x) => x && x !== idErro);
+  if (ds.length) input.setAttribute("aria-describedby", ds.join(" "));
+  else input.removeAttribute("aria-describedby");
+}
+
+function marcarCampoInvalido(input, mensagem) {
+  const idErro = input.id + "-erro";
+  let el = document.getElementById(idErro);
+  if (!el) {
+    el = document.createElement("p");
+    el.id = idErro;
+    el.className = "campo-erro";
+    input.insertAdjacentElement("afterend", el);
+  }
+  el.innerHTML = ic("alert-circle", 16) + "<span>" + escHtml(mensagem) + "</span>";
+  input.setAttribute("aria-invalid", "true");
+  const ds = (input.getAttribute("aria-describedby") || "").split(" ").filter(Boolean);
+  if (!ds.includes(idErro)) ds.push(idErro);
+  input.setAttribute("aria-describedby", ds.join(" "));
+  // Some assim que a pessoa começa a corrigir
+  input.addEventListener("input", () => limparCampoInvalido(input), { once: true });
+}
+
+// regras: [{ id: "login-email", validar: (valor) => "mensagem" | null }]
+// Retorna true se está tudo certo. Se não, marca os campos, resume no aviso do
+// formulário e leva o foco para o primeiro campo com problema.
+function validarCampos(form, erroEl, regras) {
+  const primeiros = [];
+  regras.forEach((r) => {
+    const input = form.querySelector("#" + r.id);
+    if (!input) return;
+    limparCampoInvalido(input);
+    const msg = r.validar(input.value.trim(), input);
+    if (msg) {
+      marcarCampoInvalido(input, msg);
+      primeiros.push(input);
+    }
+  });
+  if (!primeiros.length) return true;
+  mostrarErroForm(
+    erroEl,
+    primeiros.length === 1
+      ? "Falta um ajuste para continuar. Veja o campo marcado."
+      : "Faltam " + primeiros.length + " ajustes para continuar. Veja os campos marcados."
+  );
+  primeiros[0].focus();
+  return false;
+}
+
+const Validar = {
+  email(valor) {
+    if (!valor) return "Digite seu e-mail. Exemplo: nome@email.com";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)) return "Esse e-mail parece incompleto. Use o formato nome@email.com";
+    return null;
+  },
+  obrigatorio(msg) {
+    return (valor) => (valor ? null : msg);
+  },
+  senhaNova(valor) {
+    if (!valor) return "Crie uma senha para continuar.";
+    if (valor.length < 4) return "Essa senha ficou curta. Use pelo menos 4 caracteres.";
+    return null;
+  },
+};
+
 // Navegação principal. No celular é a barra inferior fixa (só os itens); a
 // partir de 860px o CSS a transforma em menu lateral e passa a mostrar também
 // a marca e o bloco do usuário (com o botão Sair), montados aqui.

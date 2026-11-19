@@ -1,0 +1,35 @@
+- link "Pular para o conteúdo":
+  - /url: "#conteudo"
+- navigation "Navegação principal":
+  - text: Jovem Aprendiz Digital
+  - link "Início":
+    - /url: /dashboard.html
+  - link "Comunidade":
+    - /url: /comunidade.html
+  - text: Teste Auditoria
+  - button "Sair"
+- main:
+  - link "Voltar para o início":
+    - /url: /dashboard.html
+  - text: iniciante
+  - heading "Primeiros Passos no Computador" [level=1]
+  - paragraph: O básico que ninguém te ensinou, sem pressa e sem jargão.
+  - paragraph:
+    - strong: 3 módulos
+  - heading "Módulos da trilha" [level=2]
+  - 'button "Módulo 1: Começar Organizando arquivos e pastas 7 seções · atividade"'
+  - 'button "Módulo 2: Escrevendo um e-mail profissional 7 seções · atividade"'
+  - 'button "Módulo 3: Introdução a planilhas 7 seções · atividade"'
+  - region "Organizando arquivos e pastas":
+    - text: Módulo 1
+    - heading "Organizando arquivos e pastas" [level=2]
+    - paragraph: Criar pastas, nomear arquivos e voltar a encontrar tudo depois — pelo celular, com o app Arquivos e o Google Drive, do jeito que quem trabalha com isso usa todo dia.
+    - list:
+      - listitem: 7 seções curtas
+      - listitem: Uns 10 minutos
+      - listitem: Atividade no fim
+    - button "Começar módulo"
+  - link "Travou em algo? Pergunte para a turma No mural ninguém julga pergunta básica.":
+    - /url: /comunidade.html
+    - strong: Travou em algo? Pergunte para a turma
+    - text: No mural ninguém julga pergunta básica.

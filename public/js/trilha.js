@@ -95,7 +95,6 @@ function pintarListaModulos() {
 
   licoes.forEach((l, i) => {
     const estado = l.concluida ? "feito" : i === proximo ? "proximo" : "";
-    const sufixo = estado === "feito" ? " — concluído" : estado === "proximo" ? " — começar" : "";
     const meta = l.secoes.length + " seções" + (l.questoes.length ? " · atividade" : "");
 
     // Linha pontilhada (só desenho) entre este módulo e o anterior
@@ -112,11 +111,10 @@ function pintarListaModulos() {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "modulo-no " + (i % 2 ? "lado-direito" : "lado-esquerdo") + (estado ? " " + estado : "");
-    // O estado e a contagem de seções ficam aria-hidden no desenho porque o
-    // aria-label já diz o estado e o aria-describedby lê a contagem; assim o
-    // texto visível (o título) está contido no nome acessível (WCAG 2.5.3).
-    btn.setAttribute("aria-label", "Módulo " + (i + 1) + ": " + l.titulo + sufixo);
-    btn.setAttribute("aria-describedby", "modulo-meta-" + i);
+    // O nome acessível vem do próprio conteúdo do botão (sem aria-label): o
+    // texto visível ("Começar", título, contagem) fica inteiro dentro dele, só
+    // com o "Módulo N:" a mais no começo, escondido para quem enxerga
+    // (WCAG 2.5.3 — Rótulo no nome).
 
     const bola =
       estado === "feito"
@@ -126,17 +124,18 @@ function pintarListaModulos() {
           : i + 1;
     const rotulo =
       estado === "feito"
-        ? '<span class="no-estado" aria-hidden="true">Concluído</span>'
+        ? '<span class="no-estado">Concluído</span>'
         : estado === "proximo"
-          ? '<span class="no-estado" aria-hidden="true">Começar</span>'
+          ? '<span class="no-estado">Começar</span>'
           : "";
 
     btn.innerHTML = `
+      <span class="sr-only">Módulo ${i + 1}: </span>
       <span class="no-bola" aria-hidden="true">${bola}</span>
       <span class="no-texto">
         ${rotulo}
         <span class="no-titulo">${esc(l.titulo)}</span>
-        <span class="no-meta" id="modulo-meta-${i}" aria-hidden="true">${meta}</span>
+        <span class="no-meta">${meta}</span>
       </span>`;
     btn.addEventListener("click", () => abrirModulo(i));
     wrap.appendChild(btn);

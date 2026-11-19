@@ -10,6 +10,11 @@ document.getElementById("form-cadastrar").addEventListener("submit", async (e) =
   e.preventDefault();
   const erroEl = document.getElementById("erro-cadastrar");
   erroEl.classList.remove("show");
+  if (!validarCampos(e.target, erroEl, [
+    { id: "cad-nome", validar: Validar.obrigatorio("Digite seu nome. É assim que você aparece na comunidade.") },
+    { id: "cad-email", validar: Validar.email },
+    { id: "cad-senha", validar: Validar.senhaNova },
+  ])) return;
   const botao = e.target.querySelector("button[type=submit]");
   const rotuloOriginal = botao.textContent;
   botao.disabled = true;

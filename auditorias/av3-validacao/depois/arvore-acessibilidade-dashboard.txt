@@ -1,0 +1,39 @@
+- link "Pular para o conteúdo":
+  - /url: "#conteudo"
+- navigation "Navegação principal":
+  - text: Jovem Aprendiz Digital
+  - link "Início":
+    - /url: /dashboard.html
+  - link "Comunidade":
+    - /url: /comunidade.html
+  - text: Teste Auditoria
+  - button "Sair"
+- main:
+  - heading "Olá, Teste!" [level=1]
+  - status: Ainda falta confirmar seu e-mail (auditoria@example.com). Veja sua caixa de entrada.
+  - text: Primeiro passo
+  - heading "Vamos começar?" [level=2]
+  - paragraph: O primeiro módulo leva uns 10 minutos e começa do zero — você não precisa saber nada antes.
+  - link "Começar o primeiro módulo":
+    - /url: /trilha.html?id=1
+  - heading "Seu mini curso" [level=2]
+  - paragraph: 9 módulos curtos em 3 trilhas, uns 10 minutos cada.
+  - heading "Suas trilhas" [level=2]
+  - link "iniciante Primeiros Passos no Computador O básico que ninguém te ensinou, sem pressa e sem jargão. 3 módulos":
+    - /url: /trilha.html?id=1
+    - text: iniciante
+    - heading "Primeiros Passos no Computador" [level=3]
+    - paragraph: O básico que ninguém te ensinou, sem pressa e sem jargão.
+    - text: 3 módulos
+  - link "intermediário Ferramentas de IA no Dia a Dia Inteligência artificial explicada sem enrolação, direto ao ponto. 3 módulos":
+    - /url: /trilha.html?id=2
+    - text: intermediário
+    - heading "Ferramentas de IA no Dia a Dia" [level=3]
+    - paragraph: Inteligência artificial explicada sem enrolação, direto ao ponto.
+    - text: 3 módulos
+  - link "intermediário Pronta para o Mercado de Trabalho Habilidades práticas para o trabalho e para o futuro emprego. 3 módulos":
+    - /url: /trilha.html?id=3
+    - text: intermediário
+    - heading "Pronta para o Mercado de Trabalho" [level=3]
+    - paragraph: Habilidades práticas para o trabalho e para o futuro emprego.
+    - text: 3 módulos

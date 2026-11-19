@@ -10,6 +10,10 @@ document.getElementById("form-entrar").addEventListener("submit", async (e) => {
   e.preventDefault();
   const erroEl = document.getElementById("erro-entrar");
   erroEl.classList.remove("show");
+  if (!validarCampos(e.target, erroEl, [
+    { id: "login-email", validar: Validar.email },
+    { id: "login-senha", validar: Validar.obrigatorio("Digite sua senha. Se esqueceu, use o link “Esqueci minha senha”.") },
+  ])) return;
   const botao = e.target.querySelector("button[type=submit]");
   const rotuloOriginal = botao.textContent;
   botao.disabled = true;

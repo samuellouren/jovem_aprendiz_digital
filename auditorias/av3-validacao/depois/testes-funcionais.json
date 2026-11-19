@@ -1,0 +1,72 @@
+[
+ {
+  "teste": "login: foco vai ao 1º campo com erro",
+  "ok": true,
+  "detalhe": ""
+ },
+ {
+  "teste": "login: aria-invalid + describedby",
+  "ok": true,
+  "detalhe": ""
+ },
+ {
+  "teste": "login: resumo em role=alert",
+  "ok": true,
+  "detalhe": ""
+ },
+ {
+  "teste": "login em estado de erro: axe 0 violações",
+  "ok": true,
+  "detalhe": ""
+ },
+ {
+  "teste": "digitar limpa o erro do campo",
+  "ok": true,
+  "detalhe": ""
+ },
+ {
+  "teste": "e-mail incompleto explica o formato",
+  "ok": true,
+  "detalhe": ""
+ },
+ {
+  "teste": "cadastro: 3 campos marcados",
+  "ok": true,
+  "detalhe": "resumo: Faltam 3 ajustes para continuar. Veja os campos marcados."
+ },
+ {
+  "teste": "esqueci-senha: campo e-mail marcado",
+  "ok": true,
+  "detalhe": ""
+ },
+ {
+  "teste": "redefinir: senhas diferentes explicado",
+  "ok": true,
+  "detalhe": ""
+ },
+ {
+  "teste": "comunidade: estado vazio visível",
+  "ok": true,
+  "detalhe": "Teste Auditoria 2 min atrás  Teste da auditoria de acessibilidade  Responder Joa"
+ },
+ {
+  "teste": "comunidade: publicar vazio marca o campo",
+  "ok": true,
+  "detalhe": ""
+ },
+ {
+  "teste": "comunidade: confirmação \"Publicado!\" aparece",
+  "ok": true,
+  "detalhe": ""
+ },
+ {
+  "teste": "404: status HTTP 404",
+  "ok": true,
+  "detalhe": ""
+ },
+ {
+  "teste": "teclado: login concluído sem mouse",
+  "ok": true,
+  "detalhe": ""
+ }
+]

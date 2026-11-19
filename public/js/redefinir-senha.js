@@ -20,11 +20,10 @@ if (painelForm.hidden === false) {
     erroEl.classList.remove("show");
 
     const senha = document.getElementById("nova-senha").value;
-    const confirmar = document.getElementById("confirmar-senha").value;
-    if (senha !== confirmar) {
-      mostrarErroForm(erroEl, "As duas senhas precisam ser iguais.");
-      return;
-    }
+    if (!validarCampos(e.target, erroEl, [
+      { id: "nova-senha", validar: Validar.senhaNova },
+      { id: "confirmar-senha", validar: (v) => (!v ? "Repita a nova senha para confirmar." : v !== senha.trim() ? "As senhas são diferentes. Digite a mesma senha nos dois campos." : null) },
+    ])) return;
 
     const botao = e.target.querySelector("button[type=submit]");
     const rotuloOriginal = botao.textContent;

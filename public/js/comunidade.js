@@ -146,7 +146,7 @@ async function carregarPosts() {
     if (!posts.length) {
       lista.innerHTML =
         `<p class="vazio">` +
-        Icones.svg("message-circle", { tamanho: 30 }) +
+        `<span class="icone" aria-hidden="true">` + Icones.svg("message-circle", { tamanho: 36 }) + `</span>` +
         `Ainda não tem nenhuma publicação. Seja a primeira pessoa a escrever!</p>`;
       return;
     }
@@ -170,13 +170,17 @@ document.getElementById("form-post").addEventListener("submit", async (e) => {
   e.preventDefault();
   const erroEl = document.getElementById("erro-post");
   erroEl.classList.remove("show");
+  const sucessoEl = document.getElementById("sucesso-post");
+  sucessoEl.classList.remove("show");
   const texto = document.getElementById("novo-post");
+  if (!validarCampos(e.target, erroEl, [{ id: "novo-post", validar: Validar.obrigatorio("Escreva algo antes de publicar. Pode ser uma dúvida curta.") }])) return;
   const botao = e.target.querySelector("button[type=submit]");
   botao.disabled = true;
   try {
     await Api.chamar("POST", "/comunidade", { conteudo: texto.value });
     texto.value = "";
     await carregarPosts();
+    mostrarSucessoForm(sucessoEl, "Publicado! Sua mensagem já está no mural da turma.");
   } catch (err) {
     mostrarErroForm(erroEl, err.message);
   } finally {

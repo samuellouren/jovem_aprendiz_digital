@@ -93,8 +93,11 @@ function serveStatic(res, pathname) {
   }
   fs.readFile(fullPath, (err, data) => {
     if (err) {
-      res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
-      return res.end("<h1>404</h1><p>Página não encontrada. <a href='/'>Voltar</a></p>");
+      // Página 404 amigável (public/404.html); se até ela faltar, cai no texto simples.
+      return fs.readFile(path.join(PUBLIC_DIR, "404.html"), (e2, pagina) => {
+        res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
+        res.end(e2 ? "<h1>Página não encontrada</h1><p><a href='/'>Voltar ao início</a></p>" : pagina);
+      });
     }
     const ext = path.extname(fullPath);
     res.writeHead(200, { "Content-Type": MIME[ext] || "application/octet-stream" });

@@ -42,3 +42,4 @@ O detalhamento critério a critério — o que foi verificado e como — está e
 - [`DOCUMENTACAO_IHC.md`](DOCUMENTACAO_IHC.md) — decisões de design, rastreabilidade entre o Board UX (persona Maria Alice) e as funcionalidades, conformidade WCAG 2 AA critério a critério, e princípios de Norman aplicados.
 - [`AUDITORIA_UX.md`](AUDITORIA_UX.md) — diagnóstico de UX que originou os ajustes de conteúdo.
 - [`README_TECNICO.md`](README_TECNICO.md) — arquitetura, setup local, modelo de dados e rotas da API.
+- [`docs/`](docs/) — entregas da 3ª AV: [relatório de acessibilidade antes/depois](docs/AV3_RELATORIO_ACESSIBILIDADE.md), [arquitetura da informação](docs/AV3_ARQUITETURA_DA_INFORMACAO.md), [atualização do design system](docs/AV3_DESIGN_SYSTEM_ATUALIZACAO.md), [changelog](docs/AV3_CHANGELOG.md), [esqueleto do portfólio de UX](docs/AV3_PORTFOLIO_UX.md) e [kit dos testes com pessoas](docs/AV3_KIT_TESTES.md).

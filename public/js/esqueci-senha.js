@@ -8,6 +8,7 @@ document.getElementById("form-esqueci-senha").addEventListener("submit", async (
   sucessoEl.classList.remove("show");
 
   const form = e.target;
+  if (!validarCampos(form, erroEl, [{ id: "email", validar: Validar.email }])) return;
   const botao = form.querySelector("button[type=submit]");
   const rotuloOriginal = botao.textContent;
   botao.disabled = true;

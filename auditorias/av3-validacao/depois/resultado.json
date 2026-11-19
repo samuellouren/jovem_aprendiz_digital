@@ -1,0 +1,517 @@
+{
+ "axe": {
+  "404": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 20,
+    "incompletos": []
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 20,
+    "incompletos": []
+   }
+  },
+  "index": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 22,
+    "incompletos": []
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 22,
+    "incompletos": []
+   }
+  },
+  "login": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 38,
+    "incompletos": [
+     "color-contrast"
+    ]
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 31,
+    "incompletos": []
+   }
+  },
+  "cadastro": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 38,
+    "incompletos": [
+     "color-contrast"
+    ]
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 36,
+    "incompletos": []
+   }
+  },
+  "esqueci-senha": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 36,
+    "incompletos": [
+     "color-contrast"
+    ]
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 29,
+    "incompletos": []
+   }
+  },
+  "redefinir-senha": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 36,
+    "incompletos": [
+     "color-contrast"
+    ]
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 34,
+    "incompletos": []
+   }
+  },
+  "verificar-email": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 32,
+    "incompletos": [
+     "color-contrast"
+    ]
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 25,
+    "incompletos": []
+   }
+  },
+  "trilha-modulo": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 34,
+    "incompletos": [
+     "color-contrast"
+    ]
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 36,
+    "incompletos": [
+     "color-contrast"
+    ]
+   }
+  },
+  "trilha-atividade": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 37,
+    "incompletos": [
+     "color-contrast"
+    ]
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 39,
+    "incompletos": [
+     "color-contrast"
+    ]
+   }
+  },
+  "trilha-atividade-erro": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 37,
+    "incompletos": [
+     "color-contrast"
+    ]
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 39,
+    "incompletos": [
+     "color-contrast"
+    ]
+   }
+  },
+  "dashboard": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 31,
+    "incompletos": []
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 33,
+    "incompletos": []
+   }
+  },
+  "comunidade": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 32,
+    "incompletos": []
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 34,
+    "incompletos": []
+   }
+  },
+  "trilha": {
+   "desktop": {
+    "violacoes": [],
+    "passou": 30,
+    "incompletos": []
+   },
+   "mobile": {
+    "violacoes": [],
+    "passou": 30,
+    "incompletos": []
+   }
+  }
+ },
+ "zoom": {
+  "404": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": []
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": []
+   }
+  },
+  "index": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": []
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": []
+   }
+  },
+  "login": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": []
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": []
+   }
+  },
+  "cadastro": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": []
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": []
+   }
+  },
+  "esqueci-senha": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": []
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": []
+   }
+  },
+  "redefinir-senha": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": []
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": []
+   }
+  },
+  "verificar-email": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": []
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": []
+   }
+  },
+  "trilha-modulo": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": [
+     "texto-cortado:SPAN.sr-only",
+     "BUTTON.passo",
+     "SPAN.sr-only",
+     "SPAN.",
+     "SPAN.passo-num",
+     "BUTTON.passo passo-teste",
+     "svg.",
+     "path."
+    ]
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": [
+     "texto-cortado:SPAN.sr-only",
+     "BUTTON.passo",
+     "SPAN.sr-only",
+     "SPAN.",
+     "SPAN.passo-num",
+     "BUTTON.passo passo-teste",
+     "svg.",
+     "path."
+    ]
+   }
+  },
+  "trilha-atividade": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": [
+     "texto-cortado:SPAN.sr-only"
+    ]
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": [
+     "texto-cortado:SPAN.sr-only"
+    ]
+   }
+  },
+  "trilha-atividade-erro": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": [
+     "texto-cortado:SPAN.sr-only"
+    ]
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": [
+     "texto-cortado:SPAN.sr-only"
+    ]
+   }
+  },
+  "dashboard": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": []
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": []
+   }
+  },
+  "comunidade": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": []
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": []
+   }
+  },
+  "trilha": {
+   "200%": {
+    "estouro_px": 0,
+    "cortados": [
+     "texto-cortado:SPAN.sr-only"
+    ]
+   },
+   "400%": {
+    "estouro_px": 0,
+    "cortados": [
+     "texto-cortado:SPAN.sr-only"
+    ]
+   }
+  }
+ },
+ "toque": {
+  "404": [],
+  "index": [],
+  "login": [],
+  "cadastro": [],
+  "esqueci-senha": [],
+  "redefinir-senha": [],
+  "verificar-email": [],
+  "trilha-modulo": [],
+  "trilha-atividade": [],
+  "trilha-atividade-erro": [],
+  "dashboard": [],
+  "comunidade": [],
+  "trilha": []
+ },
+ "extra": {
+  "404": {
+   "lang": "pt-BR",
+   "titulo": "Página não encontrada — Jovem Aprendiz Digital",
+   "h1": 1,
+   "landmarks": {
+    "main": true,
+    "nav": false,
+    "header": false
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "index": {
+   "lang": "pt-BR",
+   "titulo": "Jovem Aprendiz Digital",
+   "h1": 1,
+   "landmarks": {
+    "main": true,
+    "nav": false,
+    "header": false
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "login": {
+   "lang": "pt-BR",
+   "titulo": "Entrar — Jovem Aprendiz Digital",
+   "h1": 1,
+   "landmarks": {
+    "main": true,
+    "nav": false,
+    "header": false
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "cadastro": {
+   "lang": "pt-BR",
+   "titulo": "Criar conta — Jovem Aprendiz Digital",
+   "h1": 1,
+   "landmarks": {
+    "main": true,
+    "nav": false,
+    "header": false
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "esqueci-senha": {
+   "lang": "pt-BR",
+   "titulo": "Esqueci minha senha — Jovem Aprendiz Digital",
+   "h1": 1,
+   "landmarks": {
+    "main": true,
+    "nav": false,
+    "header": false
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "redefinir-senha": {
+   "lang": "pt-BR",
+   "titulo": "Redefinir senha — Jovem Aprendiz Digital",
+   "h1": 1,
+   "landmarks": {
+    "main": true,
+    "nav": false,
+    "header": false
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "verificar-email": {
+   "lang": "pt-BR",
+   "titulo": "Confirmar e-mail — Jovem Aprendiz Digital",
+   "h1": 1,
+   "landmarks": {
+    "main": true,
+    "nav": false,
+    "header": false
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "trilha-modulo": {
+   "lang": "pt-BR",
+   "titulo": "Trilha — Jovem Aprendiz Digital",
+   "h1": 2,
+   "landmarks": {
+    "main": true,
+    "nav": true,
+    "header": true
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "trilha-atividade": {
+   "lang": "pt-BR",
+   "titulo": "Trilha — Jovem Aprendiz Digital",
+   "h1": 2,
+   "landmarks": {
+    "main": true,
+    "nav": true,
+    "header": true
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "trilha-atividade-erro": {
+   "lang": "pt-BR",
+   "titulo": "Trilha — Jovem Aprendiz Digital",
+   "h1": 2,
+   "landmarks": {
+    "main": true,
+    "nav": true,
+    "header": true
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "dashboard": {
+   "lang": "pt-BR",
+   "titulo": "Início — Jovem Aprendiz Digital",
+   "h1": 1,
+   "landmarks": {
+    "main": true,
+    "nav": true,
+    "header": true
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "comunidade": {
+   "lang": "pt-BR",
+   "titulo": "Comunidade — Jovem Aprendiz Digital",
+   "h1": 1,
+   "landmarks": {
+    "main": true,
+    "nav": true,
+    "header": true
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  },
+  "trilha": {
+   "lang": "pt-BR",
+   "titulo": "Trilha — Jovem Aprendiz Digital",
+   "h1": 1,
+   "landmarks": {
+    "main": true,
+    "nav": true,
+    "header": true
+   },
+   "semLabel": [],
+   "semDescricaoErro": []
+  }
+ }
+}
